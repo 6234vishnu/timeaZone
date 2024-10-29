@@ -1,0 +1,99 @@
+
+<%-include("../../Views/partials/user/header")%>
+    <div class="orderdetails-container">
+        <!-- Header Section -->
+        <div class="orderdetails-header">
+            <h1>Order Details</h1>
+        </div>
+
+        <!-- Order Confirmation Message -->
+        <p class="orderdetails-confirmation-message">Thank you. Your order has been received.</p>
+
+        <!-- Order Info Section -->
+        <div class="orderdetails-info-section">
+            <!-- Order Info -->
+            <div class="orderdetails-box">
+               <% if(order){ %>
+                <h2>Order Info</h2>
+                <p>Order Id: <span><%= order._id %></span></p>
+                <p>Date: <span><%= order.createdAt  %></span></p>
+                <p>Total: <span><%= order.totalAmount %> $</span></p>
+                <p>Payment Method: <span><%= order.paymentMethod  %></span></p>
+            </div>
+                  <% } %>
+            <!-- Billing Address -->
+           
+            <div class="orderdetails-box">
+                <h2>Billing Address</h2>
+                <p>Name: <span><%= adress.adress.name %></span></p>
+                 <p>Street: <span><%= adress.adress.district %></span></p>
+                <p>City: <span><%= adress.adress.city  %></span></p>
+                <p>Country: <span><%=adress.adress.state  %></span></p>
+                <p>Postcode: <span><%= adress.adress.pincode  %></span></p>
+            </div>
+
+         
+            
+        </div>
+
+        <!-- Order Details Section -->
+        <div class="orderdetails-table-section">
+            <h2>Order Details</h2>
+            <table class="orderdetails-table">
+                <thead>
+                    <tr>
+                        <th>Product</th>
+                        <th>Quantity</th>
+                        <th >Delivery charge</th>
+                        
+                    </tr>
+                </thead>
+                <tbody>
+
+                    <tr>
+                        <% order.products.forEach(item => { %>
+                            <tr>
+                                <td><%= item.product.name %></td> 
+                                <td><%= item.quantity %></td> 
+                                
+                                <% }) %>
+                                <td>10$</td>
+                        
+                    </tr>
+                    </tr>
+                   
+                    <tr>
+                        <td colspan="2"><strong>Subtotal</strong></td>
+                        <td style="color: red;"><strong><%=order.totalAmount  %>$</strong></td>
+                    </tr>
+                    <tr>
+                       
+                       
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="orderdetails-action-buttons">
+            <button class="orderdetails-cancel-button" id="cancelOrder" onclick="confirmCancelOrder()">Cancel Order</button>
+            <button class="orderdetails-support-button" id="shopMore">shop More</button>
+        </div>
+    </div>
+    <script>
+          document.getElementById("shopMore").addEventListener("click", function() {
+        window.location.href = "/shop";
+    });
+  
+
+    function confirmCancelOrder() {
+    const confirmation = confirm("Are you sure you want to cancel this order?");
+    if (confirmation) {
+     
+      window.location.href = '/cancelOrder'; 
+    }
+  }
+
+    </script>
+
+    <%-include("../../Views/partials/user/footer")%>

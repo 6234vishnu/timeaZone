@@ -1,0 +1,118 @@
+/* Global Styles */
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f7f7f7;
+}
+
+/* Order Details Container */
+.orderdetails-container {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: white;
+}
+
+/* Header */
+.orderdetails-header {
+    text-align: center;
+    padding: 30px 0;
+}
+
+.orderdetails-header h1 {
+    font-size: 36px;
+    font-weight: 700;
+}
+
+/* Confirmation Message */
+.orderdetails-confirmation-message {
+    text-align: center;
+    color: rgb(12, 226, 9);
+    font-size: 18px;
+    margin-bottom: 30px;
+}
+
+
+.orderdetails-info-section {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 30px;
+}
+
+.orderdetails-box {
+    background-color: #f9f9f9;
+    padding: 20px;
+    width: 30%;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.orderdetails-box h2 {
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 10px;
+}
+
+.orderdetails-box p {
+    font-size: 14px;
+    margin: 5px 0;
+}
+
+.orderdetails-box p span {
+    font-weight: 500;
+}
+
+/* Order Table Section */
+.orderdetails-table-section {
+    margin-bottom: 30px;
+}
+
+.orderdetails-table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+}
+
+.orderdetails-table th, .orderdetails-table td {
+    padding: 15px;
+    border-bottom: 1px solid #ddd;
+}
+
+.orderdetails-table th {
+    background-color: #f5f5f5;
+    font-weight: 600;
+}
+
+.orderdetails-table td {
+    font-size: 14px;
+}
+
+.orderdetails-table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+/* Action Buttons */
+.orderdetails-action-buttons {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+.orderdetails-cancel-button, .orderdetails-support-button {
+    padding: 15px 40px;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.orderdetails-cancel-button {
+    background-color: #ff4b4b;
+    color: white;
+}
+
+.orderdetails-support-button {
+    background-color: #333;
+    color: white;
+}

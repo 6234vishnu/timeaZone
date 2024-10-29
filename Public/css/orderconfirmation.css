@@ -1,0 +1,80 @@
+/* Reset default styling */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #fff;
+}
+
+.orderconfirmation-container {
+    text-align: center;
+    padding: 50px;
+}
+
+.orderconfirmation-header {
+    padding: 50px 0;
+    background: url('pattern.png') no-repeat center center;
+    background-size: cover;
+}
+
+.orderconfirmation-header h1 {
+    font-size: 2rem;
+    color: #2E2E5F;
+    font-weight: bold;
+}
+
+.orderconfirmation-content {
+    margin-top: 50px;
+}
+
+.orderconfirmation-status {
+    margin-bottom: 50px;
+}
+
+.orderconfirmation-icon {
+    width: 215px;
+    margin-bottom: 20px;
+}
+
+.orderconfirmation-status h2 {
+    font-size: 1.8rem;
+    color: #2E2E5F;
+    font-weight: bold;
+}
+
+.orderconfirmation-actions {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+.orderconfirmation-shopmore {
+    background-color: #ff0d00;
+    color: white;
+    border: none;
+    padding: 15px 40px;
+    font-size: 1rem;
+    cursor: pointer;
+    border-radius: 7px;
+}
+
+.orderconfirmation-orderdetails {
+    background-color: #000000;
+    color: white;
+    border: none;
+    padding: 15px 40px;
+    font-size: 1rem;
+    cursor: pointer;
+    border-radius: 7px;
+}
+
+.orderconfirmation-shopmore:hover ,
+.orderconfirmation-orderdetails:hover {
+    opacity: 0.9;
+    background-color: #ffffff;
+    color: rgb(0, 0, 0);
+}

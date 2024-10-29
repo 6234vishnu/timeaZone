@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #f4f4f4;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        .container {
+            width: 80%;
+            margin: 0 auto;
+            max-width: 1200px;
+        }
+
+        header {
+            background-color: white;
+            padding: 10px 0;
+        }
+
+        .logo {
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+        }
+
+        .logo h2 {
+            font-size: 28px;
+            font-weight: 700;
+        }
+
+        .logo h2 span {
+            color: red;
+        }
+
+        main {
+            background-color: #fff;
+            padding: 20px 0;
+            text-align: center;
+        }
+
+        .sign-in h2 {
+            font-size: 36px;
+            font-weight: 500;
+            margin-bottom: 30px;
+        }
+
+        form {
+            max-width: 400px;
+            margin: 0 auto;
+            padding: 30px;
+            border-radius: 8px;
+            background-color: #f4f4f4;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+            text-align: left;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 500;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 10px;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+        }
+
+        .error-message {
+            color: red;
+            font-size: 14px;
+            margin-top: 5px;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            background-color: #333;
+            color: white;
+            font-size: 16px;
+            font-weight: 500;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-bottom: 20px;
+        }
+
+        a.google-signin {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: white;
+            color: #333;
+        }
+
+        a.google-signin img {
+            width: 30px;
+            margin-right: 10px;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                width: 90%;
+            }
+
+            .logo h2 {
+                font-size: 24px;
+            }
+
+            .sign-in h2 {
+                font-size: 28px;
+            }
+
+            form {
+                padding: 20px;
+            }
+
+            button {
+                padding: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <h2><span>Time</span> Zone</h2>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <section class="sign-in">
+            <div class="container">
+                <h2>Sign Up</h2>
+                <form id="signform" action="/signup" method="post">
+                    <div class="form-group">
+                        <label for="username">Username</label>
+                        <input type="text" id="fullname" placeholder="Enter name" name="name">
+                        <div id="error1" class="error-message"></div>
+                    </div>
+                    <div class="form-group">
+                        <label for="phone">Phone Number</label>
+                        <input type="text" id="phone" placeholder="Enter Phone number" name="phone" required minlength="10">
+                        <div id="error2" class="error-message"></div>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" placeholder="Enter your email" name="email" >
+                        <div id="error3" class="error-message"></div>
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <input type="password" id="password" placeholder="enter Password" name="password"  required minlength="8"  pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}">
+                        <div id="error4" class="error-message"></div>
+                    </div>
+                    <div class="form-group">
+                        <label for="password"> Confirm Password</label>
+                        <input type="password" id="confirmpassword" placeholder="Re-enter password" name="confirmPassword">
+                        <div id="error5" class="error-message"></div>
+                    </div>
+                    <button type="submit">Signup</button>
+                    <h4>or signup with Google</h4>
+                </form>
+                <a  href="/auth/google/callback" class="google-signin">
+                    <img src="\images\Google_Icons-09-512.webp" alt="Google">
+                </a>
+                <div>
+                    <% if (message) { %>
+                      <h4 style="color: red;"><%= message %></h4>
+                    <% } %>
+                  </div>
+                  
+        </section>
+    </main>
+
+    <script>
+        const nameid = document.getElementById('fullname');
+        const emailid = document.getElementById('email');
+        const phoneid = document.getElementById('phone');
+        const passwordid = document.getElementById('password');
+        const confirmid = document.getElementById('confirmpassword');
+        const error1 = document.getElementById('error1');
+        const error2 = document.getElementById('error2');
+        const error3 = document.getElementById('error3');
+        const error4 = document.getElementById('error4');
+        const error5 = document.getElementById('error5');
+        const signform = document.getElementById('signform');
+
+        signform.addEventListener('submit', function(event) {
+    let valid = true;
+
+  
+    if (nameid.value.trim() === "") {
+        error1.textContent = "Please enter your name.";
+        valid = false;
+    } else {
+        error1.textContent = "";
+    }
+
+   
+    if (phoneid.value.trim() !== "" && !/^\d{10}$/.test(phoneid.value)) {
+        error2.textContent = "Please enter a valid 10-digit phone number.";
+        valid = false;
+    } else {
+        error2.textContent = "";
+    }
+
+  
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (emailid.value.trim() === "") {
+        error3.textContent = "Please enter your email.";
+        valid = false;
+    } else if (!emailPattern.test(emailid.value.trim())) {
+        error3.textContent = "Please enter a valid email address.";
+        valid = false;
+    } else {
+        error3.textContent = "";
+    }
+
+   
+    const passwordPattern = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/;
+    if (passwordid.value.trim() === "") {
+        error4.textContent = "Please enter your password.";
+        valid = false;
+    } else if (!passwordPattern.test(passwordid.value.trim())) {
+        error4.textContent = "Password must be at least 8 characters long and include at least one uppercase letter, one lowercase letter, and one number.";
+        valid = false;
+    } else if (passwordid.value.trim() !== confirmid.value.trim()) {
+        error4.textContent = "Passwords do not match.";
+        valid = false;
+    } else {
+        error4.textContent = "";
+    }
+
+
+    if (confirmid.value.trim() === "") {
+        error5.textContent = "Please confirm your password.";
+        valid = false;
+    } else if (confirmid.value.trim() !== passwordid.value.trim()) {
+        error5.textContent = "Passwords do not match.";
+        valid = false;
+    } else {
+        error5.textContent = "";
+    }
+
+    if (!valid) {
+        event.preventDefault(); 
+    }
+});
+
+    </script>
+</body>
+</html>

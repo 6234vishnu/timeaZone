@@ -1,0 +1,152 @@
+/* General Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f5f5f5;
+  color: #333;
+}
+
+main {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+/* Order Page Container */
+.orderpage-container {
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+}
+
+/* Product Card */
+.product-card {
+  display: flex;
+  /* flex-direction: column; */
+  align-items: center;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  padding: 15px;
+  margin-bottom: 20px;
+}
+
+.product-card img {
+  max-width: 200px;
+  height: auto;
+  border-radius: 8px;
+}
+
+.product-card h2 {
+  font-size: 19px;
+  margin: 10px 0;
+  padding: 10px;
+
+}
+
+.product-card p {
+  margin: 5px 0;
+  padding: 10px;
+}
+
+/* Address Selection */
+.address-selection {
+  background-color: #f9f9f9;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  padding: 10px;
+  margin-bottom: 10px;
+}
+
+.address-option {
+  display: flex;
+  align-items: center;
+}
+
+.address-option input {
+  margin-right: 10px;
+}
+
+/* Billing Details */
+.orderpage-billing-section {
+  margin-top: 20px;
+}
+
+/* Order Summary Table */
+.orderpage-summary-section {
+  margin-top: 20px;
+}
+
+.orderpage-summary-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.orderpage-summary-table th, 
+.orderpage-summary-table td {
+  padding: 10px;
+  border: 1px solid #ddd;
+  text-align: left;
+}
+
+.orderpage-summary-table tfoot th {
+  font-weight: bold;
+}
+
+/* Confirm Order Button */
+.orderpage-confirm-btn {
+  background-color: #000000; /* Primary color */
+  color: #fff;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  margin-top: 15px;
+}
+
+.orderpage-confirm-btn:hover {
+  background-color: #ff0000; /* Darker shade on hover */
+}
+
+/* Payment Options */
+.orderpage-payment-options {
+  /* display: flex; */
+  flex-direction: column;
+  margin-top: 15px;
+}
+
+.orderpage-payment-options label {
+  display: flex;
+  align-items: center;
+  margin: 10px 0;
+}
+
+.orderpage-payment-options img {
+  width: 100px; /* Adjust width as needed */
+  margin-right: 10px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .orderpage-container {
+      padding: 15px;
+  }
+
+  .product-card {
+      width: 100%;
+  }
+
+  .orderpage-summary-table {
+      font-size: 14px; /* Smaller font size for mobile */
+  }
+
+  .orderpage-confirm-btn {
+      width: 100%;
+  }
+}

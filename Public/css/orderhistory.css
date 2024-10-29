@@ -1,0 +1,208 @@
+/* Reset default styling */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f9f9f9;
+}
+
+.orderhistory-container {
+    width: 80%;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.orderhistory-header {
+    text-align: center;
+    padding: 30px 0;
+}
+
+.orderhistory-header h1 {
+    font-size: 3rem;
+    color: #2E2E5F;
+    background-image: url('pattern.png'); /* Example pattern */
+    background-size: cover;
+    padding: 10px;
+    margin-bottom: 20px;
+}
+
+.orderhistory-filter-section {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+.orderhistory-filter h4 {
+    margin-bottom: 10px;
+}
+
+.orderhistory-filter label {
+    display: block;
+    margin: 10px 0;
+    font-size: 1rem;
+}
+
+.orderhistory-search {
+    display: flex;
+    align-items: center;
+}
+
+.orderhistory-search input {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 1rem;
+    width: 300px;
+}
+
+.orderhistory-search button {
+    background-color: #E6E6FA;
+    border: none;
+    padding: 10px;
+    margin-left: 10px;
+    cursor: pointer;
+}
+
+.orderhistory-list-section {
+    margin-top: 30px;
+}
+
+.orderhistory-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.orderhistory-table thead {
+    background-color: #E6E6FA;
+}
+
+.orderhistory-table th,
+.orderhistory-table td {
+    padding: 15px;
+    text-align: left;
+}
+
+.orderhistory-table th {
+    font-size: 1.2rem;
+    color: #2E2E5F;
+}
+
+.orderhistory-table td img {
+    width: 50px;
+    height: auto;
+    margin-right: 10px;
+}
+
+.orderhistory-status {
+    font-weight: bold;
+    color: #4CAF50;
+}
+.showstatus{
+    color: white;
+    background-color: red;
+    border-radius: 7px;
+    padding: 7px;
+    border-color: red;
+}
+.showstatus:hover{
+    color: rgb(255, 255, 255);
+    background-color: black;
+    border: black;
+}
+#submitFilter{
+    background-color: black;
+    border-radius: 10px;
+    padding: 7px;
+}
+#clearFilters{
+    background-color: black;
+    border-radius: 10px;
+    padding: 7px;
+}
+
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  padding: 20px 0;
+  list-style-type: none;
+}
+
+.pagination .page-item {
+  margin: 0 5px;
+}
+
+.pagination .page-link {
+  display: block;
+  padding: 10px 15px;
+  font-size: 16px;
+  color: #007bff;
+  text-decoration: none;
+  background-color: #fff;
+  border: 1px solid #dee2e6;
+  border-radius: 5px;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+
+.pagination .page-link:hover {
+  background-color: #ff0000;
+  color: white;
+}
+
+.pagination .active .page-link {
+  background-color: #ffffff;
+  color: rgb(0, 0, 0);
+  border-color: #000000;
+}
+
+.pagination .disabled .page-link {
+  color: #6c757d;
+  pointer-events: none;
+  background-color: #fff;
+  border-color: #dee2e6;
+}
+.search-field {
+    margin: 20px 0; /* Add some space above and below the search field */
+    display: flex;   /* Use flexbox for layout */
+    flex-direction: column; /* Stack the label and input vertically */
+}
+
+.search-field label {
+    font-weight: bold; /* Make the label bold */
+    margin-bottom: 5px; /* Space between the label and input */
+    font-size: 16px; /* Set font size for the label */
+    color: #333;
+}
+
+.search-field input {
+    padding: 10px; /* Add padding inside the input */
+    font-size: 16px; /* Set font size for the input text */
+    border: 1px solid #000000; 
+    border-radius: 4px; 
+    transition: border-color 0.3s; 
+}
+
+.search-field input:focus {
+    border-color: #000000;
+    outline: none; 
+}
+
+.search-field input::placeholder {
+    color: #aaa; 
+    font-style: italic; 
+}
+
+
+@media (max-width: 767px) {
+   
+    .pagination .page-link {
+    padding: 8px 12px;
+    font-size: 14px;
+  }
+} 

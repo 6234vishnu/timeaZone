@@ -1,0 +1,104 @@
+<%- include('../partials/admin/header') %>
+
+<form class="searchBar" action="/admin/searchOffer" method="GET">
+  <input
+    type="text"
+    name="searchQuery"
+    placeholder="Search by offer Id"
+    required
+  />
+  <button type="submit">Search</button>
+</form>
+
+<div class="couponadmin-buttons">
+  <button
+    class="couponadmin-create-btn"
+    onclick="window.location.href='/admin/createOfferPage'"
+  >
+    + Create New offer
+  </button>
+</div>
+
+<div class="couponadmin-containerfluid">
+  <div class="couponadmin-tabl">
+    <table class="couponadmin-table">
+      <thead>
+        <tr>
+          <th>Offer Id</th>
+          <th>Offer Code</th>
+
+          <th>Product</th>
+          <th>Discount Value</th>
+          <th>Valid Until</th>
+          <th>Status</th>
+          <th>View Details</th>
+          <th>Block/Unblock</th>
+        </tr>
+      </thead>
+    <% if(offer.length<=0){ %>
+        <tbody>
+            
+                <td>no offers found</td>
+            
+        </tbody>
+        <%} else{ %>
+      <% for(let i= offer.length-1;i>=0;i--){ %>
+      <tbody>
+        <td><%= offer[i]._id %></td>
+        <td><%= offer[i].offerCode %></td>
+        <td><%= offer[i].product ? offer[i].product.name : 'No Product' %></td>
+
+        <td><%= offer[i].discountValue %></td>
+
+        <td><%= new Date(offer[i].endDate).toLocaleDateString() %></td>
+        <% if(offer[i].isActive ===true){ %>
+        <td style="color: rgb(0 183 0)">Active</td>
+        <% }else{ %>
+        <td style="color: rgb(255, 0, 0)">In Active</td>
+        <% } %>
+        <td>
+          <button
+            class="couponadmin-action-btn"
+            style="background-color: black"
+            onclick="window.location.href='/admin/offerDetails?id=<%=offer[i]._id %>'"
+          >
+            ViewDetails
+          </button>
+        </td>
+        <td>
+          <% if (offer[i].isActive ===true) { %>
+          <button
+            class="couponadmin-action-btn"
+            onclick="window.location.href='/admin/blockOffer?id=<%=offer[i]._id %>'"
+          >
+            Block
+          </button>
+          <% } else { %>
+          <button
+            class="couponadmin-action-btn"
+            onclick="window.location.href='/admin/UnblockOffer?id=<%=offer[i]._id %>'"
+          >
+            Unblock
+          </button>
+          <% } %>
+        </td>
+      </tbody>
+      <% } %>
+    </table>
+  </div>
+  <% } %>
+</div>
+<div class="pagination-container">
+  <% if (currentPage > 1) { %>
+  <a href="?page=<%= currentPage - 1 %>">&laquo; Previous</a>
+  <% } %> <% for (let i = 1; i <= totalPages; i++) { %> <% if (i ===
+  currentPage) { %>
+  <span class="current-page"><%= i %></span>
+  <% } else { %>
+  <a href="?page=<%= i %>"><%= i %></a>
+  <% } %> <% } %> <% if (currentPage < totalPages) { %>
+  <a href="?page=<%= currentPage + 1 %>">Next &raquo;</a>
+  <% } %>
+</div>
+
+<%- include('../partials/admin/footer') %>

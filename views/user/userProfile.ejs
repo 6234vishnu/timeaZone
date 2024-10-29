@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Profile Page</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+    />
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f4f4;
+      }
+      .container {
+        margin-top: 20px;
+      }
+      .profile-header {
+        text-align: center;
+        margin-bottom: 20px;
+        color: #070707;
+      }
+      .sidebar {
+        background-color: #fff;
+        padding: 20px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        border-radius: 5px;
+      }
+      .sidebar ul {
+        list-style: none;
+        padding: 0;
+      }
+      .sidebar ul li {
+        margin-bottom: 10px;
+      }
+      .sidebar ul li a {
+        text-decoration: none;
+        color: #000000;
+        font-weight: bold;
+      }
+      .sidebar ul li a:hover {
+        color: #ff1500;
+      }
+      .profile-content {
+        background-color: #fff;
+        padding: 20px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        border-radius: 5px;
+      }
+      .profile-picture {
+        width: 100%;
+        max-width: 200px;
+        margin: 0 auto 20px auto;
+        display: block;
+      }
+      .profile-picture img {
+        width: 100%;
+        border-radius: 50%;
+        border: 5px solid #ddd;
+      }
+      .form-group label {
+        font-weight: bold;
+      }
+      .btn-edit-password {
+        display: block;
+        width: 100%;
+        max-width: 200px;
+        margin: 20px auto;
+        background-color: #000000;
+        color: #fff;
+        border: none;
+      }
+      .btn-edit-profile {
+        display: block;
+        width: 100%;
+        max-width: 200px;
+        margin: 20px auto;
+        background-color: #ff0000;
+        color: #fff;
+        border: none;
+      }
+      @media (max-width: 768px) {
+        .row {
+          flex-direction: column;
+        }
+        .sidebar,
+        .profile-content {
+          margin-bottom: 20px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    
+         <!-- Breadcrumb Section Begin -->
+         <section class="breadcrumb-option">
+          <div class="container">
+              <div class="row">
+                  <div class="col-lg-12">
+                      <div class="breadcrumb__text">
+                          <h1  class="profile-header">User Profile</h4>
+                          <div class="breadcrumb__links">
+                              <a href="/">Home ></a>
+                              <span>User Profile</span>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </section>
+      <!-- Breadcrumb Section End -->
+    <div class="container" action="/userProfile" method="post">
+      <h1></h1>
+      <div class="row">
+        <!-- Sidebar -->
+        <div class="col-md-3 sidebar">
+          <ul>
+            <li><a href="/userProfile"> Profile</a></li>
+            <li><a href="/editProfile">Add New address</a></li>
+            <li><a href="/savedAdresses">All Saved address</a></li>
+            <li><a href="/myorders">My Orders</a></li>
+            <li><a href="/cartPage">Cart</a></li>
+            <li><a href="/wishlist">Wishlist</a></li>
+            <li><a href="/wallet">My wallet</a></li>
+            <li><a href="#">Coupons</a></li>
+          </ul>
+          <button class="btn btn-dark mt-4 w-100" method="post" onclick="window.location.href='/logout'">
+            Logout
+          </button>
+        </div>
+
+
+        <!-- Profile Content -->
+        <div class="col-md-9 profile-content">
+          <div class="text-center">
+            <div class="profile-picture">
+              <img src="images\userProfilePicture.png" alt="Profile Picture" />
+            </div>
+          </div>
+
+          <h3 class="text-center">WELCOME</h3>
+
+          
+          <form action="/userProfile" method="post" class="needs-validation" novalidate>
+            <div class="form-row">
+              <div class="form-group col-md-6">
+                <label for="firstName">User Name</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="firstName"
+                  placeholder="<%= user.name %>"
+                  name="name"
+                  required
+                />
+                <div class="invalid-feedback">Please enter a valid name.</div>
+              </div>
+              <div class="form-group col-md-6">
+                <label for="phoneNumber">Phone Number</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="phoneNumber"
+                  placeholder="<%= user.phoneNumber %>"
+                  name="phoneNumber"
+                  pattern="^[0-9]{10}$"
+                  required
+                />
+                <div class="invalid-feedback">
+                  Please enter a valid 10-digit phone number.
+                </div>
+              </div>
+            </div>
+          
+            <div class="form-row">
+              <div class="form-group col-md-6">
+                <label for="emailAddress">Email</label>
+                <input
+                  type="email"
+                  class="form-control"
+                  id="emailAddress"
+                  placeholder="<%= user.email %>"
+                  name="email"
+                  required
+                />
+                <div class="invalid-feedback">Please enter a valid email address.</div>
+              </div>
+            </div>
+          
+            <button type="submit" class="btn btn-primary" style="margin-left: 295px;">
+              Update Profile
+            </button>
+          </form>
+          
+        </div>
+      </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+      (function() {
+  'use strict';
+  window.addEventListener('load', function() {
+   
+    var forms = document.getElementsByClassName('needs-validation');
+    
+    var validation = Array.prototype.filter.call(forms, function(form) {
+      form.addEventListener('submit', function(event) {
+        if (form.checkValidity() === false) {
+          event.preventDefault();
+          event.stopPropagation();
+        }
+        form.classList.add('was-validated');
+      }, false);
+    });
+  }, false);
+})();
+
+    </script>
+  </body>
+</html>

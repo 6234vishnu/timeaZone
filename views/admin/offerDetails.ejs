@@ -1,0 +1,218 @@
+<%- include('../partials/admin/header') %>
+<style>
+    /* General Styles */
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #000000;
+    color: #333;
+    margin: 0;
+    padding: 0;
+}
+
+h1, h2 {
+    margin: 0;
+    padding: 0;
+}
+
+/* Container */
+.offerDetails-admin-container {
+    max-width: 940px;
+    margin: 25px auto;
+    padding: 20px;
+    margin-left: 424px;
+}
+
+/* Header Section */
+.offerDetails-admin-header {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.offerDetails-admin-header h1 {
+    font-size: 32px;
+    color: #ffffff;
+}
+
+/* Confirmation Message */
+.offerDetails-admin-confirmation-message {
+    background-color: #e7f3e6;
+    color: #28a745;
+    padding: 15px;
+    border: 1px solid #28a745;
+    border-radius: 5px;
+    text-align: center;
+    font-size: 18px;
+    margin-bottom: 30px;
+}
+
+/* Info Boxes */
+.offerDetails-admin-info-section {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+.offerDetails-admin-box {
+    width: 48%;
+    margin-bottom: 20px;
+    background-color: #fff;
+    padding: 15px;
+    border-radius: 5px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.offerDetails-admin-box h2 {
+    font-size: 22px;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.offerDetails-admin-box p {
+    margin: 5px 0;
+    font-size: 16px;
+}
+
+.offerDetails-admin-box span {
+    font-weight: bold;
+    color: #555;
+}
+
+/* Order Details Table */
+.offerDetails-admin-table-section {
+    margin-top: 30px;
+}
+
+.offerDetails-admin-table-section h2 {
+    font-size: 24px;
+    margin-bottom: 20px;
+    color: #2b2b2b;
+}
+
+.offerDetails-admin-table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: #fff;
+    border-radius: 5px;
+    overflow: hidden;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.offerDetails-admin-table th, .offerDetails-admin-table td {
+    padding: 10px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+.offerDetails-admin-table th {
+    background-color: #f7f7f7;
+    color: #333;
+}
+
+/* Action Buttons */
+.offerDetails-admin-action-buttons {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+.offerDetails-admin-cancel-button,
+.offerDetails-admin-support-button {
+    padding: 10px 20px;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.offerDetails-admin-cancel-button {
+    background-color: #fd0019; /* Red */
+    color: #fff;
+}
+
+.offerDetails-admin-support-button {
+    background-color: #007bff; /* Blue */
+    color: #fff;
+}
+
+.offerDetails-admin-cancel-button:hover,
+.offerDetails-admin-support-button:hover {
+    color: white;
+    background-color: rgb(0, 0, 0);
+}
+
+</style>
+
+<div class="offerDetails-admin-container">
+    <!-- Header Section -->
+    <div class="offerDetails-admin-header">
+        <h1>Offer Details</h1>
+    </div>
+
+    <!-- Order Info Section -->
+    <div class="offerDetails-admin-info-section">
+        <!-- Order Info -->
+        <div class="offerDetails-admin-box">
+            <% if(offer) { %>
+                <h2>offer Info</h2>
+                <p>offer Id: <span><%= offer._id %></span></p>
+                <p>Offer Name: <span><%= offer.offerName %></span></p>
+                <p>Offer Code: <span><%= offer.offerCode %></span></p>
+                <p>discountType: <span><%= offer.discountType %> </span></p>
+                <p>Discount Amount: <span><%= offer.discountValue %> $</span></p>
+                
+            <% } %>
+        </div>
+        
+        <!-- Billing Address -->
+        <div class="offerDetails-admin-box">
+            <h2>Status</h2>
+            <p>Created Date: <span> <%= new Date(offer.startDate).toLocaleDateString() %></span></p>
+           
+            <p>Expiring Date: <span> <%= new Date(offer.endDate).toLocaleDateString() %></span></p>
+            <% if(offer.isActive===true){ %>
+            <p>Offer Status: <span style="color: rgb(0 183 0);">Active</span></p>
+            <% }else{ %>
+                <p>Offer Status: <span style="color: red;">In Active</span></p>
+                <% } %>
+        
+        </div>
+    </div>
+
+    <!-- Order Details Section -->
+    <div class="offerDetails-admin-table-section">
+        <table class="offerDetails-admin-table">
+            <thead>
+                <tr>
+                    <th>Product</th>
+                 
+              
+                </tr>
+            </thead>
+            <tbody>
+              
+                    <tr>
+                       
+                        <td>Product: <%= offer.product ? offer.product.name : 'No product available' %></td>
+                       
+
+                     
+                    </tr>
+
+          
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Action Buttons -->
+    <div class="offerDetails-admin-action-buttons">
+        <button class="offerDetails-admin-cancel-button" id="offerpage" onclick="confirmCancelOrder()">Go back</button>
+    </div>
+</div>
+
+<script>
+    document.getElementById("offerpage").addEventListener("click", function() {
+        window.location.href = "/admin/offerPage";
+    });
+</script>
+
+<%- include('../partials/admin/footer') %>

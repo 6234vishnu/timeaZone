@@ -1,0 +1,108 @@
+.searchBar{
+    margin: 0;
+    padding-left: 50px;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+
+.couponadmin-containerfluid {
+ 
+    margin: 0 auto;
+    max-width: 1200px;
+    background-color: #f9f9f9;
+}
+
+.couponadmin-buttons {
+    margin-bottom: 20px;
+    text-align: right;
+}
+
+.couponadmin-create-btn {
+    background-color: #ffffff;
+    color: rgb(0, 0, 0);
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    border-radius: 5px;
+    margin-right: 56px;
+}
+
+.couponadmin-create-btn:hover {
+    background-color: #e3e3e3;
+    color: rgb(0, 0, 0);
+    border-color: white;
+}
+
+.couponadmin-tabl {
+    width: 100%;
+    margin-top: 20px;
+    border-collapse: collapse;
+}
+
+.couponadmin-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.couponadmin-table th, .couponadmin-table td {
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: center;
+}
+
+.couponadmin-table th {
+    background-color: #f0f0f0;
+    color: rgb(0, 0, 0);
+    font-weight: bold;
+}
+
+.couponadmin-table td {
+    background-color: #fff;
+}
+
+.couponadmin-action-btns {
+    display: flex;
+    justify-content: center;
+}
+
+.couponadmin-edit-btn, .couponadmin-action-btn {
+    background-color: #ff0000;
+    color: white;
+    padding: 11px 10px;
+    margin: 0 5px;
+    border: none;
+    cursor: pointer;
+    border-radius: 3px;
+}
+
+.couponadmin-edit-btn:hover, .couponadmin-action-btn:hover {
+    background-color: #000000;
+}
+
+.couponadmin-pagination-container {
+    margin-top: 20px;
+    text-align: center;
+}
+
+.couponadmin-pagination-container a {
+    padding: 10px 15px;
+    background-color: #000000;
+    color: rgb(49, 70, 253);
+    margin: 0 5px;
+    text-decoration: none;
+    border-radius: 3px;
+}
+
+.couponadmin-pagination-container a:hover {
+    background-color: #ff0000;
+}
+
+.couponadmin-current-page {
+    padding: 10px 15px;
+    background-color: #000000;
+    color: white;
+    margin: 0 5px;
+    border-radius: 3px;
+}

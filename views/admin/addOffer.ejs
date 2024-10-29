@@ -1,0 +1,26 @@
+<%- include('../partials/admin/header') %>
+<div class="container">
+    <h1>Add New Offer</h1>
+    <form class="one">
+        <label for="offerId">Offer ID</label>
+        <input type="text" id="offerId" name="offerId" required>
+        
+        <label for="discount">Discount</label>
+        <input type="text" id="discount" name="discount" required>
+        
+        <label for="validTill">Valid till</label>
+        <input type="date" id="validTill" name="validTill" required>
+        
+        <label for="type">Type</label>
+        <input type="text" id="type" name="type" required>
+        
+        <label for="applicableProduct">Applicable Product</label>
+        <input type="text" id="applicableProduct" name="applicableProduct" required>
+        
+        <button type="submit" >Add Offer</button>
+    </form>
+</div>
+<script>
+    
+</script>
+<%- include('../partials/admin/footer') %>

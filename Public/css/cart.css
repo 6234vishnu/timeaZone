@@ -1,0 +1,235 @@
+/* General Styles */
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f9f9f9;
+}
+
+/* Container Styles */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+/* Cart Area Styles */
+.cart_area {
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+}
+
+/* Table Styles */
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+}
+
+.table th,
+.table td {
+  padding: 15px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+.table th {
+  background-color: #f2f2f2;
+  color: #333;
+}
+
+.table tbody tr:hover {
+  background-color: #f9f9f9;
+}
+
+/* Product Image Styles */
+.media img {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 7px;
+  margin-right: 10px;
+}
+
+/* Button Styles */
+.btn_1 {
+  background-color: #007bff;
+  color: #fff;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.btn_1:hover {
+  background-color: #0056b3;
+}
+
+.checkout_btn_1 {
+  background-color: #28a745;
+}
+
+.checkout_btn_1:hover {
+  background-color: #218838;
+}
+
+/* Quantity Control Styles */
+.product_count {
+  display: flex;
+  align-items: center;
+}
+
+.quantity-btn {
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  margin: 0 5px;
+}
+
+.quantity-input {
+  width: 50px;
+  text-align: center;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+}
+
+/* Summary Table Styles */
+.summary-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+.summary-table th,
+.summary-table td {
+  padding: 10px;
+  text-align: left;
+  border: 1px solid #ffffff;
+}
+
+.summary-table th {
+  background-color: #ffffff;
+}
+
+/* Remove Button Styles */
+.removeBtn {
+  background-color: #dc3545;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.removeBtn:hover {
+  background-color: #c82333;
+}
+
+/* Bottom Button Styles */
+.bottom_button {
+  text-align: right;
+  margin-top: 20px;
+}
+/* Heading Styles */
+ .cartHeading {
+  font-family: "Josefin Sans", sans-serif;
+  color: #000000;
+  margin-top: 0px;
+  font-style: normal;
+  font-weight: 650;
+  text-transform: normal;
+  padding: 50px;
+  text-align: center;
+}
+.removeBtn {
+ 
+  background-color: #ff0000;
+  color: rgb(255, 255, 255);
+  border: 1px solid #ccc;
+  padding: 10px 20px;
+  text-align: center;
+  cursor: pointer;
+  border-radius: 5px;
+  transition: background-color 0.3s, color 0.3s; 
+}
+
+.removeBtn:hover {
+  color: white;
+  background-color: rgb(0, 0, 0);
+}
+.product_count {
+  display: flex;
+  align-items: center;
+}
+
+.quantity-btn {
+  background-color: #000000;
+  border: 1px solid #ccc;
+  padding: 10px;
+  cursor: pointer;
+}
+
+.quantity-btn:hover {
+  background-color: #ddd;
+}
+
+#quantityInput {
+  width: 50px;
+  text-align: center;
+  border: 1px solid #000000;
+  padding: 5px;
+  
+}
+
+.totalamount{
+  color: black;
+  padding-left: 950px;
+  
+  padding-top: 30px;
+}
+/* Checkout Button Styles */
+.checkout {
+  background-color: #000000; /* Button background color */
+  color: #fff; /* Text color */
+  border: none; /* Remove border */
+  border-radius: 5px; /* Rounded corners */
+  padding: 12px 20px; /* Vertical and horizontal padding */
+  font-size: 16px; /* Font size */
+  font-weight: bold; /* Bold text */
+  cursor: pointer; /* Pointer cursor on hover */
+  transition: background-color 0.3s ease, transform 0.2s ease; /* Transition for effects */
+}
+
+/* Hover Effects */
+.checkout:hover {
+  background-color: #ff0000; /* Darker shade on hover */
+  transform: translateY(-2px); /* Slightly lift the button on hover */
+}
+
+/* Focus Effects */
+.checkout:focus {
+  outline: none; /* Remove default outline */
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.5); /* Add a glow effect on focus */
+}
+
+
+
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+  .table {
+      font-size: 14px;
+  }
+
+  .media img {
+      width: 60px;
+      height: 60px;
+  }
+}

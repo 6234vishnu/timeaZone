@@ -1,0 +1,84 @@
+body {
+    background-color: #363c49;
+    margin: 0;
+    padding-left: 250px; /* This should match the width of the sidebar */
+}
+
+.sidebar {
+    width: 250px;
+    background-color: #ffffff;
+    color: #000000;
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    padding: 25px;
+    z-index: 1000; /* Ensure the sidebar stays on top */
+}
+
+        .sidebar a {
+            color: #000000;
+            text-decoration: none;
+            display: block;
+            padding: 20px;
+            
+        }
+
+        .sidebar a:hover {
+            background-color: #495057;
+            color: #fff;
+        }
+
+        .sidebar .sidebar-title {
+            padding: 15px;
+            font-weight: bold;
+        }
+
+        .content {
+            flex-grow: 1;
+            padding: 20px;
+            background-color: #363c49;
+            color: #fff;
+        }
+
+        .toggle-btn {
+            background-color: #343a40;
+            color: #fff;
+            border: none;
+            padding: 10px;
+            cursor: pointer;
+            display: none;
+        }
+
+        .sidebar-collapsed {
+            width: 60px;
+        }
+
+        .sidebar-collapsed .sidebar-title,
+        .sidebar-collapsed a {
+            display: none;
+        }
+
+        header .logo {
+            width: 156px;
+            height: 60px;
+}
+
+header .highlight {
+    color: #ff0000;
+}
+
+        @media (max-width: 768px) {
+            .sidebar {
+                width: 60px;
+            }
+
+            .toggle-btn {
+                display: block;
+            }
+
+            .sidebar-collapsed {
+                width: 0;
+            }
+        }
+

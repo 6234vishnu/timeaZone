@@ -1,0 +1,226 @@
+<%- include('../partials/admin/header') %>
+<style>
+    /* General Styles */
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #000000;
+    color: #333;
+    margin: 0;
+    padding: 0;
+}
+
+h1, h2 {
+    margin: 0;
+    padding: 0;
+}
+
+/* Container */
+.order-details-admin-container {
+    max-width: 940px;
+    margin: 25px auto;
+    padding: 20px;
+    margin-left: 424px;
+}
+
+/* Header Section */
+.order-details-admin-header {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.order-details-admin-header h1 {
+    font-size: 32px;
+    color: #ffffff;
+}
+
+/* Confirmation Message */
+.order-details-admin-confirmation-message {
+    background-color: #e7f3e6;
+    color: #28a745;
+    padding: 15px;
+    border: 1px solid #28a745;
+    border-radius: 5px;
+    text-align: center;
+    font-size: 18px;
+    margin-bottom: 30px;
+}
+
+/* Info Boxes */
+.order-details-admin-info-section {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+.order-details-admin-box {
+    width: 48%;
+    margin-bottom: 20px;
+    background-color: #fff;
+    padding: 15px;
+    border-radius: 5px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.order-details-admin-box h2 {
+    font-size: 22px;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.order-details-admin-box p {
+    margin: 5px 0;
+    font-size: 16px;
+}
+
+.order-details-admin-box span {
+    font-weight: bold;
+    color: #555;
+}
+
+/* Order Details Table */
+.order-details-admin-table-section {
+    margin-top: 30px;
+}
+
+.order-details-admin-table-section h2 {
+    font-size: 24px;
+    margin-bottom: 20px;
+    color: #2b2b2b;
+}
+
+.order-details-admin-table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: #fff;
+    border-radius: 5px;
+    overflow: hidden;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.order-details-admin-table th, .order-details-admin-table td {
+    padding: 10px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+.order-details-admin-table th {
+    background-color: #f7f7f7;
+    color: #333;
+}
+
+/* Action Buttons */
+.order-details-admin-action-buttons {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+.order-details-admin-cancel-button,
+.order-details-admin-support-button {
+    padding: 10px 20px;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.order-details-admin-cancel-button {
+    background-color: #fd0019; /* Red */
+    color: #fff;
+}
+
+.order-details-admin-support-button {
+    background-color: #007bff; /* Blue */
+    color: #fff;
+}
+
+.order-details-admin-cancel-button:hover,
+.order-details-admin-support-button:hover {
+    color: white;
+    background-color: rgb(0, 0, 0);
+}
+
+</style>
+
+<div class="order-details-admin-container">
+    <!-- Header Section -->
+    <div class="order-details-admin-header">
+        <h1>Order Details</h1>
+    </div>
+
+    <!-- Order Confirmation Message -->
+
+
+    <!-- Order Info Section -->
+    <div class="order-details-admin-info-section">
+        <!-- Order Info -->
+        <div class="order-details-admin-box">
+            <% if(order) { %>
+                <h2>Order Info</h2>
+                <p>Order Id: <span><%= order._id %></span></p>
+                <p>Date: <span><%= order.createdAt %></span></p>
+                <p>Total: <span><%= order.totalAmount %> $</span></p>
+                <p>Payment Method: <span><%= order.paymentMethod %></span></p>
+                <p>Payment status: <span><%= order.paymentStatus %></span></p>
+                <p>Applied Coupon Code: <span><%= order.couponCode ? order.couponCode : "No coupons applied" %></span></p>
+
+            <% } %>
+        </div>
+        
+        <!-- Billing Address -->
+        <div class="order-details-admin-box">
+            <h2>Billing Address</h2>
+            <p>Street: <span><%= address.adress.district %></span></p>
+            <p>City: <span><%= address.adress.city %></span></p>
+            <p>Country: <span><%= address.adress.state %></span></p>
+            <p>Postcode: <span><%= address.adress.pincode %></span></p>
+        </div>
+    </div>
+
+    <!-- Order Details Section -->
+    <div class="order-details-admin-table-section">
+ 
+        <table class="order-details-admin-table">
+            <thead>
+                <tr>
+                    <th>Product</th>
+                    <th>Quantity</th>
+                    
+                    <th colspan="2">Delivery charge</th>
+                    
+                </tr>
+            </thead>
+            <tbody>
+                <% order.products.forEach(item => { %>
+                    <tr>
+                        <td><%= item.product.name %></td>
+                        <td><%= item.quantity %></td>
+                        <td>10 $</td>
+                       
+                      
+                    </tr>
+                    <tr>
+                        <th ><strong>Subtotal</strong></th>
+                        <td style="color: red;"><strong><%=  order.totalAmount %> $</strong></td>
+                        
+                       
+                    </tr>
+                <% }) %>
+               
+               
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Action Buttons -->
+    <div class="order-details-admin-action-buttons">
+        <button class="order-details-admin-cancel-button" id="orderpage" onclick="confirmCancelOrder()">Go back</button>
+    
+    </div>
+</div>
+<script>
+    document.getElementById("orderpage").addEventListener("click", function() {
+        window.location.href = "/admin/order";
+    });
+</script>
+<%- include('../partials/admin/footer') %>

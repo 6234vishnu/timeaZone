@@ -1,0 +1,44 @@
+body {
+    background-color: #f8f9fa;
+    padding: 20px;
+ 
+}
+
+
+.user-table {
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    overflow-x: auto;
+
+}
+
+
+
+.table-responsive {
+    padding: 15px;
+}
+
+.search-bar {
+    max-width: 400px;
+    margin-bottom: 15px;
+
+}
+
+.table th, .table td {
+    vertical-align: middle;
+    color: black;
+  
+}
+.table th :hover{
+    background-color: #363c49;
+  
+
+}
+
+.btn-block, .btn-unblock {
+    min-width: 100px;
+}
+.a{
+    color: #ffffff;
+}

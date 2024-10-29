@@ -1,0 +1,198 @@
+.productTable {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+    color: #000;
+    background-color: white;
+}
+
+.productTable th, .productTable td {
+    padding: 12px 20px;
+    border-bottom: 1px solid #ddd;
+    text-align: left;
+}
+
+.productTable th {
+    background-color: #f0f0f0;
+    color: #333;
+    font-weight: 600;
+}
+
+.productTable td {
+    background-color: #fafafa;
+    margin-top: 17px;
+}
+
+.product-search-bar {
+    display: flex;
+    justify-content:center;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.product-search-bar input {
+    width: 70%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    outline: none;
+    transition: all 0.3s ease;
+}
+
+.product-search-bar input:focus {
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.product-buttons {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 20px;
+}
+
+.product-buttons button {
+    background-color: #f5f5f5;
+    border: 2px solid #333;
+    color: #333;
+    padding: 10px 20px;
+    margin-left: 10px;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+}
+
+.product-buttons button:hover {
+    background-color: #333;
+    color: #fff;
+}
+
+.product-buttons button::before {
+    content: '+';
+    margin-right: 8px;
+    display: inline-block;
+    font-weight: bold;
+}
+
+.product-buttons button.product-update-btn::before {
+    content: '';
+}
+
+.product-action-btns {
+    display: flex;
+    justify-content: space-between;
+}
+
+.product-action-btns button {
+    padding: 8px 16px;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.product-edit-btn {
+    background-color: #e00b0b;
+    color: #fff;
+    margin-right: 10px;
+}
+
+.product-edit-btn:hover {
+    background-color: #ce0000;
+}
+
+.product-block-btn {
+    background-color: #f4210a;
+    color: #fff;
+}
+
+.product-block-btn:hover {
+    background-color: #000000;
+}
+.pagination-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 20px 0;
+    font-family: Arial, sans-serif;
+  }
+  
+  .pagination-container a,
+  .pagination-container span {
+    color: #007bff;
+    padding: 8px 16px;
+    margin: 0 4px;
+    text-decoration: none;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+  
+  .pagination-container a:hover {
+    background-color: #007bff;
+    color: #fff;
+    border-color: #007bff;
+  }
+  
+  .pagination-container .current-page {
+    background-color: #007bff;
+    color: #fff;
+    border-color: #007bff;
+    pointer-events: none;
+  }
+  
+  .pagination-container a:focus,
+  .pagination-container a:active {
+    background-color: #0056b3;
+    color: #fff;
+    border-color: #0056b3;
+  }
+  
+  .pagination-container a:first-child,
+  .pagination-container a:last-child {
+    font-weight: bold;
+  }
+  
+  .dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    padding: 12px 16px;
+    z-index: 1;
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+.dropdown-content label {
+    display: block;
+}
+
+@media screen and (max-width: 768px) {
+    .productTable th, .productTable td {
+        padding: 10px;
+        font-size: 14px;
+    }
+
+    .product-buttons button {
+        padding: 8px 15px;
+        font-size: 14px;
+    }
+
+    .product-search-bar input {
+        width: 60%;
+    }
+    .pagination-container a,
+    .pagination-container span {
+      padding: 6px 12px;
+      margin: 0 2px;
+    }
+}

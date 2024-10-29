@@ -1,0 +1,283 @@
+
+<%- include("../../Views/partials/user/header") %>
+
+  <!-- CSS here -->
+  <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+  <link rel="stylesheet" href="assets/css/owl.carousel.min.css">
+  <link rel="stylesheet" href="assets/css/flaticon.css">
+  <link rel="stylesheet" href="assets/css/slicknav.css">
+  <link rel="stylesheet" href="assets/css/animate.min.css">
+  <link rel="stylesheet" href="assets/css/magnific-popup.css">
+  <link rel="stylesheet" href="assets/css/fontawesome-all.min.css">
+  <link rel="stylesheet" href="assets/css/themify-icons.css">
+  <link rel="stylesheet" href="assets/css/slick.css">
+  <link rel="stylesheet" href="assets/css/nice-select.css">
+  <link rel="stylesheet" href="assets/css/style.css">
+
+
+
+
+  
+
+  <!--================Cart Area =================-->
+ 
+    <div class="container">
+
+
+      <div>
+        <h3 class="cartHeading">Cart</h3>
+      </div>
+      <form action="/checkOut" method="POST">
+        <div class="container">
+          <div class="cart_inner">
+            <div class="table-responsive">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th scope="col">Product</th>
+                    <th scope="col">Status</th>
+                    <th scope="col">Price</th>
+                    <th scope="col">Quantity</th>
+                    <th scope="col">Total</th>
+                    <th scope="col">Remove Items</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <% if (cart && cart.items && cart.items.length === 0) { %>
+                    <tr>
+                      <td colspan="6" style="text-align: center;">Your cart is empty.</td>
+                    </tr>
+                    <% } else if (cart && cart.items) { %>
+                    <% cart.items.forEach(function(item, index) { %>
+                      <tr>
+                        <td>
+                          <div class="media">
+                            <div class="d-flex">
+                              <% if (item.product && Array.isArray(item.product.productImage) && item.product.productImage.length > 0) { %>
+                                <a href="/productPage?id=<%= item.product._id %>">
+                                  <img style="border-radius: 7px;" src="/re-image/<%= item.product.productImage[0] %>" alt="<%= item.product.name %>" />
+                                </a>
+                              <% } else { %>
+                                <p>Product image not available</p>
+                              <% } %>
+                            </div>
+                            <div class="media-body">
+                              <% if (item.product) { %>
+                                <a href="/productPage?id=<%= item.product._id %>">
+                                  <p><%= item.product.name %></p>
+                                </a>
+                              <% } else { %>
+                                <p>Product not available</p>
+                              <% } %>
+                            </div>
+                          </div>
+                        </td>
+                        <td>
+                          <% if (item.product && item.product.quantity <= 0) { %>
+                            <h5 style="color: rgb(255, 0, 0);">Out of stock</h5>
+                          <% } else { %>
+                            <h5 style="color: rgb(0, 214, 0);"><%= item.product.status %></h5>
+                          <% } %>
+                        </td>
+                        <td>
+                          <h5>$<%= item.price.toFixed(2) %></h5>
+                        </td>
+                        <td>
+                          <div class="product_count">
+                            <% if (item.product) { %>
+                              <input type="hidden" name="items[<%= index %>][productId]" value="<%= item.product._id %>">
+                              <input type="hidden" name="items[<%= index %>][price]" value="<%= item.price %>">
+                              <button type="button" class="quantity-btn decrease-btn" data-index="<%= index %>" data-id="<%= item.product._id %>">-</button>
+                              <input type="text" class="quantity-input" id="quantityInput-<%= index %>" name="items[<%= index %>][quantity]" value="<%= item.quantity %>" readonly>
+                              <button type="button" class="quantity-btn increase-btn" data-index="<%= index %>" data-id="<%= item.product._id %>">+</button>
+                            <% } else { %>
+                              <p>Product details are unavailable.</p>
+                            <% } %>
+                          </div>
+                        </td>
+                        <td>
+                          <h5>$<%= (item.price * item.quantity).toFixed(2) %></h5>
+                        </td>
+                        <td>
+                          <button type="button" class="removeBtn" data-id="<%= item._id %>">Remove</button>
+                        </td>
+                      </tr>
+                    <% }); %>
+                  <% } %>
+                </tbody>
+              </table>
+              
+              <!-- Add More to Cart Button -->
+              <div class="bottom_button">
+                <a class="checkout" href="/shop">Add More To Cart</a>
+              </div>
+      
+              <!-- Subtotal Section -->
+              <div class="totalamount">
+                <h4 name="subTotal"><strong>Sub-total</strong></h4>
+                <h5 style="color: red;"><strong>$<%= cart.totalAmount.toFixed(2) %></strong></h5>
+              </div>
+      
+              <!-- Proceed to Checkout Button -->
+               <% if (cart.items.length === 0) {%>
+              <div class="checkout_btn_inner float-right">
+                <button type="submit" style="background-color: rgb(148, 148, 148);" disabled class="checkout"> Proceed to checkout</button>
+              </div>
+              <% }else{ %>
+                <div class="checkout_btn_inner float-right">
+                  <button type="submit"  class="checkout"> Proceed to checkout</button>
+                </div>
+              <% } %>
+            </div>
+          </div>
+        </div>
+      </form>
+      
+      
+      
+    </div>
+
+
+ 
+  
+  
+  
+  <!--================End Cart Area =================-->
+
+
+
+
+
+<script>
+
+document.addEventListener('DOMContentLoaded', function () {
+  document.addEventListener('click', function (event) {
+    if (event.target.matches('.quantity-btn')) {
+      const button = event.target;
+      const index = button.getAttribute('data-index');
+      const itemId = button.getAttribute('data-id');
+      const maxQuantity = 10;
+      const quantityInput = document.querySelector(`#quantityInput-${index}`);
+      let quantity = parseInt(quantityInput.value);
+
+      if (button.classList.contains('increase-btn')) {
+        if (quantity < maxQuantity) {
+          quantity++;
+          quantityInput.value = quantity;
+          updateQuantity(itemId, quantity);
+        } else {
+          alert('Maximum stock reached!');
+        }
+      }
+
+      if (button.classList.contains('decrease-btn')) {
+        if (quantity > 1) {
+          quantity--;
+          quantityInput.value = quantity;
+          updateQuantity(itemId, quantity);
+        }
+      }
+    }
+  });
+
+  function updateQuantity(itemId, newQuantity) {
+  const buttons = document.querySelectorAll(`.quantity-btn[data-id="${itemId}"]`);
+  buttons.forEach(button => button.disabled = true); // Disable all buttons for this item
+
+  fetch(`/updateCart`, {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      itemId: itemId,
+      quantity: newQuantity,
+    }),
+  })
+    .then(response => response.json())
+    .then(data => {
+      if (data.success) {
+        console.log('Cart updated successfully');
+        
+        // Update the subtotal by finding the h5 element containing it
+        const subtotalElement = document.querySelector('.totalamount h5 strong');
+        if (subtotalElement) {
+          subtotalElement.textContent = `$${data.subtotal.toFixed(2)}`;
+        }
+
+        // Optionally reload the page or dynamically update other elements
+        // window.location.href = ""; 
+      } else {
+        alert(data.message);
+        window.location.reload();
+      }
+    })
+    .catch(error => {
+      console.error('Error updating cart:', error);
+    })
+    .finally(() => {
+      buttons.forEach(button => button.disabled = false); // Re-enable buttons
+    });
+}
+
+
+
+});
+
+
+
+
+//roemovebutton
+  document.querySelectorAll('.removeBtn').forEach(function (removeButton) {
+    removeButton.addEventListener('click', function () {
+      const itemId = removeButton.getAttribute('data-id');
+      window.location.href = `/removeCart/${itemId}`;
+    });
+  });
+
+
+
+
+
+</script>
+
+
+
+<!-- JS here -->
+
+<script src="./assets/js/vendor/modernizr-3.5.0.min.js"></script>
+<!-- Jquery, Popper, Bootstrap -->
+<script src="./assets/js/vendor/jquery-1.12.4.min.js"></script>
+<script src="./assets/js/popper.min.js"></script>
+<script src="./assets/js/bootstrap.min.js"></script>
+<!-- Jquery Mobile Menu -->
+<script src="./assets/js/jquery.slicknav.min.js"></script>
+
+<!-- Jquery Slick , Owl-Carousel Plugins -->
+<script src="./assets/js/owl.carousel.min.js"></script>
+<script src="./assets/js/slick.min.js"></script>
+
+<!-- One Page, Animated-HeadLin -->
+<script src="./assets/js/wow.min.js"></script>
+<script src="./assets/js/animated.headline.js"></script>
+
+<!-- Scrollup, nice-select, sticky -->
+<script src="./assets/js/jquery.scrollUp.min.js"></script>
+<script src="./assets/js/jquery.nice-select.min.js"></script>
+<script src="./assets/js/jquery.sticky.js"></script>
+<script src="./assets/js/jquery.magnific-popup.js"></script>
+
+<!-- contact js -->
+<script src="./assets/js/contact.js"></script>
+<script src="./assets/js/jquery.form.js"></script>
+<script src="./assets/js/jquery.validate.min.js"></script>
+<script src="./assets/js/mail-script.js"></script>
+<script src="./assets/js/jquery.ajaxchimp.min.js"></script>
+
+<!-- Jquery Plugins, main Jquery -->	
+<script src="./assets/js/plugins.js"></script>
+<script src="./assets/js/main.js"></script>
+
+
+
+<%- include("../../Views/partials/user/footer") %>

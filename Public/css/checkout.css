@@ -1,0 +1,190 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Roboto', sans-serif;
+    background-color: #f9f9f9;
+    color: #333;
+}
+
+.checkout-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.checkout-title {
+    text-align: center;
+    font-size: 2rem;
+    margin-bottom: 30px;
+}
+
+.checkout-form-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.checkout-form-section, .checkout-summary-section {
+    flex: 1;
+    min-width: 300px;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    margin-bottom: 30px;
+}
+
+.checkout-subtitle {
+    font-size: 1.5rem;
+    margin-bottom: 20px;
+}
+
+.checkout-form-group {
+    display: flex;
+    justify-content: space-between;
+    gap: 15px;
+    margin-bottom: 15px;
+}
+
+.checkout-input {
+    flex: 1;
+    padding: 12px 15px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 1rem;
+}
+
+.checkout-btn {
+    padding: 12px 20px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    font-size: 1rem;
+}
+
+.checkout-btn:hover {
+    background-color: #0056b3;
+}
+
+.checkout-remember {
+    margin-left: 10px;
+    font-size: 0.9rem;
+}
+
+.checkout-checkbox {
+    margin-right: 10px;
+}
+
+.checkout-summary-section {
+    max-width: 350px;
+}
+
+.checkout-order-list {
+    margin-bottom: 30px;
+}
+
+.checkout-order-list p {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 0;
+    border-bottom: 1px solid #ddd;
+}
+
+.checkout-payment-options {
+    margin-bottom: 30px;
+}
+
+.checkout-payment-title {
+    font-size: 1.2rem;
+    margin-bottom: 15px;
+}
+
+.checkout-radio {
+    margin-right: 10px;
+}
+
+.checkout-textarea {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    margin-top: 10px;
+}
+
+.checkout-shipping-options {
+    margin-bottom: 30px;
+}
+
+.couponcode-container {
+    margin: 20px; /* Space around the container */
+    padding: 15px; /* Space inside the container */
+    border: 1px solid #ccc; /* Light gray border */
+    border-radius: 8px; /* Rounded corners */
+    background-color: #f9f9f9; /* Light background color */
+}
+
+/* Style for the coupon code display */
+.couponcode-display {
+    font-size: 1.2em; /* Slightly larger font size */
+    color: #ff0000; /* Dark gray text color */
+    padding: 10px; /* Space inside the table cell */
+}
+
+/* Style for the search input */
+.couponcode-input {
+    padding: 10px; /* Padding inside the input */
+    border: 1px solid #ccc; /* Border for the input */
+    border-radius: 4px; /* Rounded corners for the input */
+    width: 200px; /* Fixed width for the input */
+    margin-right: 10px; /* Space between input and button */
+}
+
+/* Style for the search button */
+.couponcode-button {
+    padding: 10px 15px; /* Padding for the button */
+    background-color: #000000; /* Bootstrap blue color */
+    color: #fff; /* White text color */
+    border: none; /* No border */
+    border-radius: 4px; /* Rounded corners */
+    cursor: pointer; /* Pointer cursor on hover */
+    transition: background-color 0.3s; /* Transition effect for hover */
+}
+
+/* Change button background color on hover */
+.couponcode-button:hover {
+    background-color: #0056b3; /* Darker blue on hover */
+}
+
+.couponcode-apply-btn{
+    background-color: #000000;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    margin-top: 15px;
+
+}
+.couponcode-apply-btn:hover{
+    background-color: red;
+}
+
+@media (max-width: 768px) {
+    .checkout-form-wrapper {
+        flex-direction: column;
+    }
+
+    .checkout-summary-section {
+        max-width: 100%;
+        margin-top: 20px;
+    }
+}
+

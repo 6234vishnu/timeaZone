@@ -1,0 +1,478 @@
+/* General Reset and Styling */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f8f8f8;
+    color: #333;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+.userpr-header {
+    background-color: #f44336;
+    padding: 20px;
+    text-align: center;
+    color: white;
+}
+
+.userpr-navbar {
+    display: flex;
+    justify-content: center;
+}
+
+.userpr-nav-list {
+    list-style: none;
+    display: flex;
+    gap: 20px;
+}
+
+.userpr-nav-link {
+    font-size: 16px;
+    color: white;
+}
+
+
+
+.userpr-main {
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+    max-width: 1200px;
+    margin: 0 auto;
+    justify-content: center; 
+     align-items: center;
+}
+/* .userpr-product-images{
+    display: contents;
+} */
+
+/* .userpr-product-images {
+    flex: 1;
+} */
+
+.userpr-product-main-image img {
+    width: 100%;
+    border-radius: 5px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.userpr-product-thumbnails {
+    display: flex;
+    gap: 10px;
+    margin-top: 15px;
+}
+
+.userpr-product-thumbnails img {
+    width: 80px;
+    height: 80px;
+    cursor: pointer;
+    border-radius: 5px;
+    border: 2px solid transparent;
+}
+
+.userpr-product-thumbnails img:hover {
+    border-color: #f44336;
+}
+
+.userpr-product-details {
+    flex: 1.5;
+    padding: 20px;
+    background-color:#d9d9d9;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    margin-top: 30px;
+}
+
+.userpr-product-title {
+    margin-top: 38px;
+    font-size: 24px;
+    margin-bottom: 10px;
+    color: #f44336;
+}
+
+.userpr-product-description {
+    font-size: 16px;
+    margin-bottom: 20px;
+    line-height: 1.6;
+}
+
+.userpr-product-pricing {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.userpr-product-price {
+    font-size: 30px;
+    font-weight: bold;
+    color: #000000;
+}
+
+.userpr-product-discount {
+    font-size: 20px;
+    color: #f44336;
+    font-weight: bold;
+}
+
+.userpr-product-color-options {
+    margin-bottom: 20px;
+}
+
+.userpr-color-option {
+    padding: 10px 20px;
+    margin-right: 10px;
+    border: 2px solid #ddd;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: border-color 0.3s ease;
+}
+
+.userpr-color-option:hover {
+    border-color: #f44336;
+}
+
+.userpr-product-stock {
+    margin-bottom: 20px;
+    font-size: 16px;
+    color: #4CAF50;
+    font-weight: bold;
+}
+
+.userpr-product-quantity {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.userpr-label {
+    margin-right: 10px;
+}
+
+.userpr-quantity-input {
+    width: 60px;
+    padding: 5px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+.userpr-product-buttons {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.userpr-add-to-wishlist,
+.userpr-add-to-cart,
+.userpr-buy-now {
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.userpr-add-to-wishlist {
+    background-color: #000000;
+    color: white;
+}
+
+.userpr-add-to-wishlist:hover {
+    background-color: #ff0000;
+}
+
+.userpr-add-to-cart {
+    background-color: #000000;
+    color: white;
+}
+
+.userpr-add-to-cart:hover {
+    background-color: #ff0000;
+}
+
+.userpr-buy-now {
+    background-color: #ff0000;
+    color: white;
+}
+
+.userpr-buy-now:hover {
+    background-color: #388E3C;
+}
+
+.userpr-product-coupons {
+    margin-bottom: 20px;
+    font-size: 14px;
+    color: #555;
+    line-height: 1.6;
+}
+
+.userpr-product-delivery {
+    font-size: 14px;
+    color: #555;
+    line-height: 1.6;
+}
+
+.userpr-ratings-reviews {
+    background-color: #d9d9d9;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    margin-bottom: 40px;
+    margin-top: 50px;
+}
+
+.userpr-ratings-reviews h2 {
+    margin-bottom: 20px;
+    color: #f44336;
+}
+
+.userpr-add-review {
+    padding: 10px 20px;
+    background-color: #f44336;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    transition: background-color 0.3s ease;
+}
+
+.userpr-add-review:hover {
+    background-color: #d32f2f;
+}
+
+.userpr-review {
+    margin-bottom: 20px;
+}
+
+.userpr-review-author {
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.userpr-review-content {
+    font-size: 14px;
+    line-height: 1.6;
+    color: #555;
+}
+
+.userpr-footer {
+    background-color: #323232;
+    color: white;
+    padding: 20px;
+    text-align: center;
+}
+
+
+.userprproductimages{
+    display: contents;
+
+}
+
+
+
+.userpr-submit-button{
+    background-color: #000000;
+    margin-bottom: 4px;
+    border-radius: 5px
+
+}
+.SimilarItem{
+    text-align: center;
+    padding: 40px;
+    font-weight: bold;
+} */ */
+
+.relatedProducts{
+   display: flex;
+    justify-content: center;
+    /* width: 1110px;
+    height: 229px; */
+    cursor: pointer;
+    border-radius: 5px;
+    border: 2px solid transparent;
+}
+
+
+.relprds{
+    display: contents;
+}
+
+/*image zoom */
+
+.userprproductimages {
+    position: relative;
+    display: inline-block;
+}
+
+#mainImage {
+    width: 366px;
+    height: 440px;
+    border-radius: 13px;
+}
+
+
+.zoom-result {
+    border: 1px solid #d4d4d4;
+    position: absolute;
+    top: 0;
+    left: 100%;
+    width: 200px;
+    height: 200px;
+    overflow: hidden;
+    background: #fff;
+    z-index: 100;
+    display: none; 
+    transition: all 0.3s ease;
+}
+
+
+.zoom-result img {
+    position:absolute;
+    width: 150%;
+    height: auto;
+}
+
+
+.zoom-lens {
+    position: absolute;
+    border: 1px solid #d4d4d4;
+    cursor: crosshair;
+    background: rgba(255, 255, 255, 0.5);
+    width: 100px; /* Adjust lens size */
+    height: 100px; /* Adjust lens size */
+    border-radius: 50%;
+    pointer-events: none;
+}
+
+
+
+
+
+/* General container styling */
+.product-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    gap: 20px;
+    margin: 20px;
+  }
+  
+  /* Card styling */
+  .card {
+    width: 18rem;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    background-color: #fff;
+  }
+  
+  /* Card hover effect */
+  .card:hover {
+    transform: scale(1.05);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  }
+  
+  /* Card image styling */
+  .card-img-top {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+  }
+  
+  /* Card body styling */
+  .card-body {
+    padding: 16px;
+    text-align: center;
+  }
+  
+  .card-title {
+    font-size: 1.25rem;
+    margin-bottom: 10px;
+    font-weight: 600;
+  }
+  
+  .card-text {
+    font-size: 1rem;
+    color: #000000;
+    margin-bottom: 15px;
+  }
+  
+  /* Button styling */
+  .btn-primary {
+    background-color: #ff0000;
+    border: none;
+    padding: 10px 15px;
+    color: white;
+    border-radius: 5px;
+    text-decoration: none;
+    font-size: 1rem;
+  }
+  
+  .btn-primary:hover {
+    background-color: #000000;
+    transition: background-color 0.3s ease;
+  }
+
+  .notification {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    padding: 15px 20px;
+    background-color: #f90202; /* Success background */
+    color: white;
+    font-size: 16px;
+    border-radius: 5px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    opacity: 0;
+    transform: translateY(-20px);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    z-index: 9999;
+  }
+  
+  .notification.error {
+    background-color: #474747; /* Error background */
+  }
+  
+  .notification.show {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  
+  .hidden {
+    display: none;
+  }
+  
+  
+  /* Responsive adjustments */
+  @media (max-width: 768px) {
+    .product-container {
+      justify-content: center;
+    }
+  
+    .card {
+      width: 90%;
+      margin-bottom: 20px;
+    }
+  }
+  
+
+
+
+
+
+
+
+
+
+

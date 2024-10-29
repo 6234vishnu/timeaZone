@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Add New Product</title>
+  <!-- Include Cropper.js CSS -->
+  <link href="https://unpkg.com/cropperjs/dist/cropper.css" rel="stylesheet">
+  <style>
+    /* Add your custom styles here */
+    .img-preview {
+      width: 100px;
+      height: 100px;
+      overflow: hidden;
+    }
+  </style>
+</head>
+<body>
+  <h1>Add New Product</h1>
+  <form id="productForm" enctype="multipart/form-data">
+    <label for="name">Product Name:</label>
+    <input type="text" id="name" name="name" required><br><br>
+
+    <label for="category">Category:</label>
+    <input type="text" id="category" name="category" required><br><br>
+
+    <label for="brand">Brand:</label>
+    <input type="text" id="brand" name="brand" required><br><br>
+
+    <label for="regularPrice">Regular Price:</label>
+    <input type="number" id="regularPrice" name="regularPrice" required><br><br>
+
+    <label for="salePrice">Sale Price:</label>
+    <input type="number" id="salePrice" name="salePrice"><br><br>
+
+    <label for="quantity">Quantity:</label>
+    <input type="number" id="quantity" name="quantity" required><br><br>
+
+    <label for="images">Product Images:</label>
+    <input type="file" id="imageInput" name="images" accept="image/*" multiple required><br><br>
+
+    <div id="cropperContainer">
+      <img id="imagePreview" style="max-width: 100%;">
+    </div>
+
+    <button type="button" id="cropImageBtn">Crop & Upload</button>
+  </form>
+
+  <!-- Include Cropper.js and your custom JavaScript -->
+  <script src="https://unpkg.com/cropperjs"></script>
+  <script>
+    let cropper;
+    const imageInput = document.getElementById('imageInput');
+    const imagePreview = document.getElementById('imagePreview');
+    const cropperContainer = document.getElementById('cropperContainer');
+    const cropImageBtn = document.getElementById('cropImageBtn');
+
+    imageInput.addEventListener('change', function(event) {
+      const files = event.target.files;
+      if (files && files.length > 0) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          imagePreview.src = e.target.result;
+          cropper = new Cropper(imagePreview, {
+            aspectRatio: 1,
+            viewMode: 1,
+            preview: '.img-preview',
+          });
+        };
+        reader.readAsDataURL(files[0]);
+        cropperContainer.style.display = 'block';
+      }
+    });
+
+    cropImageBtn.addEventListener('click', function() {
+      const canvas = cropper.getCroppedCanvas({
+        width: 300,
+        height: 300,
+      });
+
+      canvas.toBlob(function(blob) {
+        const formData = new FormData(document.getElementById('productForm'));
+        formData.append('croppedImage', blob);
+
+        fetch('/add-product', {
+          method: 'POST',
+          body: formData,
+        }).then(response => response.json())
+          .then(data => {
+            if (data.success) {
+              alert('Product added successfully!');
+            } else {
+              alert('Error adding product.');
+            }
+          });
+      });
+    });
+  </script>
+</body>
+</html>

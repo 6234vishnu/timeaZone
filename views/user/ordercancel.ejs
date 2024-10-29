@@ -1,0 +1,27 @@
+<%-include("../../Views/partials/user/header")%>
+
+<div class="orderconfirmation-container">
+    <header class="orderconfirmation-header">
+        <h1> Cancel Order</h1>
+    </header>
+
+    <section class="orderconfirmation-content">
+        <div class="orderconfirmation-status">
+            <img src="\re-image\cancelorder.png" alt="Checkmark" class="orderconfirmation-icon">
+            
+        </div>
+
+        <div class="orderconfirmation-actions">
+            <button class="orderconfirmation-shopmore" id="shopMoreButton">Shop More</button>
+            
+        </div>
+    </section>
+</div>
+<script>
+    document.getElementById("shopMoreButton").addEventListener("click", function() {
+        window.location.href = "/shop";
+    });
+
+   
+</script>
+<%-include("../../Views/partials/user/footer")%>

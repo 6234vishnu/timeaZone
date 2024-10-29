@@ -1,0 +1,403 @@
+<%-include("../../Views/partials/user/header")%>
+
+<div id="notification" class="notification hidden"></div>
+
+
+
+<div class="breadcrumb__links">
+    <a href="/">Home ></a>
+    <span>Product details</span>
+</div>
+
+<main class="userpr-main">
+
+    <% if (product && Array.isArray(product.productImage) && product.productImage.length > 0) { %>
+        <div class="userprproductimages">
+            <img id="mainImage" src="/re-image/<%= product.productImage[0] %>" alt="Product Image">
+            <div id="zoomResult" class="zoom-result"></div>
+        </div>
+    <% } %>
+
+   
+
+        <div class="userpr-product-details">
+            <div class="userpr-product-thumbnails">
+                <% for(let i=0;i<product.productImage.length;i++){ %>
+               <div onclick="changeImage('<%= product.productImage[i] %>')">
+                <img src="/re-image/<%=product.productImage[i]  %>" alt="Thumbnail <%= i + 1 %>">
+               </div>
+             
+             
+                <% } %>
+            </div>
+            <h1 class="userpr-product-title"><%=product.name  %></h1>
+            <p class="userpr-product-description">
+                <%= product.description  %>
+            </p>
+            <div class="userpr-product-pricing">
+                <span class="userpr-product-price"><%=product.salePrice  %>$</span>
+            
+            </div>
+            <div class="userpr-product-color-options">
+                <% for(let i=0;i<product.color.length;i++){ %>
+                <span class="userpr-color-option"><%=product.color[i]  %></span>
+               
+                <% } %>
+            </div>
+            
+            <form id="product-form" action="/checkOut" method="post">
+                <% if (product.quantity >= 5) { %>
+                  <div class="userpr-product-stock" id="status"><%= product.status %></div>
+                <% } else if (product.quantity > 0 && product.quantity < 5) { %>
+                  <div class="userpr-product-stock" id="status"><h4 style="color: rgb(255, 0, 0);">Only few left</h4></div>
+                <% } else { %>
+                  <div class="userpr-product-stock" id="status">
+                    <h4 style="color: red;">Out Of Stock</h4>
+                  </div>
+                <% } %>
+              
+                <% if (product.quantity >= 1) { %>
+                  <div class="userpr-product-quantity">
+                    <label for="quantity" class="userpr-label">Quantity:</label>
+                    <input
+                      name="items[<%= product._id %>][quantity]"
+                      value="1"
+                      type="number"
+                      class="userpr-quantity-input"
+                      min="1"
+                      required
+                    >
+                    <input type="hidden" name="items[<%= product._id %>][productId]" value="<%= product._id %>">
+                    
+                   
+                  </div>
+              
+                  <!-- Hidden field to indicate the action -->
+                  <input type="hidden" name="action" value="buyNow">
+              
+                  <div class="userpr-product-buttons">
+                    <button 
+                    type="button" 
+                    data-product-id="<%= product._id %>"  
+                    class="userpr-add-to-wishlist addToWishlist"> 
+                    Add To wishlist
+                  </button>
+
+                    <button 
+                      type="button" 
+                      data-product-id="<%= product._id %>"  
+                      class="userpr-add-to-cart addToCart"> 
+                      Add To Cart
+                    </button>
+                    <button type="submit" class="userpr-buy-now">Buy Now</button>
+                  </div>
+              
+                <% } else { %>
+                  <div class="userpr-product-buttons">
+                    <button type="button" id="button4" class="userpr-buy-now">Notify Me</button>
+                  </div>
+                <% } %>
+            
+          
+            
+                <% if(offer){ %>
+            <div class="userpr-product-coupons">
+                <b>Available Offers </b>
+                <% for(let i=0;i<offer.length;i++){ %>
+                <p style="color: rgb(255, 0, 0);">Bank Offer <%=offer[i].discountValue %>$ off on Times Zone LPI Transactions on order of for <%=product.name  %></p>
+                <input type="hidden" name="offerIds[]" value="<%= offer[i]._id %>">
+                <% } %>
+                <p><strong>Note: </strong>If multiple offers are exists only one will be applicable</p>
+            </div>
+            <% } %>
+            <div class="userpr-product-delivery">
+                <p style="color: black;"><strong>Service:</strong> 6 Month <%=product.name  %> Warranty</p>
+                <p><strong style="color: black;">Cash on Delivery available</strong></p>
+            </div>
+        </div>
+      </form>
+    </section>
+
+   
+
+    
+   <section class="userpr-ratings-reviews">
+        <h2>Ratings & Reviews</h2>
+       
+
+        <div class="userpr-review">
+            <% for (let i = 0; i < review.length; i++) { %>
+                <div class="review-item">
+                
+                    <div class="star-rating">
+                     
+                        <% for (let j = 0; j < review[i].rating; j++) { %>
+                            <span class="star">&#9733;</span> 
+                        <% } %>
+        
+                     
+                        <% for (let j = review[i].rating; j < 5; j++) { %>
+                            <span class="star">&#9734;</span> 
+                        <% } %>
+                    </div>
+        
+                   
+                    <p class="userpr-review-author"><%= review[i].user.name %></p>
+                    <p class="userpr-review-content"><%= review[i].review %></p>
+                </div>
+            <% } %>
+        </div>
+       
+    </section>
+    <div>
+
+
+        <div>
+            <h5 class="SimilarItem">Similar items</h5>
+        </div>
+        
+        <div class="product-container">
+            <% if(product.quantity>=1){ %>
+            <% if (similarProducts && similarProducts.length > 0) { %>
+              <% for (let i = 0; i < similarProducts.length; i++) { %>
+                <div class="card">
+                  <img src="/re-image/<%= similarProducts[i].productImage[0] %>" class="card-img-top" alt="Similar Product Image">
+                  <div class="card-body">
+                    <h5 class="card-title"><%= similarProducts[i].name %></h5>
+                    <p class="card-text">$<%= similarProducts[i].salePrice %></p>
+                    <a href="/productPage?id=<%= similarProducts[i]._id %>" class="btn btn-primary">Check Product</a>
+                   
+                  </div>
+                </div>
+              <% } %>
+            <% } else { %>
+              <p>No similar products found.</p>
+            <% } %>
+            <% }else{ %>
+                <p>No similar products found.</p>
+                <% } %>
+          </div>
+  
+ </main>
+
+
+ <script>
+
+
+document.addEventListener('DOMContentLoaded', function() {
+  const notification = document.getElementById('notification');
+
+  // Function to show the notification
+  function showNotification(message, type) {
+    notification.textContent = message;
+    
+    if (type === 'success') {
+      notification.classList.remove('error');
+      notification.style.backgroundColor = '#f90202';
+    } else {
+      notification.classList.add('error');
+      notification.style.backgroundColor = '#474747';
+    }
+
+    notification.classList.add('show');
+    notification.classList.remove('hidden');
+    setTimeout(hideNotification, 3000);
+  }
+
+  function hideNotification() {
+    notification.classList.remove('show');
+    setTimeout(() => {
+      notification.classList.add('hidden');
+    }, 300);
+  }
+
+  // Add to cart logic
+  const addToCartLinks = document.querySelectorAll('.addToCart');
+
+  addToCartLinks.forEach(link => {
+    link.addEventListener('click', async function(event) {
+      event.preventDefault();
+      const productId = this.getAttribute('data-product-id');
+
+      try {
+        const response = await fetch('/addToCart', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ productId })
+        });
+
+        const result = await response.json();
+
+        if (response.ok) {
+          showNotification('Product added to cart successfully!', 'success');
+        } else {
+          showNotification(`Failed to add product to cart: ${result.message || 'An error occurred.'}`, 'error');
+        }
+      } catch (error) {
+        console.error('Error adding product to cart:', error);
+        showNotification('There was an error adding the product to the cart.', 'error');
+      }
+    });
+  });
+
+  // Add to wishlist logic
+  const addToWishlistLinks = document.querySelectorAll('.addToWishlist'); 
+
+  addToWishlistLinks.forEach(link => {
+    link.addEventListener('click', async function(event) {
+      event.preventDefault();
+      const productId = this.getAttribute('data-product-id');
+
+      try {
+        const response = await fetch('/wishlist', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ productId })
+        });
+
+        const result = await response.json();
+
+        if (response.ok) {
+          showNotification('Product added to wishlist successfully!', 'success');
+        } else {
+          showNotification(`Failed to add product to wishlist: ${result.message || 'An error occurred.'}`, 'error');
+        }
+      } catch (error) {
+       
+        showNotification('There was an error adding the product to the wishlist.', 'error');
+      }
+    });
+  });
+});
+
+
+ </script>
+
+
+<%-include("../../Views/partials/user/footer")%>
+
+
+
+<script>
+
+
+
+
+
+// image zoom
+// scripts.js
+document.addEventListener('DOMContentLoaded', function() {
+    var img = document.getElementById('mainImage');
+    var result = document.getElementById('zoomResult');
+    
+    img.addEventListener('mousemove', function(e) {
+        var bounds = img.getBoundingClientRect();
+        var x = e.clientX - bounds.left;
+        var y = e.clientY - bounds.top;
+        
+        if (x < 0 || x > img.width || y < 0 || y > img.height) {
+            result.style.display = 'none';
+            return;
+        }
+        
+        var cx = result.offsetWidth / 200; 
+        var cy = result.offsetHeight / 200; 
+        
+        var bgPosX = (x * cx) - (result.offsetWidth / 2);
+        var bgPosY = (y * cy) - (result.offsetHeight / 2);
+        
+        result.style.backgroundImage = 'url(' + img.src + ')';
+        result.style.backgroundSize = (img.width * cx) + 'px ' + (img.height * cy) + 'px';
+        result.style.backgroundPosition = '-' + bgPosX + 'px -' + bgPosY + 'px';
+        result.style.display = 'block';
+        result.style.left = img.offsetWidth + 'px';
+        result.style.top = '0px';
+    });
+    
+    img.addEventListener('mouseleave', function() {
+        result.style.display = 'none';
+    });
+});
+
+
+    function changeImage(imageSrc) {
+        document.getElementById('mainImage').src = '/re-image/' + imageSrc;
+    }
+
+
+
+    document.addEventListener('DOMContentLoaded', function() {
+
+const addToCartLinks = document.querySelectorAll('.wishlist');
+
+
+addToCartLinks.forEach(link => {
+  link.addEventListener('click', async function(event) {
+    event.preventDefault();
+    const productId = this.getAttribute('data-product-id'); 
+
+    try {
+    
+      const response = await fetch('/wishlist', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ productId: productId }) 
+      });
+
+      const result = await response.json();
+
+      if (response.ok) {
+        alert('Product added to wishlist successfully!');
+      } else {
+        alert(`Failed to add product to wishlist: ${result.message}`);
+      }
+    } catch (error) {
+      console.error('Error adding product to wishlist:', error);
+      alert('There was an error adding the product to the wishlist.');
+    }
+  });
+});
+});
+
+
+document.addEventListener('DOMContentLoaded', function() {
+  // Select the correct buttons with the 'userpr-add-to-wishlist' class
+  const addToWishlistButtons = document.querySelectorAll('.userpr-add-to-wishlist');
+
+  addToWishlistButtons.forEach(button => {
+    button.addEventListener('click', async function(event) {
+      event.preventDefault();
+      const productId = this.getAttribute('data-product-id');
+
+      try {
+        const response = await fetch('/wishlist', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ productId }) // Send the product ID in the request body
+        });
+
+        const result = await response.json();
+
+        if (response.ok) {
+          alert('Product added to wishlist successfully!');
+        } else {
+          alert(`Failed to add product to wishlist: ${result.message}`);
+        }
+      } catch (error) {
+        console.error('Error adding product to wishlist:', error);
+        alert('There was an error adding the product to the wishlist.');
+      }
+    });
+  });
+});
+</script>
+
+

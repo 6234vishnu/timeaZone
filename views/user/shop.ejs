@@ -1,0 +1,481 @@
+<%- include("../../Views/partials/user/header") %>
+
+
+
+<style>
+    /* Filter Section Styles */
+.filter-section {
+    padding: 50px 0;
+    background-color: #f8f9fa;
+}
+
+.filter-section .container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.filter-section form {
+    background: #414141;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.filter-section .form-control {
+    border-radius: 4px;
+    border: 1px solid #000000;
+    padding: 10px;
+    font-size: 16px;
+    margin-bottom: 15px;
+}
+
+.filter-section label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: white;
+}
+
+.filter-section select, .filter-section input[type="number"] {
+    width: 100%;
+}
+
+.filter-section button {
+    background-color: #ff0000;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    border-radius: 7px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+.form-label {
+    font-weight: bold;
+}
+
+.form-control {
+    border-radius: 4px;
+}
+
+.filter-section button:hover {
+    background-color: #ff0000;
+}
+
+.filter-section .row {
+    margin-bottom: 15px;
+}
+
+.filter-section .col-md-4 {
+    margin-bottom: 15px;
+}
+
+/* Style the dropdown select elements */
+.form-select {
+    border: 1px solid #ced4da;
+    border-radius: 0.25rem;
+    padding: 0.5rem 0.75rem;
+    font-size: 1rem;
+}
+
+.form-select:focus {
+    border-color: #80bdff;
+    outline: 0;
+    box-shadow: 0 0 0 0.2rem rgba(38, 143, 255, 0.25);
+}
+
+.form-label {
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 0.5rem;
+}
+
+.filter-section input[type="radio"] {
+    margin-right: 5px; /* Spacing between radio button and label */
+}
+
+.filter-section label {
+    margin-bottom: 5px;
+    color: rgb(255, 255, 255);
+    display: inline-block; /* Align label inline with radio button */
+}
+.nice-select {
+    float: none;
+}
+.popular-img img{
+    width: 366px;
+    height: 459px;
+}
+
+
+/* Pagination container */
+.pagination {
+  display: flex;
+  justify-content: center;
+  padding: 20px 0;
+  list-style-type: none;
+}
+
+.pagination .page-item {
+  margin: 0 5px;
+}
+
+.pagination .page-link {
+  display: block;
+  padding: 10px 15px;
+  font-size: 16px;
+  color: #000000;
+  text-decoration: none;
+  background-color: #fffafa;
+  border: 1px solid #000000;
+  border-radius: 5px;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Hover and active styles */
+.pagination .page-link:hover {
+  background-color: #000000;
+  color: rgb(255, 255, 255);
+}
+
+.pagination .active .page-link {
+  background-color: #ffffff;
+  color: rgb(0, 0, 0);
+  border-color: #000000;
+}
+
+.pagination .disabled .page-link {
+  color: #6c757d;
+  pointer-events: none;
+  background-color: #fff;
+  border-color: #dee2e6;
+}
+/* Notification styles */
+.notification {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  padding: 15px;
+  background-color: #ff0000; /* Default success color */
+  color: white;
+  border-radius: 5px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  z-index: 9999;
+  opacity: 0;
+  transition: opacity 0.4s ease, transform 0.4s ease;
+  transform: translateY(-20px); /* Hidden by moving up */
+}
+
+.notification.error {
+  background-color: #474747; /* Error color */
+}
+
+.notification.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.hidden {
+  display: none;
+}
+
+
+@media (max-width: 767px) {
+    .filter-section .form-control {
+        font-size: 14px;
+    }
+
+    .filter-section button {
+        font-size: 14px;
+        padding: 8px 16px;
+    }
+    .pagination .page-link {
+    padding: 8px 12px;
+    font-size: 14px;
+  }
+}
+</style>
+
+<div id="notification" class="notification hidden"></div>
+
+
+    <!-- Hero Area Start-->
+    <div class="slider-area">
+        <div class="single-slider slider-height2 d-flex align-items-center">
+            <div class="container">
+                <div class="row">
+                    <div class="col-xl-12">
+                        <div class="hero-cap text-center">
+                            <h2>Shop Here</h2>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Hero Area End-->
+
+    <!-- Filter Section Start -->
+    <section class="filter-section">
+        <div class="container">
+            <form id="filterForm" action="/filterProducts" method="get">
+                <div class="row">
+                    <!-- Brand Filter -->
+                    <div class="col-lg-3 mb-4">
+                        <label class="form-label">Brand</label>
+                        <div>
+                            <% for (let i = 0; i < brand.length; i++) { %>
+                                <label>
+                                    <input type="radio" name="brand" value="<%= brand[i].name %>" />
+                                    <%= brand[i].name %>
+                                </label>
+                            <% } %>
+                        </div>
+                    </div>
+            
+                    <!-- Category Filter -->
+                    <div class="col-lg-3 mb-4">
+                        <label class="form-label">Category</label>
+                        <select id="category" name="category" class="form-select border">
+                            <option value="">Select category</option>
+                            <% for (let i = 0; i < category.length; i++) { %>
+                                <option value="<%= category[i].name %>" ><%= category[i].name %> </option>
+                            <% } %>
+                        </select>
+                    </div>
+            
+                    <!-- Price Range Filter -->
+                    <div class="col-md-3 mb-4">
+                        <label for="priceRange" class="form-label">Price Range</label>
+                        <select id="priceRange" name="priceRange" class="form-select border">
+                            <option value="">Select price range</option>
+                            <option value="101-200">$101 - $200</option>
+                            <option value="201-500">$201 - $500</option>
+                            <option value="501-1000">$501 - $1000</option>
+                            <option value="1001-2000">$1001 - $2000</option>
+                            <option value=">=2001">$2001+</option>
+                        </select>
+                    </div>
+            
+                    
+                    <div class="sort-container">
+                        <label for="sortBy">Sort By:</label>
+                        <select id="sortBy" name="sortBy">
+                            <option value="">Select options</option>
+                            <option value="newArrivals">New Arrivals</option>
+                            <option value="priceLowToHigh">Price: Low to High</option>
+                            <option value="priceHighToLow">Price: High to Low</option>
+                            <option value="nameAtoZ">Name: A to Z</option>
+                            <option value="nameZtoA">Name: Z to A</option>
+                            <option value="rating">Rating</option>
+                        </select>
+                    </div>
+                </div>
+                <button type="submit">Apply Filters</button>
+                <button id="clearFilters">Clear All Filters</button>
+            </form>
+            
+            
+            
+        </div>
+    </section>
+    
+    <!-- Filter Section End -->
+
+    <!-- Latest Products Start -->
+    <section class="popular-items latest-padding">
+        <div class="container">
+            <div class="tab-content" id="nav-tabContent">
+                <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+                    <div class="row">
+                        <% product.forEach(product => { %>
+                        <div class="col-xl-4 col-lg-4 col-md-6 col-sm-6">
+                            <div class="single-popular-items mb-50 text-center">
+                                <div class="popular-img">
+                                    <a href="/productPage?id=<%= product._id %>">
+                                        <img src="/re-image/<%= product.productImage[0] %>" alt="Product Image" style="border-radius: 10px;">
+                                    </a>
+                                    <div class="img-cap">
+                                        <span >
+                                            <a  href="javascript:void(0);" class="addToCart" data-product-id="<%= product._id %>">Add To Cart</a>
+                                        </span>
+                                    </div>
+                      
+                                    
+                                </div>
+                                <div class="popular-caption">
+                                    <h3><a href="/productPage?id=<%= product._id %>"><%= product.name %></a></h3>
+                                    <span>$ <%= product.salePrice %></span>
+                                </div>
+                            </div>
+                        </div>
+                        <% }); %>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="pagination">
+            <% if (currentPage > 1) { %>
+              <a class="page-link" href="?page=<%= currentPage - 1 %>">&laquo; Previous</a>
+            <% } %> 
+          
+            <% for (let i = 1; i <= totalPages; i++) { %> 
+              <% if (i === currentPage) { %>
+                <span class="page-item active">
+                  <span class="page-link"><%= i %></span>
+                </span>
+              <% } else { %>
+                <span class="page-item">
+                  <a class="page-link" href="?page=<%= i %>"><%= i %></a>
+                </span>
+              <% } %> 
+            <% } %> 
+          
+            <% if (currentPage < totalPages) { %>
+              <a class="page-link" href="?page=<%= currentPage + 1 %>">Next &raquo;</a>
+            <% } %>
+          </div>
+          
+          
+          
+    </section>
+    
+
+     <%- include("../../Views/partials/user/footer") %>
+     
+    <script>
+ document.addEventListener('DOMContentLoaded', function() {
+
+const addToCartLinks = document.querySelectorAll('.addToCart');
+const notificationElement = document.getElementById('notification');
+
+addToCartLinks.forEach(link => {
+  link.addEventListener('click', async function(event) {
+    event.preventDefault();
+    const productId = this.getAttribute('data-product-id'); 
+
+    try {
+      const response = await fetch('/addToCart', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ productId: productId }) 
+      });
+
+      const result = await response.json();
+
+      if (response.ok) {
+        showNotification('Product added to cart successfully!', 'success');
+      } else {
+        showNotification(`Failed to add product to cart: ${result.message}`, 'error');
+      }
+    } catch (error) {
+      console.error('Error adding product to cart:', error);
+      showNotification('There was an error adding the product to the cart.', 'error');
+    }
+  });
+});
+
+
+function showNotification(message, type) {
+  notificationElement.textContent = message;
+
+ 
+  if (type === 'success') {
+    notificationElement.classList.remove('error');
+  } else {
+    notificationElement.classList.add('error');
+  }
+
+  // Show the notification
+  notificationElement.classList.remove('hidden');
+  notificationElement.classList.add('show');
+
+  // Hide the notification after 3 seconds
+  setTimeout(() => {
+    notificationElement.classList.remove('show');
+    setTimeout(() => {
+      notificationElement.classList.add('hidden');
+    }, 400); // Match the transition duration in CSS
+  }, 3000); // Display for 3 seconds
+}
+});
+
+
+
+
+// document.addEventListener('DOMContentLoaded', function() {
+//   const wishlistLinks = document.querySelectorAll('.wishlist');
+
+//   wishlistLinks.forEach(link => {
+//     link.addEventListener('click', async function(event) {
+//       event.preventDefault(); 
+//       const productId = this.getAttribute('data-product-id'); 
+
+//       try {
+    
+//         const response = await fetch('/wishlist', {
+//           method: 'POST',
+//           headers: {
+//             'Content-Type': 'application/json',
+//           },
+//           body: JSON.stringify({ productId }) 
+//         });
+
+//         const result = await response.json();
+
+//         if (response.ok) {
+//           alert('Product added to wishlist successfully!');
+//         } else {
+//           alert(`Failed to add product to wishlist: ${result.message}`);
+//         }
+//       } catch (error) {
+//         console.error('Error adding product to wishlist:', error);
+//         alert('There was an error adding the product to the wishlist.');
+//       }
+//     });
+//   });
+// });
+
+
+
+
+document.addEventListener("DOMContentLoaded", function() {
+  
+  document.getElementById('filterForm').addEventListener('submit', function(event) {
+   
+    event.preventDefault();
+
+    const formData = new FormData(event.target);
+    const queryParams = new URLSearchParams();
+
+   
+    for (const [key, value] of formData.entries()) {
+        if (value) {
+            queryParams.append(key, value);
+        }
+    }
+
+    
+    window.location.href = `${this.action}?${queryParams.toString()}`;
+  });
+
+  
+  document.getElementById("clearFilters").addEventListener("click", function() {
+  
+    document.getElementById("category").value = "";
+    document.getElementById("price").value = "";
+    document.getElementById("inStock").checked = false;
+
+    
+    document.getElementById('filterForm').submit(); 
+  });
+});
+
+
+
+
+    </script>
+
+
