@@ -12,21 +12,19 @@ const morgan = require("morgan");
 const methodOverride = require("method-override");
 const { clearCacheAdmin, clearCacheUser } = require("./middlewares/clearCache");
 const nocache = require("nocache");
+const MongoStore = require('connect-mongo');
 
 db();
 
-app.use(
-  session({
-    secret: process.env.SECRECT_KEY,
-    resave: false,
-    saveUninitialized: false,
-    cookie: {
-      secure: false,
-      httpOnly: true,
-      maxAge: 72 * 60 * 60 * 1000,
-    },
+app.use(session({
+  secret: process.env.SECRECT_KEY,
+  resave: false,
+  saveUninitialized: false,
+  store: MongoStore.create({
+    mongoUrl: process.env.MONGODB_URI, 
+    
   })
-);
+}));
 app.use(passport.initialize());
 app.use(passport.session());
 app.use((req, res, next) => {
@@ -70,7 +68,7 @@ app.set("views", [
 
 app.use("/images", express.static(path.join(__dirname, "public/images")));
 
-app.listen(process.env.PORT, () => {
+app.listen(3000, () => {
   console.log(`server is running on http://localhost:3000`);
 });
 
