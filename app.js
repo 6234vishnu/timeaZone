@@ -3,7 +3,7 @@ const app = express();
 const path = require("path");
 const env = require("dotenv").config();
 const db = require("./config/db");
-const router = require("./routes/userRouter");
+
 const session = require("express-session");
 const passport = require("./config/passport");
 const adminRouter = require("./routes/adminRouter");
@@ -16,9 +16,7 @@ const MongoStore = require("connect-mongo");
 
 db();
 
-
 const PORT = process.env.PORT || 3000;
-
 
 app.use(
   session({
@@ -47,7 +45,6 @@ app.use((req, res, next) => {
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-
 app.use(express.static(path.join(__dirname, "public")));
 app.use("/images", express.static(path.join(__dirname, "public/images")));
 
@@ -57,7 +54,6 @@ app.use(methodOverride("_method"));
 
 app.use(clearCacheAdmin, clearCacheUser);
 
-
 app.set("view engine", "ejs");
 app.set("views", [
   path.join(__dirname, "views/user"),
@@ -65,16 +61,8 @@ app.set("views", [
   path.join(__dirname, "views/partials"),
 ]);
 
-
-app.use("/", router);
 app.use("/", userRouter);
 app.use("/admin", adminRouter);
-
-
-app.get("/", (req, res) => {
-  res.render("home"); 
-});
-
 
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);
