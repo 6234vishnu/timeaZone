@@ -61,6 +61,15 @@ app.set("views", [
   path.join(__dirname, "views/partials"),
 ]);
 
+app.head("/", (req, res) => {
+  res.status(200).end();
+});
+
+app.get("/", (req, res) => {
+  res.redirect("/home");
+});
+
+
 app.use("/", userRouter);
 app.use("/admin", adminRouter);
 
