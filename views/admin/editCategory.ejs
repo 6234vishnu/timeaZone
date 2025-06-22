@@ -1,42 +1,32 @@
 <%- include('../partials/admin/header') %>
 
-<body>
-  
+  <body>
+
 
     <div class="title">
-     <h1 >Edit Category</h1>
+      <h1>Edit Category</h1>
     </div>
     <main class="content">
-      <form
-        class="category-form"
-        action="/admin/editCategory"
-        method="post"
-      
-      >
-      <div class="form-group">
-        <label for="categoryName">Old Category Name</label>
-        <input type="text" id="categoryName" name="oldname" required />
-      </div>
+      <form class="category-form" action="/admin/editCategory" method="post">
+        <div class="form-group">
+          <label for="categoryName">Old Category Name</label>
+          <input type="text" id="categoryName" name="oldname" required />
+        </div>
         <div class="form-group">
           <label for="categoryName">Enter New Category Name</label>
           <input type="text" id="categoryName" name="name" required />
         </div>
-  
+
         <div class="form-group">
           <label for="discription">Description</label>
-          <textarea
-            id="discription"
-            name="discription"
-            rows="5"
-            required
-          ></textarea>
+          <textarea id="discription" name="discription" rows="5" required></textarea>
         </div>
-  
+
         <button type="submit" class="submit-btn">Add Edited Category</button>
       </form>
-  
-     
-      
+
+
+
     </main>
   </body>
   <%- include('../partials/admin/footer') %>

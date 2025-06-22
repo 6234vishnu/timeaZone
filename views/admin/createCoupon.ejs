@@ -1,67 +1,72 @@
-
 <%- include("../../views/partials/admin/header") %>
 
-<section class="contentmain">
+  <section class="contentmain">
     <div class="content-header">
       <h2 class="content-title">Add New Coupon</h2>
     </div>
     <div class="card mb-4">
       <div class="card-body">
         <% if (message) { %>
-          <p style="color: red; align-items: center;"><strong>Note: </strong><%= message %></p>
-        <% } %>
-        
-        <form action="/admin/createCoupon" method="POST">
-            <!-- Discount Code -->
-            <div class="form-group">
-              <label for="code">Discount Code:</label>
-              <input type="text" id="code" name="code" class="form-control" placeholder="Enter discount code" required>
-            </div>
-          
-        
-          
-            <!-- Discount Value -->
-            <div class="form-group">
-              <label for="discountValue">Discount Value:</label>
-              <input type="number" id="discountValue" name="discountValue" class="form-control" placeholder="Enter discount value" required>
-            </div>
+          <p style="color: red; align-items: center;"><strong>Note: </strong>
+            <%= message %>
+          </p>
+          <% } %>
 
-            <div class="form-group">
-              <label for="product">Applicable Product</label>
-              <select id="product" name="product" class="form-control" required>
-                <option value="">Select a product</option>
-                <% for (let i = 0; i < product.length; i++) { %>
-                  <option value="<%= product[i].name %>"><%= product[i].name %></option>
-                <% } %>
-              </select>
-            </div>
-            
-            
-          
-       
-           
-          
-            <!-- Start Date -->
-            <div class="form-group">
-              <label for="startDate">Start Date:</label>
-              <input type="date" id="startDate" name="startDate" class="form-control" required>
-            </div>
-          
-            <!-- End Date -->
-            <div class="form-group">
-              <label for="endDate">End Date:</label>
-              <input type="date" id="endDate" name="endDate" class="form-control" required>
-            </div>
-          
-          
-          
-          
-            <!-- Submit Button -->
-            <div class="form-group">
-              <button type="submit" class="btn btn-primary">Create Discount</button>
-            </div>
-          </form>
-          
+            <form action="/admin/createCoupon" method="POST">
+              <!-- Discount Code -->
+              <div class="form-group">
+                <label for="code">Discount Code:</label>
+                <input type="text" id="code" name="code" class="form-control" placeholder="Enter discount code"
+                  required>
+              </div>
+
+
+
+              <!-- Discount Value -->
+              <div class="form-group">
+                <label for="discountValue">Discount Value:</label>
+                <input type="number" id="discountValue" name="discountValue" class="form-control"
+                  placeholder="Enter discount value" required>
+              </div>
+
+              <div class="form-group">
+                <label for="product">Applicable Product</label>
+                <select id="product" name="product" class="form-control" required>
+                  <option value="">Select a product</option>
+                  <% for (let i=0; i < product.length; i++) { %>
+                    <option value="<%= product[i].name %>">
+                      <%= product[i].name %>
+                    </option>
+                    <% } %>
+                </select>
+              </div>
+
+
+
+
+
+
+              <!-- Start Date -->
+              <div class="form-group">
+                <label for="startDate">Start Date:</label>
+                <input type="date" id="startDate" name="startDate" class="form-control" required>
+              </div>
+
+              <!-- End Date -->
+              <div class="form-group">
+                <label for="endDate">End Date:</label>
+                <input type="date" id="endDate" name="endDate" class="form-control" required>
+              </div>
+
+
+
+
+              <!-- Submit Button -->
+              <div class="form-group">
+                <button type="submit" class="btn btn-primary">Create Discount</button>
+              </div>
+            </form>
+
       </div>
     </div>
   </section>

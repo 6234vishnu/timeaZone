@@ -1,156 +1,167 @@
 <%- include("../../Views/partials/user/header") %>
 
 
-<div class="orderhistory-container">
-    <header class="orderhistory-header">
-        <h1>Orders History</h1>
-    </header>
+    <div class="orderhistory-container">
+        <header class="orderhistory-header">
+            <h1>Orders History</h1>
+        </header>
 
-    <!-- Filter Section -->
-    <section class="orderhistory-filter-section">
-        <form id="filterForm">
-            <div class="filter-field">
-                <input type="radio" id="delivered" name="orderStatus" value="Delivered">
-                <label for="delivered">Delivered</label>
+        <!-- Filter Section -->
+        <section class="orderhistory-filter-section">
+            <form id="filterForm">
+                <div class="filter-field">
+                    <input type="radio" id="delivered" name="orderStatus" value="Delivered">
+                    <label for="delivered">Delivered</label>
 
-                <input type="radio" id="processing" name="orderStatus" value="Processing">
-                <label for="processing">Processing</label>
+                    <input type="radio" id="processing" name="orderStatus" value="Processing">
+                    <label for="processing">Processing</label>
 
-                <input type="radio" id="cancelled" name="orderStatus" value="Cancelled">
-                <label for="cancelled">Cancelled</label>
+                    <input type="radio" id="cancelled" name="orderStatus" value="Cancelled">
+                    <label for="cancelled">Cancelled</label>
+                </div>
+
+                <div class="search-field">
+                    <label for="searchQuery"></label>
+                    <input type="hidden" id="searchQuery" name="searchQuery" placeholder="Search product name">
+                </div>
+                <!-- Submit Filter Button -->
+                <button type="button" id="submitFilter">Submit Filter</button>
+                <button id="clearFilters">Clear All Filters</button>
+
+            </form>
+
+            <!-- Search Bar -->
+            <div class="orderhistory-search">
+
+
             </div>
+        </section>
 
-            <div class="search-field">
-                <label  for="searchQuery"></label>
-                <input type="hidden" id="searchQuery" name="searchQuery" placeholder="Search product name">
-            </div>
-            <!-- Submit Filter Button -->
-            <button type="button" id="submitFilter">Submit Filter</button>
-            <button id="clearFilters" >Clear All Filters</button>
-
-        </form>
-
-        <!-- Search Bar -->
-        <div class="orderhistory-search">
-           
-           
-        </div>
-    </section>
-
-    <!-- Orders List Section -->
-    <section class="orderhistory-list-section">
-        <table class="orderhistory-table">
-            <thead>
-                <tr>
-                    <th>Product</th>
-                    <th>Price</th>
-                    <th>Status</th>
-                    <th>Show Status</th>
-                </tr>
-            </thead>
-            <tbody id="orderList">
-                <% if (order && order.length > 0) { %>
-                    <% order.forEach(orderItem => { %>
-                        <tr>
-                            <% orderItem.products.forEach(item => { %>
-                                <% if (item.product) { %>
-                                    <td>
-                                        <a href="/productPage?id=<%= item.product._id %>">
-                                            <img src="/re-image/<%= item.product.productImage[0] %>" alt="<%= item.product.name %>">
-                                            <%= item.product.name %> 
-                                        </a>
-                                    </td>
-                                    <td><%= orderItem.totalAmount %></td>
-                                    <td><%= orderItem.orderStatus %></td>
-                                    <td>
-                                        <button class="showstatus" id="status-<%= orderItem._id %>">Show status</button>
-                                    </td>
+        <!-- Orders List Section -->
+        <section class="orderhistory-list-section">
+            <table class="orderhistory-table">
+                <thead>
+                    <tr>
+                        <th>Product</th>
+                        <th>Price</th>
+                        <th>Status</th>
+                        <th>Show Status</th>
+                    </tr>
+                </thead>
+                <tbody id="orderList">
+                    <% if (order && order.length> 0) { %>
+                        <% order.forEach(orderItem=> { %>
+                            <tr>
+                                <% orderItem.products.forEach(item=> { %>
+                                    <% if (item.product) { %>
+                                        <td>
+                                            <a href="/productPage?id=<%= item.product._id %>">
+                                                <img src="/re-image/<%= item.product.productImage[0] %>"
+                                                    alt="<%= item.product.name %>">
+                                                <%= item.product.name %>
+                                            </a>
+                                        </td>
+                                        <td>
+                                            <%= orderItem.totalAmount %>
+                                        </td>
+                                        <td>
+                                            <%= orderItem.orderStatus %>
+                                        </td>
+                                        <td>
+                                            <button class="showstatus" id="status-<%= orderItem._id %>">Show
+                                                status</button>
+                                        </td>
+                            </tr>
+                            <% } else { %>
+                                <tr>
+                                    <td colspan="4">Product not found.</td>
                                 </tr>
-                                <% } else { %>
-                                    <tr>
-                                        <td colspan="4">Product not found.</td>
-                                    </tr>
                                 <% } %>
-                            <% }) %>
-                        <% }) %>
-                    
-            </tbody>
-        </table>
-     
-        <div class="pagination">
-            <% if (currentPage > 1) { %>
-                <a class="page-link" href="?page=<%= currentPage - 1 %>">&laquo; Previous</a>
-            <% } %>
-        
-            <% for (let i = 1; i <= totalPages; i++) { %>
-                <% if (i === currentPage) { %>
-                    <span class="page-item active">
-                        <span class="page-link"><%= i %></span>
-                    </span>
-                <% } else { %>
-                    <span class="page-item">
-                        <a class="page-link" style="color: black;" href="?page=<%= i %>"><%= i %></a>
-                    </span>
+                                    <% }) %>
+                                        <% }) %>
+
+                </tbody>
+            </table>
+
+            <div class="pagination">
+                <% if (currentPage> 1) { %>
+                    <a class="page-link" href="?page=<%= currentPage - 1 %>">&laquo; Previous</a>
+                    <% } %>
+
+                        <% for (let i=1; i <=totalPages; i++) { %>
+                            <% if (i===currentPage) { %>
+                                <span class="page-item active">
+                                    <span class="page-link">
+                                        <%= i %>
+                                    </span>
+                                </span>
+                                <% } else { %>
+                                    <span class="page-item">
+                                        <a class="page-link" style="color: black;" href="?page=<%= i %>">
+                                            <%= i %>
+                                        </a>
+                                    </span>
+                                    <% } %>
+                                        <% } %>
+
+                                            <% if (currentPage < totalPages) { %>
+                                                <a class="page-link" style="color: black;"
+                                                    href="?page=<%= currentPage + 1 %>">Next &raquo;</a>
+                                                <% } %>
+            </div>
+
+            <% } else { %>
+                <p style="color: red;"> No orders found</p>
                 <% } %>
-            <% } %>
-        
-            <% if (currentPage < totalPages) { %>
-                <a class="page-link" style="color: black;" href="?page=<%= currentPage + 1 %>">Next &raquo;</a>
-            <% } %>
-        </div>
 
-        <% } else { %>
-          <p style="color: red;"> No orders found</p>
-        <% } %>
-        
-          
-    </section>
-</div>
 
-<%- include("../../Views/partials/user/footer") %>
+        </section>
+    </div>
 
-<script>
+    <%- include("../../Views/partials/user/footer") %>
 
-    
-    document.querySelectorAll("[id^='status-']").forEach(button => {
-        button.addEventListener("click", function() {
-            const orderId = this.id.split('-')[1]; 
-            window.location.href = "/orderUpdates/" + orderId;
-        });
-    });
+        <script>
 
-    
-    document.getElementById("submitFilter").addEventListener("click", applyFilters);
 
-   
-   
+            document.querySelectorAll("[id^='status-']").forEach(button => {
+                button.addEventListener("click", function () {
+                    const orderId = this.id.split('-')[1];
+                    window.location.href = "/orderUpdates/" + orderId;
+                });
+            });
 
-    function applyFilters() {
-      
-        const selectedStatus = document.querySelector('input[name="orderStatus"]:checked')?.value || '';
-        const searchQuery = document.getElementById('searchQuery').value.trim();
 
-        fetch('/filterOrders', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-               
-                orderStatus: selectedStatus,
-                // searchOrder:searchQuery
-            })
-        })
-        .then(response => response.json())
-        .then(data => {
-            const orderList = document.getElementById("orderList");
-            orderList.innerHTML = "";  
+            document.getElementById("submitFilter").addEventListener("click", applyFilters);
 
-            if (data.orders && data.orders.length > 0) {
-                data.orders.forEach(orderItem => {
-                    orderItem.products.forEach(item => {
-                        if (item.product) {
-                            orderList.innerHTML += `
+
+
+
+            function applyFilters() {
+
+                const selectedStatus = document.querySelector('input[name="orderStatus"]:checked')?.value || '';
+                const searchQuery = document.getElementById('searchQuery').value.trim();
+
+                fetch('/filterOrders', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+
+                        orderStatus: selectedStatus,
+                        // searchOrder:searchQuery
+                    })
+                })
+                    .then(response => response.json())
+                    .then(data => {
+                        const orderList = document.getElementById("orderList");
+                        orderList.innerHTML = "";
+
+                        if (data.orders && data.orders.length > 0) {
+                            data.orders.forEach(orderItem => {
+                                orderItem.products.forEach(item => {
+                                    if (item.product) {
+                                        orderList.innerHTML += `
                                 <tr>
                                     <td>
                                         <a href="/productPage?id=${item.product._id}">
@@ -165,24 +176,24 @@
                                     </td>
                                 </tr>
                             `;
+                                    }
+                                });
+                            });
+                        } else {
+                            orderList.innerHTML = `<tr><td colspan="4">No orders found.</td></tr>`;
                         }
-                    });
-                });
-            } else {
-                orderList.innerHTML = `<tr><td colspan="4">No orders found.</td></tr>`;
+                    })
+                    .catch(error => console.error('Error filtering orders:', error));
             }
-        })
-        .catch(error => console.error('Error filtering orders:', error));
-    }
 
 
-    document.getElementById("clearFilters").addEventListener("click", function() {
-  
-  document.getElementById("Cancelled").value = "";
-  document.getElementById("Processing").value = "";
-  document.getElementById("Delivered").checked = false;
+            document.getElementById("clearFilters").addEventListener("click", function () {
 
-  
-  document.getElementById('filterForm').submit(); 
-});
-</script>
+                document.getElementById("Cancelled").value = "";
+                document.getElementById("Processing").value = "";
+                document.getElementById("Delivered").checked = false;
+
+
+                document.getElementById('filterForm').submit();
+            });
+        </script>

@@ -7,9 +7,8 @@ const Brand = require("../../models/brandSchema");
 const Category = require("../../models/categorySchema");
 const Address = require("../../models/adressSchema");
 const Cart = require("../../models/cartSchema");
-const Order=require("../../models/orderSchema")
-const Review=require("../../models/reviewSchema")
-
+const Order = require("../../models/orderSchema");
+const Review = require("../../models/reviewSchema");
 
 const loadHomepage = async (req, res) => {
   try {
@@ -19,12 +18,8 @@ const loadHomepage = async (req, res) => {
     const category = await Category.find({ isBlocked: false });
     const brand = await Brand.find({ isBlocked: false });
     if (user) {
-   
-
       const userData = await User.findOne({ _id: user, isBlocked: false });
       req.session.user = userData;
-   
-     
 
       res.render("home", {
         user: userData,
@@ -40,13 +35,9 @@ const loadHomepage = async (req, res) => {
       });
     }
   } catch (error) {
-    console.log("home page dosent loading", error);
-
     return res.status(500).send("Server error");
   }
 };
-
-
 
 const loadLoginpage = async (req, res) => {
   try {
@@ -56,7 +47,6 @@ const loadLoginpage = async (req, res) => {
     res.render("login");
   } catch (error) {
     if (error) {
-      console.log("error on the login page loading ");
       res.status(500).send("server error");
     }
   }
@@ -68,7 +58,6 @@ const loadSignupPage = async (req, res) => {
     res.render("signup");
   } catch (error) {
     if (error) {
-      console.log(" error in sigin page loading");
       res.status(500).send("server error");
     }
   }
@@ -130,10 +119,8 @@ const signup = async (req, res) => {
     req.session.userOtp = otp;
     req.session.userData = { name, phone, email, password };
     res.redirect("/verifyOtpPage");
-    console.log("otp is: ", otp);
   } catch (error) {
     if (error) {
-      console.log("error in signup", error);
       res.redirect("/pageNotfoundServer");
     }
   }
@@ -153,7 +140,6 @@ const verifyOtpPage = (req, res) => {
   try {
     res.render("verifyOtp");
   } catch (error) {
-    console.log("Error loading OTP page:", error);
     res.status(500).send("Server Error");
   }
 };
@@ -186,7 +172,6 @@ const verifyOtp = async (req, res) => {
         .json({ sucess: false, messages: "invalid otp please try again" });
     }
   } catch (error) {
-    console.log("error in verifying otp", error);
     res.status(500).json({ sucess: false, message: "an error occured" });
   }
 };
@@ -194,7 +179,6 @@ const verifyOtp = async (req, res) => {
 const resendOtp = async (req, res) => {
   try {
     const { email } = req.session.userData;
-    console.log("email", email);
 
     if (!email) {
       res.status(400).json({
@@ -207,8 +191,6 @@ const resendOtp = async (req, res) => {
     const emailSend = sendEmailVerification(email, otp);
 
     if (emailSend) {
-      console.log("resend otp", otp);
-
       res.status(200).json({
         success: false,
         message: "otp resend sucessfully",
@@ -221,7 +203,6 @@ const resendOtp = async (req, res) => {
     }
   } catch (error) {
     if (error) {
-      console.log("error in resend otp", error);
       res.status(500).json({
         success: false,
         message: "Error occurred while resending OTP",
@@ -254,18 +235,12 @@ const login = async (req, res) => {
       return res.render("login", { message: "password is not correct" });
     } else {
       req.session.user = findUser;
-    
 
-      res.setHeader('Cache-Control', 'no-store');
-      res.setHeader('Pragma', 'no-cache');
-      res.setHeader('Expires', '0');
-    
+      res.setHeader("Cache-Control", "no-store");
+      res.setHeader("Pragma", "no-cache");
+      res.setHeader("Expires", "0");
 
       res.redirect("/");
-
-      
-      
-   
     }
   } catch (error) {
     if (error) {
@@ -320,7 +295,6 @@ const loadOrderLogin = async (req, res) => {
   }
 };
 
-
 module.exports = {
   loadHomepage,
   loadLoginpage,
@@ -331,5 +305,4 @@ module.exports = {
   resendOtp,
   login,
   loadOrderLogin,
- 
-}
+};

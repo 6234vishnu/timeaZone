@@ -40,9 +40,6 @@ const loadProductPage = async (req, res) => {
     const category = await Category.find({ isListed: true });
     const brand = await Brand.find({ isBlocked: false });
 
-    
- 
-
     if (category && brand) {
       res.render("products", {
         data: productData,
@@ -56,7 +53,6 @@ const loadProductPage = async (req, res) => {
     }
   } catch (error) {
     res.status(500).render("pageNotfoundServer");
-    console.log("Error in rendering product page:", error);
   }
 };
 
@@ -70,7 +66,6 @@ const blockProduct = async (req, res) => {
     res.redirect("/admin/products");
   } catch (error) {
     res.status(500).render("pageNotfoundServer");
-    console.log("Error in addProduct:", error);
   }
 };
 const unblockProduct = async (req, res) => {
@@ -83,7 +78,6 @@ const unblockProduct = async (req, res) => {
     res.redirect("/admin/products");
   } catch (error) {
     res.status(500).render("pageNotfoundServer");
-    console.log("Error in addProduct:", error);
   }
 };
 
@@ -97,7 +91,6 @@ const addProductPage = async (req, res) => {
     });
   } catch (error) {
     res.status(500).render("pageNotfoundServer");
-    console.log("error in rendering addProduct");
   }
 };
 
@@ -131,7 +124,8 @@ const addProducts = async (req, res) => {
         await sharp(originalImagePath)
           // .resize({ width: 200, height: 230 })
           .resize(500, 500, { fit: "cover" })
-          .jpeg({ quality: 100 }).png({quality: 100 })
+          .jpeg({ quality: 100 })
+          .png({ quality: 100 })
           .toFile(resizedImagePath);
 
         images.push(req.files[i].filename);
@@ -174,7 +168,9 @@ const addProducts = async (req, res) => {
 
 const editProduct = async (req, res) => {
   try {
-    const product = await Product.findById(req.params.id).populate("category").populate("brand")
+    const product = await Product.findById(req.params.id)
+      .populate("category")
+      .populate("brand");
     const brands = await Brand.find();
     const categories = await Category.find();
 
@@ -197,13 +193,13 @@ const deleteProductImage = async (req, res) => {
   try {
     const productId = req.params.productId;
     const image = req.body.image;
-    
+
     const product = await Product.findById(productId);
-    
+
     product.productImage = product.productImage.filter((img) => img !== image);
-    
+
     const imagePath = path.join(__dirname, "../../public/images/", image);
-    
+
     if (fs.existsSync(imagePath)) {
       fs.unlinkSync(imagePath);
     }
@@ -219,19 +215,15 @@ const deleteProductImage = async (req, res) => {
 
 const uploadCroppedImage = async (req, res) => {
   try {
-    
     const productId = req.params.productId;
-    
-    console.log('imageblob',req.file)
+
     if (req.file) {
       const imageBlob = `${req.file.filename}`;
       const product = await Product.findById(productId);
       product.productImage.push(imageBlob);
-     
 
       await product.save();
 
-     
       res.status(200).json({ message: "Image uploade successfully" });
     } else {
       res.status(400).json({ message: "No file uploaded" });
@@ -247,21 +239,9 @@ const updateProduct = async (req, res) => {
     // Get productId from the route parameter
     const productId = req.params.productId;
 
-    console.log('Product ID:', productId);
-    console.log('Received Data:', {
-      productName: req.body.productName,
-      description: req.body.description,
-      regularPrice: req.body.regularPrice,
-      salePrice: req.body.salePrice,
-      quantity: req.body.quantity,
-      category: req.body.category,
-      brand: req.body.brand,
-      color: req.body.color,
-    });
-const id= await Category.findOne({name:req.body.category})
-console.log("id",id);
-const brand=await Brand.findOne({name:req.body.brand})
+    const id = await Category.findOne({ name: req.body.category });
 
+    const brand = await Brand.findOne({ name: req.body.brand });
 
     // Create an updatedProduct object with the updated fields
     const updatedProduct = {
@@ -275,22 +255,20 @@ const brand=await Brand.findOne({name:req.body.brand})
       colors: req.body.color || [], // Use empty array if no colors
     };
 
-  console.log('picture',req.files)
     if (req.files && req.files.length > 0) {
       const uploadedImages = req.files.filename;
       updatedProduct.productImage = uploadedImages;
     }
 
-    
-    const product = await Product.findByIdAndUpdate(productId,updatedProduct,{ new: true });
+    const product = await Product.findByIdAndUpdate(productId, updatedProduct, {
+      new: true,
+    });
 
     if (!product) {
-      return res.status(404).json({ message: 'Product not found' });
+      return res.status(404).json({ message: "Product not found" });
     }
-    res.redirect('/admin/products')
-    
+    res.redirect("/admin/products");
   } catch (error) {
-   
     console.error("Error updating product:", error);
     res.status(500).send("Server error");
   }

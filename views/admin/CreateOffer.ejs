@@ -1,81 +1,88 @@
 <%- include("../../views/partials/admin/header") %>
 
-<section class="contentmain">
+  <section class="contentmain">
     <div class="content-header">
       <h2 class="content-title">Add New Offer</h2>
     </div>
     <div class="card mb-4">
       <div class="card-body">
         <% if (message) { %>
-          <p style="color: red; align-items: center;"><strong>Note: </strong><%= message %></p>
-        <% } %>
-        
-        <form action="/admin/createOffer" method="POST">
-          
-            <!-- Offer Name -->
-            <div class="form-group">
-              <label for="offerName">Offer Name:</label>
-              <input type="text" id="offerName" name="offerName" class="form-control" placeholder="Enter offer name" required>
-            </div>
+          <p style="color: red; align-items: center;"><strong>Note: </strong>
+            <%= message %>
+          </p>
+          <% } %>
 
-            <!-- Offer Description -->
-            <div class="form-group">
-              <label for="offerDescription">Offer Code:</label>
-              <textarea id="offerDescription" name="offerCode" class="form-control" placeholder="Enter offer description" required></textarea>
-            </div>
+            <form action="/admin/createOffer" method="POST">
 
-            <!-- Discount Type -->
-            <div class="form-group">
-              <label for="discountType">Discount Type:</label>
-              <select id="discountType" name="discountType" class="form-control" required>
-                <option value="Fixed">Fixed Amount</option>
-            
-              </select>
-            </div>
+              <!-- Offer Name -->
+              <div class="form-group">
+                <label for="offerName">Offer Name:</label>
+                <input type="text" id="offerName" name="offerName" class="form-control" placeholder="Enter offer name"
+                  required>
+              </div>
 
-            <!-- Discount Value -->
-            <div class="form-group">
-              <label for="discountValue">Discount Value:</label>
-              <input type="number" id="discountValue" name="discountValue" class="form-control" placeholder="Enter discount value" required>
-            </div>
+              <!-- Offer Description -->
+              <div class="form-group">
+                <label for="offerDescription">Offer Code:</label>
+                <textarea id="offerDescription" name="offerCode" class="form-control"
+                  placeholder="Enter offer description" required></textarea>
+              </div>
 
-            <!-- Minimum Order Amount -->
-           
+              <!-- Discount Type -->
+              <div class="form-group">
+                <label for="discountType">Discount Type:</label>
+                <select id="discountType" name="discountType" class="form-control" required>
+                  <option value="Fixed">Fixed Amount</option>
 
-            <!-- Start Date -->
-            <div class="form-group">
-              <label for="startDate">Start Date:</label>
-              <input type="date" id="startDate" name="startDate" class="form-control" required>
-            </div>
-
-            <!-- End Date -->
-            <div class="form-group">
-              <label for="endDate">End Date:</label>
-              <input type="date" id="endDate" name="endDate" class="form-control" required>
-            </div>
-
-            <!-- Applicable Products/Categories -->
-           
-
-            <div class="form-group">
-                <label for="applicableTo">Applicable Product:</label>
-                <select id="applicableTo" name="product" class="form-control" required>
-                  
-                  <% for(let i=0;i<product.length;i++){ %>
-                  <option value="<%=product[i].name  %>"><%=product[i].name  %></option>
-                  <% } %>
                 </select>
               </div>
 
-            <!-- Submit Button -->
-            <div class="form-group">
-              <button type="submit" class="btn btn-primary">Create Offer</button>
-            </div>
-            
-        </form>
+              <!-- Discount Value -->
+              <div class="form-group">
+                <label for="discountValue">Discount Value:</label>
+                <input type="number" id="discountValue" name="discountValue" class="form-control"
+                  placeholder="Enter discount value" required>
+              </div>
+
+              <!-- Minimum Order Amount -->
+
+
+              <!-- Start Date -->
+              <div class="form-group">
+                <label for="startDate">Start Date:</label>
+                <input type="date" id="startDate" name="startDate" class="form-control" required>
+              </div>
+
+              <!-- End Date -->
+              <div class="form-group">
+                <label for="endDate">End Date:</label>
+                <input type="date" id="endDate" name="endDate" class="form-control" required>
+              </div>
+
+              <!-- Applicable Products/Categories -->
+
+
+              <div class="form-group">
+                <label for="applicableTo">Applicable Product:</label>
+                <select id="applicableTo" name="product" class="form-control" required>
+
+                  <% for(let i=0;i<product.length;i++){ %>
+                    <option value="<%=product[i].name  %>">
+                      <%=product[i].name %>
+                    </option>
+                    <% } %>
+                </select>
+              </div>
+
+              <!-- Submit Button -->
+              <div class="form-group">
+                <button type="submit" class="btn btn-primary">Create Offer</button>
+              </div>
+
+            </form>
       </div>
     </div>
-   
-</section>
 
-<%- include("../../views/partials/admin/footer") %>
+  </section>
+
+  <%- include("../../views/partials/admin/footer") %>

@@ -1,79 +1,96 @@
 <%- include('../partials/admin/header') %>
 
-<form class="searchBar" action="/admin/searchCoupons" method="GET">
-    <input type="text" name="searchQuery" placeholder="Search by coupon Id" required>
-    <button type="submit">Search</button>
-</form>
+    <form class="searchBar" action="/admin/searchCoupons" method="GET">
+        <input type="text" name="searchQuery" placeholder="Search by coupon Id" required>
+        <button type="submit">Search</button>
+    </form>
 
 
-<div class="couponadmin-buttons">
-    <button class="couponadmin-create-btn" onclick="window.location.href='/admin/createCouponPage'">+ Create New Coupon</button>
-</div>
-
-<div class="couponadmin-containerfluid">
-
-    <div class="couponadmin-tabl">
-        <table class="couponadmin-table">
-            <thead>
-                <tr>
-                    <th>Coupon Id</th>
-                    <th>Coupon Code</th>
-                   
-                    <th>Discount Value</th>
-             
-                    <th>Valid From</th>
-                    <th>Valid Until</th>
-                    <th>Status</th>
-                    <th>Block/Unblock</th>
-                </tr>
-            </thead>
-            <tbody>
-              <% for(let i =coupon.length-1; i>=0 ;i--){ %>
-                <tr>
-                    <td><%= coupon[i]._id  %></td>
-                    <td><%=coupon[i].code  %></td>
-                    <td><%=coupon[i].discountValue  %> $</td>
-                   
-                    <td><%= new Date(coupon[i].startDate).toLocaleDateString() %></td>
-
-                    <td><%= new Date(coupon[i].endDate).toLocaleDateString() %></td>
-                    <% if(coupon[i].isActive=true){ %>
-                    <td>Active</td>
-                    <% }else{ %>
-                        <td>inActive</td>
-                        <% } %>
-                   
-                    <td>
-                        <% if (coupon[i].isActive=true) { %>
-                            <button class="couponadmin-action-btn" onclick="window.location.href='/admin/blockCoupon?id=<%=coupon[i]._id %>'">Block</button>
-                        <% } else { %>
-                            <button class="couponadmin-action-btn" onclick="window.location.href='/admin/UnblockCoupon?id=<%=coupon[i]._id %>'">Unblock</button>
-                        <% } %>
-                    </td>
-                    
-                    
-                  
-                </tr>
-                <% } %>
-            </tbody>
-        </table>
-
+    <div class="couponadmin-buttons">
+        <button class="couponadmin-create-btn" onclick="window.location.href='/admin/createCouponPage'">+ Create New
+            Coupon</button>
     </div>
-</div>
-<div class="pagination-container">
-    <% if (currentPage > 1) { %>
-    <a href="?page=<%= currentPage - 1 %>">&laquo; Previous</a>
-    <% } %> 
-    <% for (let i = 1; i <= totalPages; i++) { %> 
-    <% if (i === currentPage) { %>
-    <span class="current-page"><%= i %></span>
-    <% } else { %>
-    <a href="?page=<%= i %>"><%= i %></a>
-    <% } %> 
-    <% } %> 
-    <% if (currentPage < totalPages) { %>
-    <a href="?page=<%= currentPage + 1 %>">Next &raquo;</a>
-    <% } %>
-</div>
 
-<%- include('../partials/admin/footer') %>
+    <div class="couponadmin-containerfluid">
+
+        <div class="couponadmin-tabl">
+            <table class="couponadmin-table">
+                <thead>
+                    <tr>
+                        <th>Coupon Id</th>
+                        <th>Coupon Code</th>
+
+                        <th>Discount Value</th>
+
+                        <th>Valid From</th>
+                        <th>Valid Until</th>
+                        <th>Status</th>
+                        <th>Block/Unblock</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% for(let i=coupon.length-1; i>=0 ;i--){ %>
+                        <tr>
+                            <td>
+                                <%= coupon[i]._id %>
+                            </td>
+                            <td>
+                                <%=coupon[i].code %>
+                            </td>
+                            <td>
+                                <%=coupon[i].discountValue %> $
+                            </td>
+
+                            <td>
+                                <%= new Date(coupon[i].startDate).toLocaleDateString() %>
+                            </td>
+
+                            <td>
+                                <%= new Date(coupon[i].endDate).toLocaleDateString() %>
+                            </td>
+                            <% if(coupon[i].isActive=true){ %>
+                                <td>Active</td>
+                                <% }else{ %>
+                                    <td>inActive</td>
+                                    <% } %>
+
+                                        <td>
+                                            <% if (coupon[i].isActive=true) { %>
+                                                <button class="couponadmin-action-btn"
+                                                    onclick="window.location.href='/admin/blockCoupon?id=<%=coupon[i]._id %>'">Block</button>
+                                                <% } else { %>
+                                                    <button class="couponadmin-action-btn"
+                                                        onclick="window.location.href='/admin/UnblockCoupon?id=<%=coupon[i]._id %>'">Unblock</button>
+                                                    <% } %>
+                                        </td>
+
+
+
+                        </tr>
+                        <% } %>
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+    <div class="pagination-container">
+        <% if (currentPage> 1) { %>
+            <a href="?page=<%= currentPage - 1 %>">&laquo; Previous</a>
+            <% } %>
+                <% for (let i=1; i <=totalPages; i++) { %>
+                    <% if (i===currentPage) { %>
+                        <span class="current-page">
+                            <%= i %>
+                        </span>
+                        <% } else { %>
+                            <a href="?page=<%= i %>">
+                                <%= i %>
+                            </a>
+                            <% } %>
+                                <% } %>
+                                    <% if (currentPage < totalPages) { %>
+                                        <a href="?page=<%= currentPage + 1 %>">Next &raquo;</a>
+                                        <% } %>
+    </div>
+
+    <%- include('../partials/admin/footer') %>

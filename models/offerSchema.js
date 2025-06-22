@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
 const offerSchema = new mongoose.Schema({
   offerName: {
@@ -12,7 +12,7 @@ const offerSchema = new mongoose.Schema({
   },
   discountType: {
     type: String,
-    enum: ['Fixed'],
+    enum: ["Fixed"],
     required: true,
   },
   discountValue: {
@@ -34,17 +34,15 @@ const offerSchema = new mongoose.Schema({
 
   isActive: {
     type: Boolean,
-    default: true, 
+    default: true,
   },
 
-
   product: {
-    
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'Product',
-      required: false,
-    },
-   
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Product",
+    required: false,
+  },
+
   createdAt: {
     type: Date,
     default: Date.now,
@@ -57,11 +55,11 @@ const offerSchema = new mongoose.Schema({
 
 // Pre-save middleware to update `updatedAt` field
 
-offerSchema.pre('save', function (next) {
+offerSchema.pre("save", function (next) {
   this.updatedAt = Date.now();
   next();
 });
 
-const Offer = mongoose.model('Offer', offerSchema);
+const Offer = mongoose.model("Offer", offerSchema);
 
 module.exports = Offer;

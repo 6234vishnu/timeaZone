@@ -1,112 +1,132 @@
 <%- include('../partials/admin/header') %>
-<style>
-    .search-button {
-    margin-top: 10px; /* Space between the input and button */
-    padding: 10px 15px; /* Padding for the button */
-    font-size: 16px; /* Font size for button text */
-    color: #fff; /* Text color */
-    background-color: #000000; /* Button background color */
-    border: none; /* Remove default border */
-    border-radius: 4px; /* Rounded corners */
-    cursor: pointer; /* Change cursor to pointer on hover */
-    transition: background-color 0.3s; /* Smooth transition for background color */
-}
+    <style>
+        .search-button {
+            margin-top: 10px;
+            /* Space between the input and button */
+            padding: 10px 15px;
+            /* Padding for the button */
+            font-size: 16px;
+            /* Font size for button text */
+            color: #fff;
+            /* Text color */
+            background-color: #000000;
+            /* Button background color */
+            border: none;
+            /* Remove default border */
+            border-radius: 4px;
+            /* Rounded corners */
+            cursor: pointer;
+            /* Change cursor to pointer on hover */
+            transition: background-color 0.3s;
+            /* Smooth transition for background color */
+        }
 
-.search-button:hover {
-    background-color: #000000; /* Darker shade on hover */
-}
+        .search-button:hover {
+            background-color: #000000;
+            /* Darker shade on hover */
+        }
 
-.search-button:focus {
-    outline: none; /* Remove default outline */
-}
+        .search-button:focus {
+            outline: none;
+            /* Remove default outline */
+        }
+    </style>
+    <div class="container-fluid" style="width: 1000px;">
 
-</style>
-<div class="container-fluid" style="width: 1000px;">
-    
 
-    <div class="tabl">
-        <table class="productTable" >
-            <thead>
-                <tr>
-                    <th>Order Details</th>
-                    <th>Order Id</th>
-                    <th>Price</th>
-                    <th>Status</th>
-                    <th>Order Details</th>
-                
-                </tr>
-            </thead>
-            <tbody>
-              
-                
-                <% for(let i=order.length-1;i>=0;i--){ %>
-                <tr>
-                    <td>
-                        <form action="/admin/orderDetails" method="GET">
-                            <input type="hidden" name="orderId" value="<%= order[i]._id %>">
-                            <button type="submit" style="background-color: black;">Order Details</button>
-                          </form>
-                          
-                          
-                      </td>
-                    <form action="/admin/submitData" method="POST">
-                       
-                        <input type="hidden" name="orderId" value="<%= order[i]._id %>">
+        <div class="tabl">
+            <table class="productTable">
+                <thead>
+                    <tr>
+                        <th>Order Details</th>
+                        <th>Order Id</th>
+                        <th>Price</th>
+                        <th>Status</th>
+                        <th>Order Details</th>
 
-                        
-                        <td><%= order[i]._id %></td> 
+                    </tr>
+                </thead>
+                <tbody>
 
-                        <td><%= order[i].totalAmount  %></td>
-                        <td><%= order[i].orderStatus  %></td>
-                       
 
-                        <td class="product-action-btns">
-                            <div class="dropdown">
-                                <button type="button">Select an Option </button>
-                                <div class="dropdown-content">
-                                    <label>
-                                        <input type="radio" name="newStatus" value="Returned" required> Returned
-                                    </label>
-                                    <label>
-                                        <input type="radio" name="newStatus" value="Delivered"> Delivered
-                                    </label>
-                                    <label>
-                                        <input type="radio" name="newStatus" value="Shipped"> Shipped
-                                    </label>
-                                    <label>
-                                        <input type="radio" name="newStatus" value="Processing"> Processing
-                                    </label>
-                                    <label>
-                                        <input type="radio" name="newStatus" value="Cancelled"> Cancelled
-                                    </label>
-                                </div>
-                            </div>
-                            <br><br>
-                            <button type="submit" style="background-color: black;">Submit</button>
-                        </td>
-                    </form>
-                </tr>
-                <% } %>
-            </tbody>
-        </table>
+                    <% for(let i=order.length-1;i>=0;i--){ %>
+                        <tr>
+                            <td>
+                                <form action="/admin/orderDetails" method="GET">
+                                    <input type="hidden" name="orderId" value="<%= order[i]._id %>">
+                                    <button type="submit" style="background-color: black;">Order Details</button>
+                                </form>
 
-        <div class="pagination-container">
-            <% if (currentPage > 1) { %>
-            <a href="?page=<%= currentPage - 1 %>">&laquo; Previous</a>
-            <% } %> 
-            <% for (let i = 1; i <= totalPages; i++) { %> 
-            <% if (i === currentPage) { %>
-            <span class="current-page"><%= i %></span>
-            <% } else { %>
-            <a href="?page=<%= i %>"><%= i %></a>
-            <% } %> 
-            <% } %> 
-            <% if (currentPage < totalPages) { %>
-            <a href="?page=<%= currentPage + 1 %>">Next &raquo;</a>
-            <% } %>
+
+                            </td>
+                            <form action="/admin/submitData" method="POST">
+
+                                <input type="hidden" name="orderId" value="<%= order[i]._id %>">
+
+
+                                <td>
+                                    <%= order[i]._id %>
+                                </td>
+
+                                <td>
+                                    <%= order[i].totalAmount %>
+                                </td>
+                                <td>
+                                    <%= order[i].orderStatus %>
+                                </td>
+
+
+                                <td class="product-action-btns">
+                                    <div class="dropdown">
+                                        <button type="button">Select an Option </button>
+                                        <div class="dropdown-content">
+                                            <label>
+                                                <input type="radio" name="newStatus" value="Returned" required> Returned
+                                            </label>
+                                            <label>
+                                                <input type="radio" name="newStatus" value="Delivered"> Delivered
+                                            </label>
+                                            <label>
+                                                <input type="radio" name="newStatus" value="Shipped"> Shipped
+                                            </label>
+                                            <label>
+                                                <input type="radio" name="newStatus" value="Processing"> Processing
+                                            </label>
+                                            <label>
+                                                <input type="radio" name="newStatus" value="Cancelled"> Cancelled
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <br><br>
+                                    <button type="submit" style="background-color: black;">Submit</button>
+                                </td>
+                            </form>
+                        </tr>
+                        <% } %>
+                </tbody>
+            </table>
+
+            <div class="pagination-container">
+                <% if (currentPage> 1) { %>
+                    <a href="?page=<%= currentPage - 1 %>">&laquo; Previous</a>
+                    <% } %>
+                        <% for (let i=1; i <=totalPages; i++) { %>
+                            <% if (i===currentPage) { %>
+                                <span class="current-page">
+                                    <%= i %>
+                                </span>
+                                <% } else { %>
+                                    <a href="?page=<%= i %>">
+                                        <%= i %>
+                                    </a>
+                                    <% } %>
+                                        <% } %>
+                                            <% if (currentPage < totalPages) { %>
+                                                <a href="?page=<%= currentPage + 1 %>">Next &raquo;</a>
+                                                <% } %>
+            </div>
         </div>
     </div>
-</div>
 
 
-<%- include('../partials/admin/footer') %>
+    <%- include('../partials/admin/footer') %>

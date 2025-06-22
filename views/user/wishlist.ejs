@@ -1,138 +1,144 @@
 <%- include("../../Views/partials/user/header") %>
 
-<div class="wishlist-container">
-    <h1 class="wishlist-title">My Wishlist</h1>
-    
-    <div class="wishlist-items">
-        <!-- Check if there are items in the wishlist -->
-        <% if(wishlist && wishlist.length > 0) { %>
-            <% for(let i = 0; i < wishlist.length; i++) { %>
-                <% const wishlistItem = wishlist[i]; %>
-                
-                <% if(wishlistItem.products && wishlistItem.products.length > 0) { %>
-                    <% for(let j = 0; j < wishlistItem.products.length; j++) { %>
-                        <% const product = wishlistItem.products[j]; %>
-                        
-                        <!-- Check if the product exists -->
-                        <% if(product) { %>
-                            <div class="wishlist-item">
-                                <img src="/re-image/<%= product.productImage[0] %>" alt="<%= product.name %>" class="wishlist-item-image">
-                                <div class="wishlist-item-info">
-                                    <h2 class="wishlist-item-title"><%= product.name %></h2>
-                                    
-                                    <!-- Stock Availability -->
-                                    <% if(product.quantity <= 0) { %>
-                                        <p class="wishlist-item-price">Out of stock</p>
-                                    <% } else if(product.quantity < 5) { %>
-                                        <p class="wishlist-item-price">Only a few left</p>
-                                    <% } else { %>
-                                        <p  style="color: rgb(11, 219, 11);" class="wishlist-item-price">Available</p>
-                                    <% } %>
-                                    
-                                    <p class="wishlist-item-price"><%= product.salePrice %> $</p>
+    <div class="wishlist-container">
+        <h1 class="wishlist-title">My Wishlist</h1>
 
-                                    <button class="wishlist-add-to-cart">
-                                  
-                                            <span >
-                                                <a  href="javascript:void(0);" class="addToCart" data-product-id="<%= product._id %>">Add To Cart</a>
-                                            </span>
-                                      
-                                    </button>
-                                    
-                                
-                                    <button 
-                                        class="remove" 
-                                        data-product-id="<%= product._id %>"
-                                    >Remove</button>
-                                </div>
-                            </div>
-                        <% } %>
-                    <% } %>
-                <% } %>
-            <% } %>
-        <% } else { %>
-            <div>
-                <h4 style="color: black;">No products found</h4>
-            </div>
-        <% } %>
+        <div class="wishlist-items">
+            <!-- Check if there are items in the wishlist -->
+            <% if(wishlist && wishlist.length> 0) { %>
+                <% for(let i=0; i < wishlist.length; i++) { %>
+                    <% const wishlistItem=wishlist[i]; %>
+
+                        <% if(wishlistItem.products && wishlistItem.products.length> 0) { %>
+                            <% for(let j=0; j < wishlistItem.products.length; j++) { %>
+                                <% const product=wishlistItem.products[j]; %>
+
+                                    <!-- Check if the product exists -->
+                                    <% if(product) { %>
+                                        <div class="wishlist-item">
+                                            <img src="/re-image/<%= product.productImage[0] %>"
+                                                alt="<%= product.name %>" class="wishlist-item-image">
+                                            <div class="wishlist-item-info">
+                                                <h2 class="wishlist-item-title">
+                                                    <%= product.name %>
+                                                </h2>
+
+                                                <!-- Stock Availability -->
+                                                <% if(product.quantity <=0) { %>
+                                                    <p class="wishlist-item-price">Out of stock</p>
+                                                    <% } else if(product.quantity < 5) { %>
+                                                        <p class="wishlist-item-price">Only a few left</p>
+                                                        <% } else { %>
+                                                            <p style="color: rgb(11, 219, 11);"
+                                                                class="wishlist-item-price">Available</p>
+                                                            <% } %>
+
+                                                                <p class="wishlist-item-price">
+                                                                    <%= product.salePrice %> $
+                                                                </p>
+
+                                                                <button class="wishlist-add-to-cart">
+
+                                                                    <span>
+                                                                        <a href="javascript:void(0);" class="addToCart"
+                                                                            data-product-id="<%= product._id %>">Add To
+                                                                            Cart</a>
+                                                                    </span>
+
+                                                                </button>
+
+
+                                                                <button class="remove"
+                                                                    data-product-id="<%= product._id %>">Remove</button>
+                                            </div>
+                                        </div>
+                                        <% } %>
+                                            <% } %>
+                                                <% } %>
+                                                    <% } %>
+                                                        <% } else { %>
+                                                            <div>
+                                                                <h4 style="color: black;">No products found</h4>
+                                                            </div>
+                                                            <% } %>
+        </div>
+
+
+
     </div>
-    
-    
+    <script>
 
-</div>
-<script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const removeButtons = document.querySelectorAll('.remove');
 
-document.addEventListener('DOMContentLoaded', function() {
-    const removeButtons = document.querySelectorAll('.remove');
+            removeButtons.forEach(button => {
+                button.addEventListener('click', async function (event) {
+                    event.preventDefault();
+                    const productId = this.getAttribute('data-product-id');
 
-    removeButtons.forEach(button => {
-        button.addEventListener('click', async function(event) {
-            event.preventDefault(); 
-            const productId = this.getAttribute('data-product-id'); 
+                    try {
 
-            try {
-               
-                const response = await fetch('/removeWishlist', {
-                    method: 'DELETE', 
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({ productId: productId })
+                        const response = await fetch('/removeWishlist', {
+                            method: 'DELETE',
+                            headers: {
+                                'Content-Type': 'application/json',
+                            },
+                            body: JSON.stringify({ productId: productId })
+                        });
+
+                        const result = await response.json();
+
+                        if (response.ok) {
+                            alert('Product removed from wishlist successfully!');
+
+                            location.reload()
+                        } else {
+                            alert(`Failed to remove product from wishlist: ${result.message}`);
+                        }
+                    } catch (error) {
+                        console.error('Error removing product from wishlist:', error);
+                        alert('There was an error removing the product from the wishlist.');
+                    }
                 });
-
-                const result = await response.json();
-
-                if (response.ok) {
-                    alert('Product removed from wishlist successfully!');
-       
-                    location.reload()
-                } else {
-                    alert(`Failed to remove product from wishlist: ${result.message}`);
-                }
-            } catch (error) {
-                console.error('Error removing product from wishlist:', error);
-                alert('There was an error removing the product from the wishlist.');
-            }
+            });
         });
-    });
-});
 
 
-document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', function () {
 
-const addToCartLinks = document.querySelectorAll('.addToCart');
+            const addToCartLinks = document.querySelectorAll('.addToCart');
 
 
-addToCartLinks.forEach(link => {
-  link.addEventListener('click', async function(event) {
-    event.preventDefault();
-    const productId = this.getAttribute('data-product-id'); 
+            addToCartLinks.forEach(link => {
+                link.addEventListener('click', async function (event) {
+                    event.preventDefault();
+                    const productId = this.getAttribute('data-product-id');
 
-    try {
-    
-      const response = await fetch('/addToCart', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ productId: productId }) 
-      });
+                    try {
 
-      const result = await response.json();
+                        const response = await fetch('/addToCart', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                            },
+                            body: JSON.stringify({ productId: productId })
+                        });
 
-      if (response.ok) {
-        alert('Product added to cart successfully!');
-      } else {
-        alert(`Failed to add product to cart: ${result.message}`);
-      }
-    } catch (error) {
-      console.error('Error adding product to cart:', error);
-      alert('There was an error adding the product to the cart.');
-    }
-  });
-});
-});
+                        const result = await response.json();
 
-</script>
+                        if (response.ok) {
+                            alert('Product added to cart successfully!');
+                        } else {
+                            alert(`Failed to add product to cart: ${result.message}`);
+                        }
+                    } catch (error) {
+                        console.error('Error adding product to cart:', error);
+                        alert('There was an error adding the product to the cart.');
+                    }
+                });
+            });
+        });
 
-<%- include("../../Views/partials/user/footer") %>
+    </script>
+
+    <%- include("../../Views/partials/user/footer") %>

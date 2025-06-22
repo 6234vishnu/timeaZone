@@ -1,62 +1,74 @@
-.swiper-slide<%-include("../../Views/partials/user/header")%>
+.swiper-slide<%-include(".. /../Views/partials/user/header")%>
 
 
-<div class="breadcrumb__links">
-    <a href="/">Home ></a>
-    <span>Product details</span>
-</div>
-<main class="userpr-main">
-    
+    <div class="breadcrumb__links">
+        <a href="/">Home ></a>
+        <span>Product details</span>
+    </div>
+    <main class="userpr-main">
+
         <div class="userpr-product-images">
-           
+
             <div class="swiper-container">
                 <div class="swiper-wrapper">
-                    <% for (let i = 0; i < product.productImage.length; i++) { %>
+                    <% for (let i=0; i < product.productImage.length; i++) { %>
                         <div class="swiper-slide">
                             <img src="/re-image/<%= product.productImage[i] %>" alt="Product Image">
                         </div>
-                    <% } %>
+                        <% } %>
                 </div>
-               
+
                 <div class="swiper-pagination"></div>
                 <div class="swiper-button-next"></div>
                 <div class="swiper-button-prev"></div>
             </div>
-            
+
         </div>
 
-        
+
         <div class="userpr-product-details">
             <div class="userpr-product-thumbnails">
                 <% for(let i=0;i<product.productImage.length;i++){ %>
-                <img src="/re-image/<%=product.productImage[i]  %>" alt="Thumbnail <%= i + 1 %>">
-             
-                <% } %>
+                    <img src="/re-image/<%=product.productImage[i]  %>" alt="Thumbnail <%= i + 1 %>">
+
+                    <% } %>
             </div>
-            <h1 class="userpr-product-title"><%=product.name  %></h1>
+            <h1 class="userpr-product-title">
+                <%=product.name %>
+            </h1>
             <p class="userpr-product-description">
-                <%= product.description  %>
+                <%= product.description %>
             </p>
             <div class="userpr-product-pricing">
-                <span class="userpr-product-price"><%=product.salePrice  %> $</span>
+                <span class="userpr-product-price">
+                    <%=product.salePrice %> $
+                </span>
                 <span class="userpr-product-discount">30% Off</span>
             </div>
             <div class="userpr-product-color-options">
                 <% for(let i=0;i<product.color.length;i++){ %>
-                <span class="userpr-color-option"><%=product.color[i]  %></span>
-                <span class="userpr-color-option"><%=product.color[i]  %></span>
-                <span class="userpr-color-option"><%=product.color[i]  %></span>
-                <% } %>
+                    <span class="userpr-color-option">
+                        <%=product.color[i] %>
+                    </span>
+                    <span class="userpr-color-option">
+                        <%=product.color[i] %>
+                    </span>
+                    <span class="userpr-color-option">
+                        <%=product.color[i] %>
+                    </span>
+                    <% } %>
             </div>
             <form id="product-form">
-                <div class="userpr-product-stock" id="status"><%=product.status  %></div>
+                <div class="userpr-product-stock" id="status">
+                    <%=product.status %>
+                </div>
                 <div class="userpr-product-quantity">
                     <label for="quantity" class="userpr-label"></label>
                     <input type="number" id="quantity" class="userpr-quantity-input" value="1" min="1">
                 </div>
-                <button type="submit" class="userpr-submit-button" >Update Status</button>
+                <button type="submit" class="userpr-submit-button">Update Status</button>
             </form>
-            
+
             <div class="userpr-product-buttons">
                 <button class="userpr-add-to-wishlist">Add to Wishlist</button>
                 <button class="userpr-add-to-cart">Add to Cart</button>
@@ -74,72 +86,74 @@
                 <p><strong>Delivery:</strong> 3rd street north, Avenue NewYork</p>
             </div>
         </div>
-    </section>
+        </section>
 
-    <section class="userpr-ratings-reviews">
-        <h2>Ratings & Reviews</h2>
-        <button class="userpr-add-review">Add Your Review</button>
+        <section class="userpr-ratings-reviews">
+            <h2>Ratings & Reviews</h2>
+            <button class="userpr-add-review">Add Your Review</button>
 
-        <div class="userpr-review">
-            <p class="userpr-review-author">Samuel Jackson</p>
-            <p class="userpr-review-content">I am using the product for a month now. Each and every aspect of this product is great and totally worth for the money I paid for it.</p>
-        </div>
-        <div class="userpr-review">
-            <p class="userpr-review-author">Leonardo Dicaprio</p>
-            <p class="userpr-review-content">I am using the product for a month now. Each and every aspect of this product is great and totally worth for the money I paid for it.</p>
-        </div>
-    </section>
-</main>
+            <div class="userpr-review">
+                <p class="userpr-review-author">Samuel Jackson</p>
+                <p class="userpr-review-content">I am using the product for a month now. Each and every aspect of this
+                    product is great and totally worth for the money I paid for it.</p>
+            </div>
+            <div class="userpr-review">
+                <p class="userpr-review-author">Leonardo Dicaprio</p>
+                <p class="userpr-review-content">I am using the product for a month now. Each and every aspect of this
+                    product is great and totally worth for the money I paid for it.</p>
+            </div>
+        </section>
+    </main>
 
-<footer class="userpr-footer">
-    <p>&copy; 2024 Time Zone. All rights reserved.</p>
-</footer>
-
-
-<script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
-<script>
-
-    const quantityLimit = 5
+    <footer class="userpr-footer">
+        <p>&copy; 2024 Time Zone. All rights reserved.</p>
+    </footer>
 
 
-function updateProductStatus() {
-    const quantityInput = document.getElementById('quantity');
-    const statusElement = document.getElementById('status');
+    <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+    <script>
+
+        const quantityLimit = 5
 
 
-    const quantity = parseInt(quantityInput.value);
+        function updateProductStatus() {
+            const quantityInput = document.getElementById('quantity');
+            const statusElement = document.getElementById('status');
 
 
-    if ( quantityLimit>quantity) {
-        statusElement.textContent = 'In Stock';
-        statusElement.style.color = '#4CAF50'; 
-    } else {
-        statusElement.textContent = 'Out of Stock';
-        statusElement.style.color = '#ff0000'; 
-    }
-}
+            const quantity = parseInt(quantityInput.value);
 
 
-document.getElementById('product-form').addEventListener('submit', function(event) {
-    event.preventDefault(); 
-    updateProductStatus();
-});
+            if (quantityLimit > quantity) {
+                statusElement.textContent = 'In Stock';
+                statusElement.style.color = '#4CAF50';
+            } else {
+                statusElement.textContent = 'Out of Stock';
+                statusElement.style.color = '#ff0000';
+            }
+        }
 
 
-    var swiper = new Swiper('.swiper-container', {
-        slidesPerView: 1, 
-        spaceBetween: 10,  
-        pagination: {
-            el: '.swiper-pagination',
-            clickable: true,
-        },
-        navigation: {
-            nextEl: '.swiper-button-next',
-            prevEl: '.swiper-button-prev',
-        },
-        loop: true,  
-    });
-</script>
+        document.getElementById('product-form').addEventListener('submit', function (event) {
+            event.preventDefault();
+            updateProductStatus();
+        });
 
 
-<%-include("../../Views/partials/user/footer")%>
+        var swiper = new Swiper('.swiper-container', {
+            slidesPerView: 1,
+            spaceBetween: 10,
+            pagination: {
+                el: '.swiper-pagination',
+                clickable: true,
+            },
+            navigation: {
+                nextEl: '.swiper-button-next',
+                prevEl: '.swiper-button-prev',
+            },
+            loop: true,
+        });
+    </script>
+
+
+    <%-include(".. /../Views/partials/user/footer")%>

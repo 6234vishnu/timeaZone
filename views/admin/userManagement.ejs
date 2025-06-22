@@ -2,7 +2,7 @@
 
 
 
-<div class="container-fluid">
+    <div class="container-fluid">
 
         <h2 class="mb-4" style="color: white;">User Management</h2>
 
@@ -11,7 +11,7 @@
 
         <!-- User Table -->
         <div class="user-table table-responsive">
-            <table class="table table-hover" >
+            <table class="table table-hover">
                 <thead class="thead-dark">
                     <tr style="color: white;">
                         <th scope="col">user-id</th>
@@ -19,76 +19,87 @@
                         <th scope="col">address-id</th>
                         <th scope="col">Email</th>
                         <th scope="col">Actions</th>
-                        
+
                     </tr>
                 </thead>
-                <tbody id="userTable" >
-                    <% for(let i = 0; i < data.length; i++) { %>
+                <tbody id="userTable">
+                    <% for(let i=0; i < data.length; i++) { %>
                         <tr>
-                            <td><%= data[i]._id %></td>
-                            <td><%= data[i].name %></td>
                             <td>
-                                <% if (data[i].address && data[i].address.length > 0) { %>
-                                    <% data[i].address.forEach(function(address, index) { %>
-                                        <%= address._id %><% if (index < data[i].address.length - 1) { %>, <% } %>
-                                    <% }); %>
-                                <% } else { %>
-                                    No Address Available
-                                <% } %>
+                                <%= data[i]._id %>
                             </td>
-                            <td><%= data[i].email %></td>
                             <td>
-                                <% if(data[i].isBlocked === false) { %>
-                                    <button class="btn btn-danger btn-block" onclick="window.location.href='/admin/blockCustomer?id=<%= data[i]._id %>'">Block</button>
-                                <% } else { %>
-                                    <button class="btn btn-success btn-unblock" onclick="window.location.href='/admin/unBlockCustomer?id=<%= data[i]._id %>'">Unblock</button>
-                                <% } %>
+                                <%= data[i].name %>
+                            </td>
+                            <td>
+                                <% if (data[i].address && data[i].address.length> 0) { %>
+                                    <% data[i].address.forEach(function(address, index) { %>
+                                        <%= address._id %>
+                                            <% if (index < data[i].address.length - 1) { %>, <% } %>
+                                                    <% }); %>
+                                                        <% } else { %>
+                                                            No Address Available
+                                                            <% } %>
+                            </td>
+                            <td>
+                                <%= data[i].email %>
+                            </td>
+                            <td>
+                                <% if(data[i].isBlocked===false) { %>
+                                    <button class="btn btn-danger btn-block"
+                                        onclick="window.location.href='/admin/blockCustomer?id=<%= data[i]._id %>'">Block</button>
+                                    <% } else { %>
+                                        <button class="btn btn-success btn-unblock"
+                                            onclick="window.location.href='/admin/unBlockCustomer?id=<%= data[i]._id %>'">Unblock</button>
+                                        <% } %>
                             </td>
                         </tr>
-                    <% } %>
-                    
-                    
-                    
-                  
-                    </tbody>
-                    </table>
-                    
-                    </div>
-                    <nav aria-label="Page navigation">
-                        <div>
-                            <ul class="pagination">
-                                <% for(let i = 1; i <= totalPages; i++) { %>
-                                    <li class="page-item <%= (i === currentPage) ? 'active' : '' %>" aria-current="page">
-                                        <a class="page-link" href="?page=<%= i %>"><%= i %></a>
-                                    </li>
-                                <% } %>
-                            </ul>
-                        </div>
-                    </nav>
-                    
-                    
+                        <% } %>
 
-    
 
-    <script>
-        // JavaScript for search functionality
-        document.getElementById('searchBar').addEventListener('keyup', function() {
-            let filter = this.value.toLowerCase();
-            let rows = document.querySelectorAll('#userTable tr');
 
-            rows.forEach(row => {
-                let name = row.querySelector('td:first-child').textContent.toLowerCase();
-                let email = row.querySelector('td:nth-child(2)').textContent.toLowerCase();
-                if (name.includes(filter) || email.includes(filter)) {
-                    row.style.display = '';
-                } else {
-                    row.style.display = 'none';
-                }
+
+                </tbody>
+            </table>
+
+        </div>
+        <nav aria-label="Page navigation">
+            <div>
+                <ul class="pagination">
+                    <% for(let i=1; i <=totalPages; i++) { %>
+                        <li class="page-item <%= (i === currentPage) ? 'active' : '' %>" aria-current="page">
+                            <a class="page-link" href="?page=<%= i %>">
+                                <%= i %>
+                            </a>
+                        </li>
+                        <% } %>
+                </ul>
+            </div>
+        </nav>
+
+
+
+
+
+        <script>
+            // JavaScript for search functionality
+            document.getElementById('searchBar').addEventListener('keyup', function () {
+                let filter = this.value.toLowerCase();
+                let rows = document.querySelectorAll('#userTable tr');
+
+                rows.forEach(row => {
+                    let name = row.querySelector('td:first-child').textContent.toLowerCase();
+                    let email = row.querySelector('td:nth-child(2)').textContent.toLowerCase();
+                    if (name.includes(filter) || email.includes(filter)) {
+                        row.style.display = '';
+                    } else {
+                        row.style.display = 'none';
+                    }
+                });
             });
-        });
-    </script>
-</div>
+        </script>
+    </div>
 
 
 
-<%- include('../partials/admin/footer') %>
+    <%- include('../partials/admin/footer') %>

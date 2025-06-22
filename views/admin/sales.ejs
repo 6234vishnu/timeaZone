@@ -1,83 +1,89 @@
 <%- include('../partials/admin/header') %>
-<form class="searchBar" action="/admin/salesPage" method="GET">
+  <form class="searchBar" action="/admin/salesPage" method="GET">
     <input type="text" name="searchQuery" placeholder="Search by order Id" required>
     <button type="submit">Search</button>
-</form>
+  </form>
 
 
 
-<div class="sales-report-header-bar">
+  <div class="sales-report-header-bar">
     <h1 class="sales-report-title">SALES REPORT</h1>
     <div class="sales-report-buttons">
-        <form action="/admin/excelDownload" method="GET">
-          
-            <input type="hidden" name="download" value="excel">
-            <button type="submit" class="sales-report-download-btn" style="background-color: black;">Download Excel</button>
-        </form>
-        
-        <form action="/admin/salesPage" method="GET">
-          
-            <input type="hidden" name="download" value="pdf">
-            <button type="submit" class="sales-report-download-btn">Download PDF</button>
-        </form>
-    </div>
-    </div>
-</div>
+      <form action="/admin/excelDownload" method="GET">
 
-<div class="sales-report-container">
+        <input type="hidden" name="download" value="excel">
+        <button type="submit" class="sales-report-download-btn" style="background-color: black;">Download Excel</button>
+      </form>
 
-  <form action="/admin/salesPage" method="get">
-    <div class="sales-report-filter-section">
-      <select name="filterType" class="sales-report-filter-dropdown">
-        <option value="">Apply filter</option>
-        <option value="total">Total</option>
-        <option value="daily">Daily</option>
-        <option value="weekly">Weekly</option>
-        <option value="monthly">Monthly</option>
-        <option value="custom">Custom Date Range</option> <!-- Added custom filter option -->
-      </select>
-  
-      <!-- New date inputs for custom range -->
-      <input type="date" name="startDate" class="sales-report-date-input" placeholder="Start Date" />
-      <input type="date" name="endDate" class="sales-report-date-input" placeholder="End Date" />
-  
-      <button type="submit" class="sales-report-filter-btn">Filter</button>
+      <form action="/admin/salesPage" method="GET">
+
+        <input type="hidden" name="download" value="pdf">
+        <button type="submit" class="sales-report-download-btn">Download PDF</button>
+      </form>
     </div>
-  </form>
-  
-  
-  
+  </div>
+  </div>
+
+  <div class="sales-report-container">
+
+    <form action="/admin/salesPage" method="get">
+      <div class="sales-report-filter-section">
+        <select name="filterType" class="sales-report-filter-dropdown">
+          <option value="">Apply filter</option>
+          <option value="total">Total</option>
+          <option value="daily">Daily</option>
+          <option value="weekly">Weekly</option>
+          <option value="monthly">Monthly</option>
+          <option value="custom">Custom Date Range</option> <!-- Added custom filter option -->
+        </select>
+
+        <!-- New date inputs for custom range -->
+        <input type="date" name="startDate" class="sales-report-date-input" placeholder="Start Date" />
+        <input type="date" name="endDate" class="sales-report-date-input" placeholder="End Date" />
+
+        <button type="submit" class="sales-report-filter-btn">Filter</button>
+      </div>
+    </form>
+
+
+
     <div class="sales-report-header">
-  
+
       <div class="sales-report-total-sales-section">
         <div class="sales-report-sales-image">
           <img src="\re-image\salesCount.jpg" alt="Sales Icon" />
         </div>
         <div class="sales-report-total-sales">
-          <h2>Total Sales Count: <span style="color: red;"><%= totalOrders %></span></h2>
+          <h2>Total Sales Count: <span style="color: red;">
+              <%= totalOrders %>
+            </span></h2>
         </div>
       </div>
-  
+
       <div class="sales-report-total-sales-section">
         <div class="sales-report-sales-image">
           <img src="\re-image\SalesOFFER.jpg" alt="Sales Icon" />
         </div>
         <div class="sales-report-total-sales">
-          <h2>Total Discount: <span style="color: red;"><%= totalDiscount %> $</span></h2>
+          <h2>Total Discount: <span style="color: red;">
+              <%= totalDiscount %> $
+            </span></h2>
         </div>
       </div>
-  
+
       <div class="sales-report-total-sales-section">
         <div class="sales-report-sales-image">
           <img src="\re-image\totalAmount.jpg" alt="Sales Icon" />
         </div>
         <div class="sales-report-total-sales">
-          <h2>Total Amount: <span style="color: red;"><%= totalAmount %> $</span></h2>
+          <h2>Total Amount: <span style="color: red;">
+              <%= totalAmount %> $
+            </span></h2>
         </div>
       </div>
-  
+
     </div>
-  
+
     <div class="sales-report-table-container">
       <table class="sales-report-table">
         <thead>
@@ -91,8 +97,8 @@
             <th>Order Status</th>
           </tr>
         </thead>
-  
-        <% if (totalOrders === 0) { %>
+
+        <% if (totalOrders===0) { %>
           <tbody>
             <tr>
               <td colspan="7" style="text-align: center;">
@@ -100,53 +106,69 @@
               </td>
             </tr>
           </tbody>
-        <% } else { %>
-          <tbody>
-            <% for (let i = order.length - 1; i >= 0; i--) { %>
-              <tr>
-                <td><%= order[i]._id %></td>
-                <td><%= order[i].user.name %></td>
-                <td>
-                  <% order[i].products.forEach(function(productItem) { %>
-                    <% if (productItem.product) { %>
-                      <%= productItem.product.name %> (Qty: <%= productItem.quantity || 0 %>)<br>
+          <% } else { %>
+            <tbody>
+              <% for (let i=order.length - 1; i>= 0; i--) { %>
+                <tr>
+                  <td>
+                    <%= order[i]._id %>
+                  </td>
+                  <td>
+                    <%= order[i].user.name %>
+                  </td>
+                  <td>
+                    <% order[i].products.forEach(function(productItem) { %>
+                      <% if (productItem.product) { %>
+                        <%= productItem.product.name %> (Qty: <%= productItem.quantity || 0 %>)<br>
+                            <% } else { %>
+                              Product not found<br>
+                              <% } %>
+                                <% }); %>
+                  </td>
+                  <td>
+                    <%= order[i].totalAmount %> $
+                  </td>
+                  <% if (order[i].discount===0) { %>
+                    <td>No discount</td>
                     <% } else { %>
-                      Product not found<br>
-                    <% } %>
-                  <% }); %>
-                </td>
-                <td><%= order[i].totalAmount %> $</td>
-                <% if (order[i].discount === 0) { %>
-                  <td>No discount</td>
-                <% } else { %>
-                  <td><%= order[i].discount %> $</td>
+                      <td>
+                        <%= order[i].discount %> $
+                      </td>
+                      <% } %>
+                        <td>
+                          <%= order[i].paymentMethod %>
+                        </td>
+                        <td>
+                          <%= order[i].orderStatus %>
+                        </td>
+                </tr>
                 <% } %>
-                <td><%= order[i].paymentMethod %></td>
-                <td><%= order[i].orderStatus %></td>
-              </tr>
+            </tbody>
             <% } %>
-          </tbody>
-        <% } %>
       </table>
     </div>
-  
+
   </div>
-  
-<div class="pagination-container">
-    <% if (currentPage > 1) { %>
-    <a href="?page=<%= currentPage - 1 %>">&laquo; Previous</a>
-    <% } %> 
-    <% for (let i = 1; i <= totalPages; i++) { %> 
-    <% if (i === currentPage) { %>
-    <span class="current-page"><%= i %></span>
-    <% } else { %>
-    <a href="?page=<%= i %>"><%= i %></a>
-    <% } %> 
-    <% } %> 
-    <% if (currentPage < totalPages) { %>
-    <a href="?page=<%= currentPage + 1 %>">Next &raquo;</a>
-    <% } %>
-</div>
+
+  <div class="pagination-container">
+    <% if (currentPage> 1) { %>
+      <a href="?page=<%= currentPage - 1 %>">&laquo; Previous</a>
+      <% } %>
+        <% for (let i=1; i <=totalPages; i++) { %>
+          <% if (i===currentPage) { %>
+            <span class="current-page">
+              <%= i %>
+            </span>
+            <% } else { %>
+              <a href="?page=<%= i %>">
+                <%= i %>
+              </a>
+              <% } %>
+                <% } %>
+                  <% if (currentPage < totalPages) { %>
+                    <a href="?page=<%= currentPage + 1 %>">Next &raquo;</a>
+                    <% } %>
+  </div>
 
 
-<%- include('../partials/admin/footer') %>
+  <%- include('../partials/admin/footer') %>

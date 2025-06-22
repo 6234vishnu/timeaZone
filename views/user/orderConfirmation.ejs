@@ -1,29 +1,29 @@
-<%-include("../../Views/partials/user/header")%>
+<%-include(".. /../Views/partials/user/header")%>
 
-<div class="orderconfirmation-container">
-    <header class="orderconfirmation-header">
-        <h1>Order Confirmation</h1>
-    </header>
+    <div class="orderconfirmation-container">
+        <header class="orderconfirmation-header">
+            <h1>Order Confirmation</h1>
+        </header>
 
-    <section class="orderconfirmation-content">
-        <div class="orderconfirmation-status">
-            <img src="\re-image\orderconform.png" alt="Checkmark" class="orderconfirmation-icon">
-            
-        </div>
+        <section class="orderconfirmation-content">
+            <div class="orderconfirmation-status">
+                <img src="\re-image\orderconform.png" alt="Checkmark" class="orderconfirmation-icon">
 
-        <div class="orderconfirmation-actions">
-            <button class="orderconfirmation-shopmore" id="shopMoreButton">Shop More</button>
-            <button class="orderconfirmation-orderdetails" id="orderDetails">Order Details</button>
-        </div>
-    </section>
-</div>
-<script>
-    document.getElementById("shopMoreButton").addEventListener("click", function() {
-        window.location.href = "/shop";
-    });
+            </div>
 
-    document.getElementById("orderDetails").addEventListener("click", function() {
-        window.location.href = "/orderDetails";
-    });
-</script>
-<%-include("../../Views/partials/user/footer")%>
+            <div class="orderconfirmation-actions">
+                <button class="orderconfirmation-shopmore" id="shopMoreButton">Shop More</button>
+                <button class="orderconfirmation-orderdetails" id="orderDetails">Order Details</button>
+            </div>
+        </section>
+    </div>
+    <script>
+        document.getElementById("shopMoreButton").addEventListener("click", function () {
+            window.location.href = "/shop";
+        });
+
+        document.getElementById("orderDetails").addEventListener("click", function () {
+            window.location.href = "/orderDetails";
+        });
+    </script>
+    <%-include(".. /../Views/partials/user/footer")%>

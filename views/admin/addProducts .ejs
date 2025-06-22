@@ -1,234 +1,171 @@
 <%- include("../../views/partials/admin/header") %>
-<link
-  rel="stylesheet"
-  href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.12/cropper.min.css"
-/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.12/cropper.min.css" />
 
-<section class="contentmain">
-  <div class="content-header">
-    <h2 class="content-title">Add New Product</h2>
-  </div>
-  <div class="card mb-4">
-    <div class="card-body">
-      <form
-        method="post"
-        action="/admin/addProducts"
-        enctype="multipart/form-data"
-        onsubmit="return validateAndSubmit()"
-      >
-        <div class="mb-4">
-          <label for="product_name" class="form-label">Product Name</label>
-          <input
-            type="text"
-            placeholder="Type here"
-            name="productName"
-            class="form-control border"
-            id="product_name"
-          />
-          <div id="productName-error" class="error-message"></div>
-        </div>
-        <div class="col-lg-4 mb-4">
-          <label class="form-label">Brand</label>
-          <select class="form-select border" name="brand">
-            <% for (let i = 0; i < brand.length; i++) { %>
-            <option value="<%= brand[i].name %>"><%= brand[i].name %></option>
-            <% } %>
-          </select>
-          <div id="brand-error" class="error-message"></div>
-        </div>
-        <div class="mb-4">
-          <label class="form-label">Full description</label>
-          <textarea
-            placeholder="Type here"
-            id="descriptionid"
-            name="description"
-            class="form-control border"
-            rows="4"
-          ></textarea>
-          <div id="description-error" class="error-message"></div>
-        </div>
-        <div class="row">
-          <div class="col-lg-4">
-            <div class="mb-4">
-              <label class="form-label">Regular price</label>
-              <input
-                placeholder="$"
-                name="regularPrice"
-                type="text"
-                class="form-control border"
-                id="regularPrice"
-              />
-              <div id="regularPrice-error" class="error-message"></div>
-            </div>
-          </div>
-          <div class="col-lg-4">
-            <div class="mb-4">
-              <label class="form-label">Sale price</label>
-              <input
-                placeholder="$"
-                name="salePrice"
-                type="text"
-                class="form-control border"
-                id="salePrice"
-              />
-              <div id="salePrice-error" class="error-message"></div>
-            </div>
-          </div>
-          <div class="col-lg-4">
-            <div class="mb-4">
-              <label class="form-label">Quantity</label>
-              <input
-                placeholder=""
-                name="quantity"
-                type="text"
-                class="form-control border"
-                id="quantity"
-              />
-              <div id="quantity-error" class="error-message"></div>
-            </div>
-          </div>
-        </div>
-
-        <div class="col-lg-4 mb-4">
-          <label class="form-label">Category</label>
-          <select class="form-select border" name="category">
-            <% for (let i = 0; i < category.length; i++) { %>
-            <option value="<%= category[i].name %>">
-              <%= category[i].name %>
-            </option>
-            <% } %>
-          </select>
-          <div id="category-error" class="error-message"></div>
-        </div>
-
-      
-    
-
-             <h2>Select Colors</h2>
-          
-                <label>
-                    <input type="checkbox" name="color" value="black ">
-                   black
-                </label><br>
-                <label>
-                    <input type="checkbox" name="color" value="white ">
-                   white
-                </label><br>
-                <label>
-                    <input type="checkbox" name="color" value="gold ">
-                   silver
-                </label><br>
-                <label>
-                    <input type="checkbox" name="color" value="siver ">
-                   Gold
-                </label><br>
-                <label >
-             
-                
-               </label><br>
-            
-        
-          
-        <div class="card mb-4">
-          <div class="card-header">
-            <h4>Choose images</h4>
-          </div>
-        
-          <div class="border row">
-            <div id="addedImagesContainer" class="thumbnails-container"></div>
-          </div>
-          <div class="row">
-            <div
-              class="card-body align-items-center"
-              style="margin-bottom: 20px"
-            >
-              <img src="" alt="" id="imgView1" />
-              <input
-                class="form-control"
-                type="file"
-                name="images"
-                id="input1"
-                accept="image/png, image/jpeg, image/jpg"
-                onchange="viewImage(event, 1)"
-              />
-              <div id="images-error" class="error-message"></div>
-            </div>
-            <div class="image-cropper" id="cropperContainer1">
-              <img src="" id="croppedImg1" alt="" />
-              <button type="button" id="saveButton1" class="btn-sm btn-primary">
-                Save
-              </button>
-            </div>
-          </div>
-          <div class="row">
-            <div
-              class="card-body align-items-center"
-              style="margin-bottom: 20px"
-            >
-              <img src="" alt="" id="imgView2" />
-              <input
-                class="form-control"
-                type="file"
-                name="images"
-                id="input2"
-                accept="image/png, image/jpeg, image/jpg"
-                onchange="viewImage(event, 2)"
-              />
-            </div>
-            <div class="image-cropper" id="cropperContainer2">
-              <img src="" id="croppedImg2" alt="" />
-              <button type="button" id="saveButton2" class="btn-sm btn-primary">
-                Save
-              </button>
-            </div>
-          </div>
-          <div class="row">
-            <div
-              class="card-body align-items-center"
-              style="margin-bottom: 20px"
-            >
-              <img src="" alt="" id="imgView3" />
-              <input
-                class="form-control"
-                type="file"
-                name="images"
-                id="input3"
-                accept="image/png, image/jpeg, image/jpg"
-                onchange="viewImage(event, 3)"
-              />
-            </div>
-            <div class="image-cropper" id="cropperContainer3">
-              <img src="" id="croppedImg3" alt="" />
-              <button type="button" id="saveButton3" class="btn-sm btn-primary">
-                Save
-              </button>
-            </div>
-          </div>
-        </div>
-        <button
-          class="buttompublish"
-          type="submit"
-        >
-          Create Product
-        </button>
-      </form>
+  <section class="contentmain">
+    <div class="content-header">
+      <h2 class="content-title">Add New Product</h2>
     </div>
-  </div>
-</section>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.12/cropper.min.js"></script>
-<script>
+    <div class="card mb-4">
+      <div class="card-body">
+        <form method="post" action="/admin/addProducts" enctype="multipart/form-data"
+          onsubmit="return validateAndSubmit()">
+          <div class="mb-4">
+            <label for="product_name" class="form-label">Product Name</label>
+            <input type="text" placeholder="Type here" name="productName" class="form-control border"
+              id="product_name" />
+            <div id="productName-error" class="error-message"></div>
+          </div>
+          <div class="col-lg-4 mb-4">
+            <label class="form-label">Brand</label>
+            <select class="form-select border" name="brand">
+              <% for (let i=0; i < brand.length; i++) { %>
+                <option value="<%= brand[i].name %>">
+                  <%= brand[i].name %>
+                </option>
+                <% } %>
+            </select>
+            <div id="brand-error" class="error-message"></div>
+          </div>
+          <div class="mb-4">
+            <label class="form-label">Full description</label>
+            <textarea placeholder="Type here" id="descriptionid" name="description" class="form-control border"
+              rows="4"></textarea>
+            <div id="description-error" class="error-message"></div>
+          </div>
+          <div class="row">
+            <div class="col-lg-4">
+              <div class="mb-4">
+                <label class="form-label">Regular price</label>
+                <input placeholder="$" name="regularPrice" type="text" class="form-control border" id="regularPrice" />
+                <div id="regularPrice-error" class="error-message"></div>
+              </div>
+            </div>
+            <div class="col-lg-4">
+              <div class="mb-4">
+                <label class="form-label">Sale price</label>
+                <input placeholder="$" name="salePrice" type="text" class="form-control border" id="salePrice" />
+                <div id="salePrice-error" class="error-message"></div>
+              </div>
+            </div>
+            <div class="col-lg-4">
+              <div class="mb-4">
+                <label class="form-label">Quantity</label>
+                <input placeholder="" name="quantity" type="text" class="form-control border" id="quantity" />
+                <div id="quantity-error" class="error-message"></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-lg-4 mb-4">
+            <label class="form-label">Category</label>
+            <select class="form-select border" name="category">
+              <% for (let i=0; i < category.length; i++) { %>
+                <option value="<%= category[i].name %>">
+                  <%= category[i].name %>
+                </option>
+                <% } %>
+            </select>
+            <div id="category-error" class="error-message"></div>
+          </div>
+
+
+
+
+          <h2>Select Colors</h2>
+
+          <label>
+            <input type="checkbox" name="color" value="black ">
+            black
+          </label><br>
+          <label>
+            <input type="checkbox" name="color" value="white ">
+            white
+          </label><br>
+          <label>
+            <input type="checkbox" name="color" value="gold ">
+            silver
+          </label><br>
+          <label>
+            <input type="checkbox" name="color" value="siver ">
+            Gold
+          </label><br>
+          <label>
+
+
+          </label><br>
+
+
+
+          <div class="card mb-4">
+            <div class="card-header">
+              <h4>Choose images</h4>
+            </div>
+
+            <div class="border row">
+              <div id="addedImagesContainer" class="thumbnails-container"></div>
+            </div>
+            <div class="row">
+              <div class="card-body align-items-center" style="margin-bottom: 20px">
+                <img src="" alt="" id="imgView1" />
+                <input class="form-control" type="file" name="images" id="input1"
+                  accept="image/png, image/jpeg, image/jpg" onchange="viewImage(event, 1)" />
+                <div id="images-error" class="error-message"></div>
+              </div>
+              <div class="image-cropper" id="cropperContainer1">
+                <img src="" id="croppedImg1" alt="" />
+                <button type="button" id="saveButton1" class="btn-sm btn-primary">
+                  Save
+                </button>
+              </div>
+            </div>
+            <div class="row">
+              <div class="card-body align-items-center" style="margin-bottom: 20px">
+                <img src="" alt="" id="imgView2" />
+                <input class="form-control" type="file" name="images" id="input2"
+                  accept="image/png, image/jpeg, image/jpg" onchange="viewImage(event, 2)" />
+              </div>
+              <div class="image-cropper" id="cropperContainer2">
+                <img src="" id="croppedImg2" alt="" />
+                <button type="button" id="saveButton2" class="btn-sm btn-primary">
+                  Save
+                </button>
+              </div>
+            </div>
+            <div class="row">
+              <div class="card-body align-items-center" style="margin-bottom: 20px">
+                <img src="" alt="" id="imgView3" />
+                <input class="form-control" type="file" name="images" id="input3"
+                  accept="image/png, image/jpeg, image/jpg" onchange="viewImage(event, 3)" />
+              </div>
+              <div class="image-cropper" id="cropperContainer3">
+                <img src="" id="croppedImg3" alt="" />
+                <button type="button" id="saveButton3" class="btn-sm btn-primary">
+                  Save
+                </button>
+              </div>
+            </div>
+          </div>
+          <button class="buttompublish" type="submit">
+            Create Product
+          </button>
+        </form>
+      </div>
+    </div>
+  </section>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.12/cropper.min.js"></script>
+  <script>
     let cropper1, cropper2, cropper3;
-    
+
     function viewImage(event, index) {
       const input = event.target;
       const reader = new FileReader();
-    
+
       reader.onload = function (e) {
         const img = document.getElementById(`imgView${index}`);
         img.src = e.target.result;
-        img.style.maxWidth = "150px"; 
+        img.style.maxWidth = "150px";
         document.getElementById(`cropperContainer${index}`).style.display = "block";
-    
+
         if (index === 1 && cropper1) cropper1.destroy();
         if (index === 2 && cropper2) cropper2.destroy();
         if (index === 3 && cropper3) cropper3.destroy();
@@ -236,21 +173,21 @@
         if (index === 2) cropper2 = new Cropper(img, { aspectRatio: 1 });
         if (index === 3) cropper3 = new Cropper(img, { aspectRatio: 1 });
       };
-    
+
       reader.readAsDataURL(input.files[0]);
     }
-    
+
     function saveCroppedImage(index) {
       let croppedCanvas;
-    
+
       if (index === 1) croppedCanvas = cropper1.getCroppedCanvas();
       if (index === 2) croppedCanvas = cropper2.getCroppedCanvas();
       if (index === 3) croppedCanvas = cropper3.getCroppedCanvas();
-    
+
       if (croppedCanvas) {
         const croppedImage = croppedCanvas.toDataURL('image/png');
         document.getElementById(`croppedImg${index}`).src = croppedImage;
-    
+
         const hiddenInput = document.createElement('input');
         hiddenInput.type = 'hidden';
         hiddenInput.name = `croppedImage${index}`;
@@ -258,15 +195,15 @@
         document.querySelector('form').appendChild(hiddenInput);
       }
     }
-    
+
     document.getElementById('saveButton1').addEventListener('click', () => saveCroppedImage(1));
     document.getElementById('saveButton2').addEventListener('click', () => saveCroppedImage(2));
     document.getElementById('saveButton3').addEventListener('click', () => saveCroppedImage(3));
-    
+
     function validateForm() {
       let isValid = true;
-      const requiredFields = ["product_name", "regularPrice", "salePrice", "quantity", "description", "color","images"];
-    
+      const requiredFields = ["product_name", "regularPrice", "salePrice", "quantity", "description", "color", "images"];
+
       requiredFields.forEach((id) => {
         const input = document.getElementById(id);
         if (input && !input.value) {
@@ -276,23 +213,23 @@
           document.getElementById(`${id}-error`).innerText = "";
         }
       });
-    
+
       const images = [
         document.getElementById("input1").files[0],
         document.getElementById("input2").files[0],
         document.getElementById("input3").files[0],
       ];
-    
+
       if (images.some((image) => !image)) {
         document.getElementById("images-error").innerText = "All three images are required";
         isValid = false;
       } else {
         document.getElementById("images-error").innerText = "";
       }
-    
+
       return isValid;
     }
-    
+
     function validateAndSubmit() {
       if (validateForm()) {
         saveCroppedImage(1);
@@ -300,6 +237,6 @@
         saveCroppedImage(3);
         return true;
       }
-      return false; 
+      return false;
     }
-    </script>
+  </script>

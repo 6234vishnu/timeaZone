@@ -1,296 +1,54 @@
 <%- include("../../Views/partials/user/header") %>
 
 
-<div class="orderstatuss">
-  <h1 class="orderstatus-title">Order Status</h1>
+  <div class="orderstatuss">
+    <h1 class="orderstatus-title">Order Status</h1>
 
-  <!-- Order Details Section -->
-  <% if (order.orderStatus === 'Delivered') { %>
-  <div class="orderstatus-details">
-    <div class="orderstatus-header">
-      <div>
-        <h2>Order ID: <%= order._id %></h2>
-        <p>
-          Ordered on: <strong><%= order.createdAt.toLocaleString() %></strong>
-        </p>
-      </div>
-      <div>
-        <button class="orderstatus-return-btn" id="return">Return</button>
-      </div>
-
-      <div id="returnModal" style="display:none;">
-        <div>
-            <h2>Cancellation Reason</h2>
-            <textarea id="returnReason" placeholder=""></textarea>
-            <button id="submitReason">Submit</button>
-            <button id="closeReturnModal">Close</button>
-        </div>
-    </div>
-    </div>
-
-    <div class="orderstatus-product-info">
-      <% order.products.forEach(item => { %>
-      <div class="product-item">
-        <a href="/productPage?id=<%= item.product._id %>" id="productId<%= item.product._id %>">
-          <img src="/re-image/<%= item.product.productImage[0] %>" alt="Product Image" />
-        </a>
-        <div>
-          <h3><%= item.product.name %></h3>
-          <p>Price: <strong><%= item.product.salePrice %></strong></p>
-        </div>
-      </div>
-      <% }) %>
-    </div>
-
-    <!-- Order Status Progress -->
-    <div class="orderstatus-status">
-      <div class="orderstatus-status-progress">
-        <div class="orderstatus-status-step completed">
-          <p>Ordered</p>
-          <span>&#x2714;</span>
-        </div>
-        <div class="orderstatus-status-step completed">
-          <p>Shipped</p>
-          <span>&#x2714;</span>
-        </div>
-        <div class="orderstatus-progress-bar">
-          <div class="progress"></div>
-        </div>
-        <div class="orderstatus-status-step completed">
-          <p>Delivered</p>
-          <span>&#x2714;</span>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Rating and Review Section -->
-  <div class="orderstatus-details">
-    <h3>Rate Your Experience</h3>
-    <form id="ratingForm">
-      <div class="orderstatus-rating-field">
-        <% [1, 2, 3, 4, 5].forEach(rating => { %>
-        <input type="radio" id="star<%= rating %>" name="rating" value="<%= rating %>" required />
-        <label for="star<%= rating %>">&#9733;</label>
-        <% }) %>
-      </div>
-      <div class="orderstatus-review-field">
-        <label for="review">Write Your Review</label>
-        <textarea id="review" name="review" rows="4" placeholder="Share your experience..." required></textarea>
-      </div>
-      <button type="button" class="orderstatus-submit-rating-btn" id="submitRating">Submit Rating</button>
-      <div id="message"><%= message ? message : '' %></div>
-    </form>
-  </div>
-
-  <!-- Delivery Address -->
-  <div class="orderstatus-address-info orderstatus-details">
-    <h3>Delivery Address</h3>
-    <% if (user.address && user.address.length > 0) { %>
-      <p>Name: <%= user.address[0].adress.name %></p>
-      <p>Area: <%= user.address[0].adress.area %></p>
-      <p>Pincode: <%= user.address[0].adress.pincode %></p>
-      <p>Phone: <%= user.address[0].adress.phone %></p>
-  <% }%>
-    
-    </div>
-
-  
-  
-
-  <!-- Order Summary -->
-  <div class="orderstatus-summary orderstatus-details">
-    <h3>Order Summary</h3>
-    <p>Subtotal: <strong><%= order.totalAmount %>$</strong></p>
-    <p>Shipping Fee: <strong>0$ (free Delivery)</strong></p>
-    <p>Total Amount: <strong><%= order.totalAmount %>$</strong></p>
-  </div>
-
-  <% } else if (order.orderStatus === 'Cancelled') { %>
-
-  <div class="orderstatus-details">
-    <div class="orderstatus-header">
-      <div>
-        <h2>Order ID: <%= order._id %></h2>
-        <p>
-          Ordered on: <strong><%= order.createdAt.toLocaleString() %></strong>
-        </p>
-      </div>
-    </div>
-
-    <!-- Product Info -->
-    <div class="orderstatus-product-info">
-      <% order.products.forEach(item => { %>
-      <div class="product-item">
-        <img src="/re-image/<%= item.product.productImage[0] %>" alt="Product Image" />
-        <div>
-          <h3><%= item.product.name %></h3>
-          <p>Price: <strong><%= item.product.salePrice %></strong></p>
-        </div>
-      </div>
-      <% }) %>
-    </div>
-
-    <!-- Order Status Progress -->
-    <div class="orderstatus-status">
-      <div class="orderstatus-status-progress">
-        <div class="orderstatus-status-step completed">
-          <p>Ordered</p>
-          <span>&#x2714;</span>
-        </div>
-        <div class="orderstatus-status-step completed">
-          <p>Shipped</p>
-          <span>&#x2714;</span>
-        </div>
-        <div class="orderstatus-progress-bar">
-          <div class="progress"></div>
-        </div>
-        <div class="orderstatus-status-step completed">
-          <p>Cancelled</p>
-          <span>&#x2714;</span>
-        </div>
-      </div>
-    </div>
-  </div>
-
-
-
-  <!-- Delivery Address -->
-  <div class="orderstatus-address-info orderstatus-details">
-    <h3>Delivery Address</h3>
-    <% if (user.address && user.address.length > 0) { %>
-      <p>Name: <%= user.address[0].adress.name %></p>
-      <p>Area: <%= user.address[0].adress.area %></p>
-      <p>Pincode: <%= user.address[0].adress.pincode %></p>
-      <p>Phone: <%= user.address[0].adress.phone %></p>
-  <% }%>
-    
-    </div>
-
-  <!-- Order Summary -->
-  <div class="orderstatus-summary orderstatus-details">
-    <h3>Order Summary</h3>
-    <p>Subtotal: <strong><%= order.totalAmount %>$</strong></p>
-    <p>Shipping Fee: <strong>0$ (free Delivery)</strong></p>
-    <p>Total Amount: <strong><%= order.totalAmount %>$</strong></p>
-  </div>
-
-  <% } else if (order.orderStatus === 'Processing') { %>
-
-  <div class="orderstatus-details">
-    <div class="orderstatus-header">
-      <div>
-        <h2>Order ID: <%= order._id %></h2>
-        <p>
-          Ordered on: <strong><%= order.createdAt.toLocaleString() %></strong>
-        </p>
-      </div>
-      <div>
-        <button class="orderstatus-return-btn" id="cancel">Cancel</button>
-    </div>
-    
-    <!-- Modal for cancellation reason -->
-    <div id="cancelModal" style="display:none;">
-        <div>
-            <h2>Cancellation Reason</h2>
-            <textarea id="cancellationReason" placeholder=""></textarea>
-            <button id="submitCancellation">Submit</button>
-            <button id="closeModal">Close</button>
-        </div>
-    </div>
-    
-    </div>
-
-    <!-- Product Info -->
-    <div class="orderstatus-product-info">
-      <% order.products.forEach(item => { %>
-      <div class="product-item">
-        <img src="/re-image/<%= item.product.productImage[0] %>" alt="Product Image" />
-        <div>
-          <h3><%= item.product.name %></h3>
-          <p>Price: <strong><%= item.product.salePrice %></strong></p>
-        </div>
-      </div>
-      <% }) %>
-    </div>
-
-    <!-- Order Status Progress -->
-    <div class="orderstatus-status">
-      <div class="orderstatus-status-progress">
-        <div class="orderstatus-status-step completed">
-          <p>Ordered</p>
-          <span>&#x2714;</span>
-        </div>
-        <div class="orderstatus-progress-bar">
-          <div class="progress"></div>
-        </div>
-        <div class="orderstatus-status-step <%= order.orderStatus === 'Shipped' ? 'completed' : 'in-progress' %>">
-          <p>Shipped</p>
-          <span>&#9675;</span>
-        </div>
-        <div class="orderstatus-progress-bar">
-          <div class="progress"></div>
-        </div>
-        <div class="orderstatus-status-step <%= order.orderStatus === 'Delivered' ? 'completed' : 'pending' %>">
-          <p>Delivered</p>
-          <span>&#9675;</span>
-        </div>
-      </div>
-    </div>
-  </div>
-
-   <!-- Order adress -->
-
-   <div class="orderstatus-address-info orderstatus-details">
-    <h3>Delivery Address</h3>
-    <% if (user.address && user.address.length > 0) { %>
-      <p>Name: <%= user.address[0].adress.name %></p>
-      <p>Area: <%= user.address[0].adress.area %></p>
-      <p>Pincode: <%= user.address[0].adress.pincode %></p>
-      <p>Phone: <%= user.address[0].adress.phone %></p>
-  <% }%>
-    
-    </div>
-
-
-  <!-- Order Summary -->
-  <div class="orderstatus-summary orderstatus-details">
-    <h3>Order Summary</h3>
-    <p>Subtotal: <strong><%= order.totalAmount %>$</strong></p>
-    <p>Shipping Fee: <strong>0$ (free Delivery)</strong></p>
-    <p>Total Amount: <strong><%= order.totalAmount %>$</strong></p>
-  </div>
-
-  <% }else if(order.orderStatus === 'Returned') {%>
-
-    <div class="orderstatus-container">
- 
-    
-      <!-- Order Details Section -->
+    <!-- Order Details Section -->
+    <% if (order.orderStatus==='Delivered' ) { %>
       <div class="orderstatus-details">
         <div class="orderstatus-header">
           <div>
-            <h2>Order ID: <%= order._id %></h2>
+            <h2>Order ID: <%= order._id %>
+            </h2>
             <p>
-              Ordered on: <strong><%= order.createdAt.toLocaleString() %></strong>
+              Ordered on: <strong>
+                <%= order.createdAt.toLocaleString() %>
+              </strong>
             </p>
           </div>
-        </div>
-    
-        <div class="orderstatus-product-info">
-          <% order.products.forEach(item => { %>
-          <div class="product-item">
-            <a href="/productPage?id=<%= item.product._id %>" id="productId<%= item.product._id %>">
-              <img src="/re-image/<%= item.product.productImage[0] %>" alt="Product Image" />
-            </a>
+          <div>
+            <button class="orderstatus-return-btn" id="return">Return</button>
+          </div>
+
+          <div id="returnModal" style="display:none;">
             <div>
-              <h3><%= item.product.name %></h3>
-              <p>Price: <strong><%= item.product.salePrice %>$</strong></p>
+              <h2>Cancellation Reason</h2>
+              <textarea id="returnReason" placeholder=""></textarea>
+              <button id="submitReason">Submit</button>
+              <button id="closeReturnModal">Close</button>
             </div>
           </div>
-          <% }) %>
         </div>
-    
+
+        <div class="orderstatus-product-info">
+          <% order.products.forEach(item=> { %>
+            <div class="product-item">
+              <a href="/productPage?id=<%= item.product._id %>" id="productId<%= item.product._id %>">
+                <img src="/re-image/<%= item.product.productImage[0] %>" alt="Product Image" />
+              </a>
+              <div>
+                <h3>
+                  <%= item.product.name %>
+                </h3>
+                <p>Price: <strong>
+                    <%= item.product.salePrice %>
+                  </strong></p>
+              </div>
+            </div>
+            <% }) %>
+        </div>
+
         <!-- Order Status Progress -->
         <div class="orderstatus-status">
           <div class="orderstatus-status-progress">
@@ -302,221 +60,524 @@
               <p>Shipped</p>
               <span>&#x2714;</span>
             </div>
-            <div class="orderstatus-status-step completed">
-              <p>Delivered</p>
-              <span>&#x2714;</span>
+            <div class="orderstatus-progress-bar">
+              <div class="progress"></div>
             </div>
             <div class="orderstatus-status-step completed">
-              <p>Returned</p>
+              <p>Delivered</p>
               <span>&#x2714;</span>
             </div>
           </div>
         </div>
       </div>
-    
-      
-    
+
       <!-- Rating and Review Section -->
       <div class="orderstatus-details">
         <h3>Rate Your Experience</h3>
         <form id="ratingForm">
           <div class="orderstatus-rating-field">
-            <% [1, 2, 3, 4, 5].forEach(rating => { %>
-            <input type="radio" id="star<%= rating %>" name="rating" value="<%= rating %>" required />
-            <label for="star<%= rating %>">&#9733;</label>
-            <% }) %>
+            <% [1, 2, 3, 4, 5].forEach(rating=> { %>
+              <input type="radio" id="star<%= rating %>" name="rating" value="<%= rating %>" required />
+              <label for="star<%= rating %>">&#9733;</label>
+              <% }) %>
           </div>
           <div class="orderstatus-review-field">
             <label for="review">Write Your Review</label>
             <textarea id="review" name="review" rows="4" placeholder="Share your experience..." required></textarea>
           </div>
           <button type="button" class="orderstatus-submit-rating-btn" id="submitRating">Submit Rating</button>
-          <div id="message"><%= message ? message : '' %></div>
+          <div id="message">
+            <%= message ? message : '' %>
+          </div>
         </form>
       </div>
-    
-      
-    
+
+      <!-- Delivery Address -->
+      <div class="orderstatus-address-info orderstatus-details">
+        <h3>Delivery Address</h3>
+        <% if (user.address && user.address.length> 0) { %>
+          <p>Name: <%= user.address[0].adress.name %>
+          </p>
+          <p>Area: <%= user.address[0].adress.area %>
+          </p>
+          <p>Pincode: <%= user.address[0].adress.pincode %>
+          </p>
+          <p>Phone: <%= user.address[0].adress.phone %>
+          </p>
+          <% }%>
+
+      </div>
+
+
+
+
       <!-- Order Summary -->
       <div class="orderstatus-summary orderstatus-details">
         <h3>Order Summary</h3>
-        <p>Subtotal: <strong><%= order.totalAmount %>$</strong></p>
+        <p>Subtotal: <strong>
+            <%= order.totalAmount %>$
+          </strong></p>
         <p>Shipping Fee: <strong>0$ (free Delivery)</strong></p>
-        <p>Total Amount: <strong><%= order.totalAmount %>$</strong></p>
-        <p>Refund Amount: <strong><%= order.refundAmount %>$</strong></p>
+        <p>Total Amount: <strong>
+            <%= order.totalAmount %>$
+          </strong></p>
       </div>
-    </div>
-    
+
+      <% } else if (order.orderStatus==='Cancelled' ) { %>
+
+        <div class="orderstatus-details">
+          <div class="orderstatus-header">
+            <div>
+              <h2>Order ID: <%= order._id %>
+              </h2>
+              <p>
+                Ordered on: <strong>
+                  <%= order.createdAt.toLocaleString() %>
+                </strong>
+              </p>
+            </div>
+          </div>
+
+          <!-- Product Info -->
+          <div class="orderstatus-product-info">
+            <% order.products.forEach(item=> { %>
+              <div class="product-item">
+                <img src="/re-image/<%= item.product.productImage[0] %>" alt="Product Image" />
+                <div>
+                  <h3>
+                    <%= item.product.name %>
+                  </h3>
+                  <p>Price: <strong>
+                      <%= item.product.salePrice %>
+                    </strong></p>
+                </div>
+              </div>
+              <% }) %>
+          </div>
+
+          <!-- Order Status Progress -->
+          <div class="orderstatus-status">
+            <div class="orderstatus-status-progress">
+              <div class="orderstatus-status-step completed">
+                <p>Ordered</p>
+                <span>&#x2714;</span>
+              </div>
+              <div class="orderstatus-status-step completed">
+                <p>Shipped</p>
+                <span>&#x2714;</span>
+              </div>
+              <div class="orderstatus-progress-bar">
+                <div class="progress"></div>
+              </div>
+              <div class="orderstatus-status-step completed">
+                <p>Cancelled</p>
+                <span>&#x2714;</span>
+              </div>
+            </div>
+          </div>
+        </div>
 
 
-    <% } %>
 
-</div>
+        <!-- Delivery Address -->
+        <div class="orderstatus-address-info orderstatus-details">
+          <h3>Delivery Address</h3>
+          <% if (user.address && user.address.length> 0) { %>
+            <p>Name: <%= user.address[0].adress.name %>
+            </p>
+            <p>Area: <%= user.address[0].adress.area %>
+            </p>
+            <p>Pincode: <%= user.address[0].adress.pincode %>
+            </p>
+            <p>Phone: <%= user.address[0].adress.phone %>
+            </p>
+            <% }%>
 
-<%- include("../../Views/partials/user/footer") %>
+        </div>
+
+        <!-- Order Summary -->
+        <div class="orderstatus-summary orderstatus-details">
+          <h3>Order Summary</h3>
+          <p>Subtotal: <strong>
+              <%= order.totalAmount %>$
+            </strong></p>
+          <p>Shipping Fee: <strong>0$ (free Delivery)</strong></p>
+          <p>Total Amount: <strong>
+              <%= order.totalAmount %>$
+            </strong></p>
+        </div>
+
+        <% } else if (order.orderStatus==='Processing' ) { %>
+
+          <div class="orderstatus-details">
+            <div class="orderstatus-header">
+              <div>
+                <h2>Order ID: <%= order._id %>
+                </h2>
+                <p>
+                  Ordered on: <strong>
+                    <%= order.createdAt.toLocaleString() %>
+                  </strong>
+                </p>
+              </div>
+              <div>
+                <button class="orderstatus-return-btn" id="cancel">Cancel</button>
+              </div>
+
+              <!-- Modal for cancellation reason -->
+              <div id="cancelModal" style="display:none;">
+                <div>
+                  <h2>Cancellation Reason</h2>
+                  <textarea id="cancellationReason" placeholder=""></textarea>
+                  <button id="submitCancellation">Submit</button>
+                  <button id="closeModal">Close</button>
+                </div>
+              </div>
+
+            </div>
+
+            <!-- Product Info -->
+            <div class="orderstatus-product-info">
+              <% order.products.forEach(item=> { %>
+                <div class="product-item">
+                  <img src="/re-image/<%= item.product.productImage[0] %>" alt="Product Image" />
+                  <div>
+                    <h3>
+                      <%= item.product.name %>
+                    </h3>
+                    <p>Price: <strong>
+                        <%= item.product.salePrice %>
+                      </strong></p>
+                  </div>
+                </div>
+                <% }) %>
+            </div>
+
+            <!-- Order Status Progress -->
+            <div class="orderstatus-status">
+              <div class="orderstatus-status-progress">
+                <div class="orderstatus-status-step completed">
+                  <p>Ordered</p>
+                  <span>&#x2714;</span>
+                </div>
+                <div class="orderstatus-progress-bar">
+                  <div class="progress"></div>
+                </div>
+                <div
+                  class="orderstatus-status-step <%= order.orderStatus === 'Shipped' ? 'completed' : 'in-progress' %>">
+                  <p>Shipped</p>
+                  <span>&#9675;</span>
+                </div>
+                <div class="orderstatus-progress-bar">
+                  <div class="progress"></div>
+                </div>
+                <div class="orderstatus-status-step <%= order.orderStatus === 'Delivered' ? 'completed' : 'pending' %>">
+                  <p>Delivered</p>
+                  <span>&#9675;</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Order adress -->
+
+          <div class="orderstatus-address-info orderstatus-details">
+            <h3>Delivery Address</h3>
+            <% if (user.address && user.address.length> 0) { %>
+              <p>Name: <%= user.address[0].adress.name %>
+              </p>
+              <p>Area: <%= user.address[0].adress.area %>
+              </p>
+              <p>Pincode: <%= user.address[0].adress.pincode %>
+              </p>
+              <p>Phone: <%= user.address[0].adress.phone %>
+              </p>
+              <% }%>
+
+          </div>
+
+
+          <!-- Order Summary -->
+          <div class="orderstatus-summary orderstatus-details">
+            <h3>Order Summary</h3>
+            <p>Subtotal: <strong>
+                <%= order.totalAmount %>$
+              </strong></p>
+            <p>Shipping Fee: <strong>0$ (free Delivery)</strong></p>
+            <p>Total Amount: <strong>
+                <%= order.totalAmount %>$
+              </strong></p>
+          </div>
+
+          <% }else if(order.orderStatus==='Returned' ) {%>
+
+            <div class="orderstatus-container">
+
+
+              <!-- Order Details Section -->
+              <div class="orderstatus-details">
+                <div class="orderstatus-header">
+                  <div>
+                    <h2>Order ID: <%= order._id %>
+                    </h2>
+                    <p>
+                      Ordered on: <strong>
+                        <%= order.createdAt.toLocaleString() %>
+                      </strong>
+                    </p>
+                  </div>
+                </div>
+
+                <div class="orderstatus-product-info">
+                  <% order.products.forEach(item=> { %>
+                    <div class="product-item">
+                      <a href="/productPage?id=<%= item.product._id %>" id="productId<%= item.product._id %>">
+                        <img src="/re-image/<%= item.product.productImage[0] %>" alt="Product Image" />
+                      </a>
+                      <div>
+                        <h3>
+                          <%= item.product.name %>
+                        </h3>
+                        <p>Price: <strong>
+                            <%= item.product.salePrice %>$
+                          </strong></p>
+                      </div>
+                    </div>
+                    <% }) %>
+                </div>
+
+                <!-- Order Status Progress -->
+                <div class="orderstatus-status">
+                  <div class="orderstatus-status-progress">
+                    <div class="orderstatus-status-step completed">
+                      <p>Ordered</p>
+                      <span>&#x2714;</span>
+                    </div>
+                    <div class="orderstatus-status-step completed">
+                      <p>Shipped</p>
+                      <span>&#x2714;</span>
+                    </div>
+                    <div class="orderstatus-status-step completed">
+                      <p>Delivered</p>
+                      <span>&#x2714;</span>
+                    </div>
+                    <div class="orderstatus-status-step completed">
+                      <p>Returned</p>
+                      <span>&#x2714;</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
 
 
 
-<script>
+              <!-- Rating and Review Section -->
+              <div class="orderstatus-details">
+                <h3>Rate Your Experience</h3>
+                <form id="ratingForm">
+                  <div class="orderstatus-rating-field">
+                    <% [1, 2, 3, 4, 5].forEach(rating=> { %>
+                      <input type="radio" id="star<%= rating %>" name="rating" value="<%= rating %>" required />
+                      <label for="star<%= rating %>">&#9733;</label>
+                      <% }) %>
+                  </div>
+                  <div class="orderstatus-review-field">
+                    <label for="review">Write Your Review</label>
+                    <textarea id="review" name="review" rows="4" placeholder="Share your experience..."
+                      required></textarea>
+                  </div>
+                  <button type="button" class="orderstatus-submit-rating-btn" id="submitRating">Submit Rating</button>
+                  <div id="message">
+                    <%= message ? message : '' %>
+                  </div>
+                </form>
+              </div>
 
-document.addEventListener("DOMContentLoaded", function() {
-    document.getElementById("cancel").addEventListener("click", function() {
-       
-        document.getElementById("cancelModal").style.display = 'block';
-    });
-
-    document.getElementById("submitCancellation").addEventListener("click", async function() {
-        const reason = document.getElementById("cancellationReason").value;
-    
-       const orderId="<%= order._id %>"
-       
 
 
-        if (reason) {
+              <!-- Order Summary -->
+              <div class="orderstatus-summary orderstatus-details">
+                <h3>Order Summary</h3>
+                <p>Subtotal: <strong>
+                    <%= order.totalAmount %>$
+                  </strong></p>
+                <p>Shipping Fee: <strong>0$ (free Delivery)</strong></p>
+                <p>Total Amount: <strong>
+                    <%= order.totalAmount %>$
+                  </strong></p>
+                <p>Refund Amount: <strong>
+                    <%= order.refundAmount %>$
+                  </strong></p>
+              </div>
+            </div>
+
+
+
+            <% } %>
+
+  </div>
+
+  <%- include("../../Views/partials/user/footer") %>
+
+
+
+    <script>
+
+      document.addEventListener("DOMContentLoaded", function () {
+        document.getElementById("cancel").addEventListener("click", function () {
+
+          document.getElementById("cancelModal").style.display = 'block';
+        });
+
+        document.getElementById("submitCancellation").addEventListener("click", async function () {
+          const reason = document.getElementById("cancellationReason").value;
+
+          const orderId = "<%= order._id %>"
+
+
+
+          if (reason) {
             try {
-              
-                const response = await fetch(`/cancel/${orderId}`, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({ reason,orderId }) 
-                });
 
-                if (response.ok) {
-                    
-                    window.location.href = `/orderUpdates/${orderId}`; 
-                } else {
-                    alert("Failed to cancel the order. Please try again.");
-                }
+              const response = await fetch(`/cancel/${orderId}`, {
+                method: 'POST',
+                headers: {
+                  'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ reason, orderId })
+              });
+
+              if (response.ok) {
+
+                window.location.href = `/orderUpdates/${orderId}`;
+              } else {
+                alert("Failed to cancel the order. Please try again.");
+              }
             } catch (error) {
-                console.error("Error:", error);
-                alert("An error occurred while cancelling the order.");
+              console.error("Error:", error);
+              alert("An error occurred while cancelling the order.");
             }
-        } else {
+          } else {
             alert("Please provide a reason for cancellation.");
-        }
-    });
+          }
+        });
 
-    document.getElementById("closeModal").addEventListener("click", function() {
-       
-        document.getElementById("cancelModal").style.display = 'none';
-    });
-});
+        document.getElementById("closeModal").addEventListener("click", function () {
 
-
+          document.getElementById("cancelModal").style.display = 'none';
+        });
+      });
 
 
 
-document.addEventListener("DOMContentLoaded", function() {
-   
-    document.getElementById("return").addEventListener("click", function() {
-        document.getElementById("returnModal").style.display = 'block';
-    });
 
-    
-    document.getElementById("submitReason").addEventListener("click", async function() {
-        const reason = document.getElementById("returnReason").value;
-        const orderId = "<%= order._id %>"; 
 
-        if (reason) {
+      document.addEventListener("DOMContentLoaded", function () {
+
+        document.getElementById("return").addEventListener("click", function () {
+          document.getElementById("returnModal").style.display = 'block';
+        });
+
+
+        document.getElementById("submitReason").addEventListener("click", async function () {
+          const reason = document.getElementById("returnReason").value;
+          const orderId = "<%= order._id %>";
+
+          if (reason) {
             try {
 
-                const response = await fetch(`/return/${orderId}`, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({ reason, orderId }),
-                });
+              const response = await fetch(`/return/${orderId}`, {
+                method: 'POST',
+                headers: {
+                  'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ reason, orderId }),
+              });
 
-               
-                if (response.ok) {
-                    window.location.href = `/orderUpdates/${orderId}`;
-                } else {
-                    alert("Failed to return the order. Please try again.");
-                }
+
+              if (response.ok) {
+                window.location.href = `/orderUpdates/${orderId}`;
+              } else {
+                alert("Failed to return the order. Please try again.");
+              }
             } catch (error) {
-                console.error("Error:", error);
-                alert("An error occurred while returning the order.");
+              console.error("Error:", error);
+              alert("An error occurred while returning the order.");
             }
-        } else {
+          } else {
             alert("Please provide a reason for returning the order.");
-        }
-    });
-
-    
-    document.getElementById("closeModal").addEventListener("click", function() {
-        document.getElementById("returnModal").style.display = 'none'; 
-    });
-});
+          }
+        });
 
 
-  
+        document.getElementById("closeModal").addEventListener("click", function () {
+          document.getElementById("returnModal").style.display = 'none';
+        });
+      });
 
 
-document.addEventListener("DOMContentLoaded", function() {
-    document.getElementById("submitRating").addEventListener("click", function () {
-        const rating = document.querySelector('input[name="rating"]:checked');
-        const review = document.getElementById("review").value;
-        const orderId = "<%= order._id %>";
-        const userId = "<%= user._id %>";
 
-        if (rating) {
+
+
+      document.addEventListener("DOMContentLoaded", function () {
+        document.getElementById("submitRating").addEventListener("click", function () {
+          const rating = document.querySelector('input[name="rating"]:checked');
+          const review = document.getElementById("review").value;
+          const orderId = "<%= order._id %>";
+          const userId = "<%= user._id %>";
+
+          if (rating) {
             const ratingValue = rating.value;
 
             const data = {
-                orderId: orderId,
-                rating: ratingValue,
-                review: review,
-                userId: userId,
+              orderId: orderId,
+              rating: ratingValue,
+              review: review,
+              userId: userId,
             };
 
             fetch(`/rating/${orderId}`, {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify(data),
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify(data),
             })
-            .then((response) => {
+              .then((response) => {
                 if (!response.ok) {
-                    throw new Error("Network response was not ok");
+                  throw new Error("Network response was not ok");
                 }
                 return response.json();
-            })
-            .then((result) => {
+              })
+              .then((result) => {
                 const messageDiv = document.getElementById("message");
-                
-                if (result.success) {
-                    messageDiv.innerText = result.message || "Rating submitted successfully!";
-                    messageDiv.style.color = "green"; // Set success message color
-                } else {
-                    messageDiv.innerText = "Error submitting review!";
-                    messageDiv.style.color = "red"; // Set error message color
-                }
-                
-                messageDiv.style.display = "block";  
 
-           
+                if (result.success) {
+                  messageDiv.innerText = result.message || "Rating submitted successfully!";
+                  messageDiv.style.color = "green"; // Set success message color
+                } else {
+                  messageDiv.innerText = "Error submitting review!";
+                  messageDiv.style.color = "red"; // Set error message color
+                }
+
+                messageDiv.style.display = "block";
+
+
                 document.getElementById("ratingForm").reset();
                 document.getElementById("submitRating").disabled = true;
-            })
-            .catch((error) => {
+              })
+              .catch((error) => {
                 const messageDiv = document.getElementById("message");
                 messageDiv.innerText = "An error occurred. Please try again.";
                 messageDiv.style.color = "red"; // Set error message color
                 messageDiv.style.display = "block";
                 console.error("Error:", error);
-            });
-        } else {
+              });
+          } else {
             alert("Please select a rating before submitting.");
-        }
-    });
-});
+          }
+        });
+      });
 
 
-</script>
-
-
-
+    </script>

@@ -1,7 +1,7 @@
 const { name } = require("ejs");
 const Category = require("../../models/categorySchema");
 const User = require("../../models/userSchema");
-const Product=require('../../models/productSchema')
+const Product = require("../../models/productSchema");
 
 const categoryInfo = async (req, res) => {
   try {
@@ -25,7 +25,6 @@ const categoryInfo = async (req, res) => {
   } catch (error) {
     if (error) {
       res.redirect("/admin/pageNotfoundServer");
-      console.log("error in categoryinfo", error);
     }
   }
 };
@@ -40,7 +39,6 @@ const addCategoryPage = (req, res) => {
 };
 
 const addCategory = async (req, res) => {
-    
   const { name, discription } = req.body;
 
   try {
@@ -58,85 +56,71 @@ const addCategory = async (req, res) => {
   } catch (error) {
     if (error) {
       res.status(500).render("pageNotfoundServer");
-      console.log("category adding error");
     }
   }
 };
 
-
-
-const blockCategory= async (req,res)=>{
-
+const blockCategory = async (req, res) => {
   try {
-      let id=req.query.id
-      
-     await Category.updateOne({_id:id},{$set:{isBlocked:true,isActive:false}})
-     
-      res.redirect('/admin/category')
+    let id = req.query.id;
+
+    await Category.updateOne(
+      { _id: id },
+      { $set: { isBlocked: true, isActive: false } }
+    );
+
+    res.redirect("/admin/category");
   } catch (error) {
-      res.redirect('/admin/pageNotfoundServer')
-      console.log('error in customer block');
-      
+    res.redirect("/admin/pageNotfoundServer");
   }
-}
-const unBlockCategory= async (req,res)=>{
+};
+const unBlockCategory = async (req, res) => {
   try {
-      let id=req.query.id
-      await Category.updateOne({_id:id},{$set:{isBlocked:false,isActive:true}})
-      res.redirect('/admin/category')
+    let id = req.query.id;
+    await Category.updateOne(
+      { _id: id },
+      { $set: { isBlocked: false, isActive: true } }
+    );
+    res.redirect("/admin/category");
   } catch (error) {
-      res.redirect('/admin/pageNotfoundServer')
-      console.log('error in customer unBlock');
+    res.redirect("/admin/pageNotfoundServer");
   }
-}
+};
 
-const editCategoryrender=(req,res)=>{
+const editCategoryrender = (req, res) => {
   try {
-    res.render('editCategory')
-    
-  } catch (error) {
-    console.log("error in rendering editCategory",error);
-    
-    
-  }
-}
+    res.render("editCategory");
+  } catch (error) {}
+};
 
-const editCategory =async(req,res)=>{
-try {
-  
-  const {oldname,name,discription}=req.body
-  const find=Category.find({name:oldname})
-  console.log('errrr',find);
-
-if(find){
-  const updated=await Category.updateOne({ name:oldname }, { $set: { name: name, discription: discription } });
-if (updated.modifiedCount > 0) {
-  console.log('Category updated successfully');
-} else {
-  console.log('No category found or no changes made');
-}
-
-res.redirect('/admin/category')
-}
-
-} catch (error) {
-  res.status(500).render('pageNotfoundServer')
-  console.log('error in editCategory',error);
-  
-}
-
-}
-
-const addOffer= (req,res)=>{
+const editCategory = async (req, res) => {
   try {
-    res.render('addCategory')
-    
+    const { oldname, name, discription } = req.body;
+    const find = Category.find({ name: oldname });
+
+    if (find) {
+      const updated = await Category.updateOne(
+        { name: oldname },
+        { $set: { name: name, discription: discription } }
+      );
+      if (updated.modifiedCount > 0) {
+      } else {
+      }
+
+      res.redirect("/admin/category");
+    }
   } catch (error) {
-    res.render('pageNotfoundServer')
-    console.log('error in rendering add category',error);
-    
+    res.status(500).render("pageNotfoundServer");
   }
-}
+};
+
+const addOffer = (req, res) => {
+  try {
+    res.render("addCategory");
+  } catch (error) {
+    res.render("pageNotfoundServer");
+  }
+};
 
 module.exports = {
   categoryInfo,
@@ -147,6 +131,4 @@ module.exports = {
   editCategoryrender,
   editCategory,
   addOffer,
-
-
 };

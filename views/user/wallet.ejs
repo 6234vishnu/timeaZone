@@ -1,79 +1,81 @@
 <%- include("../../Views/partials/user/header") %>
-<style>
-    .paginationWallet a {
-    padding: 8px 12px;
-    margin: 0 5px;
-    background-color: #f2f2f2;
-    color: #333;
-    text-decoration: none;
-    border-radius: 4px;
-    transition: background-color 0.3s;
-}
+    <style>
+        .paginationWallet a {
+            padding: 8px 12px;
+            margin: 0 5px;
+            background-color: #f2f2f2;
+            color: #333;
+            text-decoration: none;
+            border-radius: 4px;
+            transition: background-color 0.3s;
+        }
 
-.paginationWallet a:hover {
-    background-color: #ddd;
-}
+        .paginationWallet a:hover {
+            background-color: #ddd;
+        }
 
-.paginationWallet .current-page {
-    font-weight: bold;
-    color: #0073e6;
-}
-</style>
+        .paginationWallet .current-page {
+            font-weight: bold;
+            color: #0073e6;
+        }
+    </style>
 
-<div class="wallethead">
+    <div class="wallethead">
 
         <div class="wallet-icon">
-            <img src="/re-image/wallet.avif" alt="Wallet Icon"> 
+            <img src="/re-image/wallet.avif" alt="Wallet Icon">
         </div>
 
         <!-- Total Wallet Balance -->
-        <% if (wallet.orders && wallet.orders.length > 0) { %>
-        <div class="walletbalance">
-            <h2 class="wallet-balance-title">Total Wallet Balance</h2>
-            <p class="wallet-balance-amount" style="color: red;"><%= wallet.balance %> $</p>
-        </div>
-        </div>
-        
-        <div class="wallet-container">
-            
+        <% if (wallet.orders && wallet.orders.length> 0) { %>
+            <div class="walletbalance">
+                <h2 class="wallet-balance-title">Total Wallet Balance</h2>
+                <p class="wallet-balance-amount" style="color: red;">
+                    <%= wallet.balance %> $
+                </p>
+            </div>
+    </div>
 
-                <div class="wallet-transactions">
-                    <h3 class="wallet-transactions-title">Transactions</h3>
-                    
-                    <ul class="wallet-transaction-list">
-                        <% wallet.transactions.forEach((transaction, index) => { %> 
-                            <li class="wallet-transaction-item">
-                                <!-- Transaction date -->
-                                <span class="wallet-transaction-date">
-                                    <%= new Date(transaction.date).toLocaleDateString() %>
-                                </span>
-                    
-                                <!-- Order ID -->
-                                <span class="wallet-transaction-id">
-                                    id-<%= transaction._id %>
-                                </span>
-                    
-                                <!-- Transaction amount -->
-                                <span class="wallet-transaction-amount <%= transaction.type %>">
-                                    <% if (transaction.type === 'credit') { %>
-                                        + ₹ <%= transaction.amount %>
-                                    <% } else if (transaction.type === 'debit') { %>
+    <div class="wallet-container">
+
+
+        <div class="wallet-transactions">
+            <h3 class="wallet-transactions-title">Transactions</h3>
+
+            <ul class="wallet-transaction-list">
+                <% wallet.transactions.forEach((transaction, index)=> { %>
+                    <li class="wallet-transaction-item">
+                        <!-- Transaction date -->
+                        <span class="wallet-transaction-date">
+                            <%= new Date(transaction.date).toLocaleDateString() %>
+                        </span>
+
+                        <!-- Order ID -->
+                        <span class="wallet-transaction-id">
+                            id-<%= transaction._id %>
+                        </span>
+
+                        <!-- Transaction amount -->
+                        <span class="wallet-transaction-amount <%= transaction.type %>">
+                            <% if (transaction.type==='credit' ) { %>
+                                + ₹ <%= transaction.amount %>
+                                    <% } else if (transaction.type==='debit' ) { %>
                                         - ₹ <%= transaction.amount %>
-                                    <% } %>
-                                </span>
-                            </li>
-                        <% }); %>
-                    </ul>
-                    
-                    
+                                            <% } %>
+                        </span>
+                    </li>
+                    <% }); %>
+            </ul>
+
+
             <% } else { %>
-              
-            
+
+
                 <div class="wallet-balance">
                     <h2 class="wallet-balance-title">Available Balance</h2>
                     <p class="wallet-balance-amount">0$</p>
                 </div>
-        
+
                 <div class="wallet-transactions">
                     <h3 class="wallet-transactions-title">Transactions</h3>
                     <ul class="wallet-transaction-list">
@@ -84,27 +86,30 @@
                         </li>
                     </ul>
                 </div>
-            <% } %>
+                <% } %>
         </div>
 
-        
+
     </div>
-    <div class="paginationWallet" style="display: flex; justify-content: center; align-items: center; margin-top: 20px; font-size: 1.1em; color: #333;">
-        <% if (totalPages > 1) { %>
-            <% if (currentPage > 1) { %>
-                <a href="?page=<%= currentPage - 1 %>" style="padding: 8px 12px; margin-right: 10px; background-color: #f2f2f2; color: #333; text-decoration: none; border-radius: 4px; transition: background-color 0.3s;">
+    <div class="paginationWallet"
+        style="display: flex; justify-content: center; align-items: center; margin-top: 20px; font-size: 1.1em; color: #333;">
+        <% if (totalPages> 1) { %>
+            <% if (currentPage> 1) { %>
+                <a href="?page=<%= currentPage - 1 %>"
+                    style="padding: 8px 12px; margin-right: 10px; background-color: #f2f2f2; color: #333; text-decoration: none; border-radius: 4px; transition: background-color 0.3s;">
                     Previous
                 </a>
-            <% } %>
-            <span style="margin: 0 10px;">Page <%= currentPage %> of <%= totalPages %></span>
-            <% if (currentPage < totalPages) { %>
-                <a href="?page=<%= currentPage + 1 %>" style="padding: 8px 12px; margin-left: 10px; background-color: #f2f2f2; color: #333; text-decoration: none; border-radius: 4px; transition: background-color 0.3s;">
-                    Next
-                </a>
-            <% } %>
-        <% } %>
+                <% } %>
+                    <span style="margin: 0 10px;">Page <%= currentPage %> of <%= totalPages %></span>
+                    <% if (currentPage < totalPages) { %>
+                        <a href="?page=<%= currentPage + 1 %>"
+                            style="padding: 8px 12px; margin-left: 10px; background-color: #f2f2f2; color: #333; text-decoration: none; border-radius: 4px; transition: background-color 0.3s;">
+                            Next
+                        </a>
+                        <% } %>
+                            <% } %>
     </div>
-    
 
 
-<%- include("../../Views/partials/user/footer") %>
+
+    <%- include("../../Views/partials/user/footer") %>

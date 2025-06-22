@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -15,6 +16,7 @@
     }
   </style>
 </head>
+
 <body>
   <h1>Add New Product</h1>
   <form id="productForm" enctype="multipart/form-data">
@@ -55,11 +57,11 @@
     const cropperContainer = document.getElementById('cropperContainer');
     const cropImageBtn = document.getElementById('cropImageBtn');
 
-    imageInput.addEventListener('change', function(event) {
+    imageInput.addEventListener('change', function (event) {
       const files = event.target.files;
       if (files && files.length > 0) {
         const reader = new FileReader();
-        reader.onload = function(e) {
+        reader.onload = function (e) {
           imagePreview.src = e.target.result;
           cropper = new Cropper(imagePreview, {
             aspectRatio: 1,
@@ -72,13 +74,13 @@
       }
     });
 
-    cropImageBtn.addEventListener('click', function() {
+    cropImageBtn.addEventListener('click', function () {
       const canvas = cropper.getCroppedCanvas({
         width: 300,
         height: 300,
       });
 
-      canvas.toBlob(function(blob) {
+      canvas.toBlob(function (blob) {
         const formData = new FormData(document.getElementById('productForm'));
         formData.append('croppedImage', blob);
 
@@ -97,4 +99,5 @@
     });
   </script>
 </body>
+
 </html>

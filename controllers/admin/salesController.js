@@ -62,7 +62,7 @@ const salesPage = async (req, res) => {
             const end = moment(endDate).endOf('day');
             filteredOrders = allOrders.filter(order => moment(order.createdAt).isBetween(start, end));
           } else {
-            console.log('Start date or end date missing for custom range filter.');
+           
             filteredOrders = [];
           }
           break;
@@ -79,15 +79,15 @@ const salesPage = async (req, res) => {
     let totalAmount = filteredOrders.reduce((acc, order) => acc + (order.totalAmount || 0), 0);
 
     let paginatedOrders = filteredOrders.slice(skip, skip + limit);
-    console.log("filtersOrders",filteredOrders.length)
+   
 
 
     // PDF Download
     if (req.query.download === 'pdf') {
      
-      console.log("filtersOrders2",filteredOrders.length)
+     
       let totalOrders = filteredOrders.length;
-      console.log("filtersOrders3",totalOrders)
+     
       let totalDiscount = filteredOrders.reduce((acc, order) => acc + (order.discount || 0), 0);
       let totalAmount = filteredOrders.reduce((acc, order) => acc + (order.totalAmount || 0), 0);
     
@@ -154,7 +154,7 @@ const salesPage = async (req, res) => {
     });
 
   } catch (error) {
-    console.log('Error in rendering salesPage', error);
+    
     res.status(400).json('Error in rendering sales page');
   }
 };
@@ -216,7 +216,7 @@ const excelDownload=async(req,res)=>{
     return; 
 
   } catch (error) {
-    console.log('error in rendering salesPage', error);
+    
     res.status(400).json('Error in rendering sales page');
   }
 }

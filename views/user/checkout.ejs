@@ -1,454 +1,481 @@
 <%- include("../../Views/partials/user/header") %>
 
-<main>
-  <section class="orderpage-container">
-    
-    
-    <form action="/orderPage" method="POST" onsubmit="return validateAddressSelection()" > 
-      <div class="orderpage-login-section">
-        <h2 style="padding: 15px;">Your Order Items</h2>
-        <% if (items.length > 0) { %>
+  <main>
+    <section class="orderpage-container">
 
-      
 
-          <% items.forEach(function(item) { %>
-            <div class="product-card"  data-product-id="<%= item.product._id %>">
-              <a href="/productPage?id=<%= item.product._id %>">
-                <img src="/re-image/<%= item.product.productImage[0] %>" alt="<%= item.product.name %>">
-              </a>
-              <h2 name="productName" style="color: rgb(0, 0, 0);"><%= item.product.name %></h2>
-              <p name="productPrice" class="price" style="color: red;">
-                <strong>$<%= item.salePrice %></strong>
-              </p>
-        
-              <!-- Display the quantity of the product -->
-              <p name="productQuantity">Quantity: <%= item.quantity %></p>
-        
-              <!-- Calculate and display the total price for the product -->
-              <p name="totalPrice">Total Price: $<%= item.quantity * item.salePrice %></p>
-              
-        
-              <!-- Hidden input fields for storing values -->
-              <input type="hidden" name="productId[]" value="<%= item.product._id %>">
-              <input type="hidden" name="quantity[]" value="<%= item.quantity %>">
-              <input type="hidden" name="totalPrice[]" value="<%= item.quantity * item.salePrice %>">
-            </div>
-          <% }); %>
-    
-        
-        <% } else { %>
-          <p>Your order list is empty.</p>
-        <% } %>
-      </div>
-    
-      <h2 style="padding: 15px;">Logged Addresses</h2>
-      <% if (addresses.length > 0) { %>
-        <% addresses.forEach(function(address, index) { %>
-          <div class="address-selection">
-            <div class="address-option">
-              <input type="radio" id="address<%= index %>" name="address" value="<%= address._id %>" onclick="selectAddress('<%= address._id %>')">
-              <input type="hidden" id="userId" name="user" value="<%= user._id %>">
-              <label for="address<%= index %>"> 
-                <div class="address-details">
-                  <p id="address"><%= address._id %></p>
-                  <% if (address.adress) { %>
-                    <p>Name: <%= address.adress.name || 'N/A' %></p>
-                    <p>State: <%= address.adress.state || 'N/A' %></p>
-                    <p>City: <%= address.adress.city || 'N/A' %></p>
-                    <p>Building: <%= address.adress.building || 'N/A' %></p>
-                    <p>Area: <%= address.adress.area || 'N/A' %></p>
-                    <p>Pin Code: <%= address.adress.pincode || 'N/A' %></p>
-                    <p>Phone: <%= address.adress.phone || 'N/A' %></p>
-                  <% } else { %>
-                    <p><strong>Address details are not available.</strong></p>
-                  <% } %>
-                </div>
-              </label>
-            </div>
-          </div>
-        <% }); %>
-      <% } else { %>
-        <p>No addresses logged.</p>
-      <% } %>
-    
-    
-    
-      <!-- Order Summary Section -->
-      <div class="orderpage-summary-section">
-        <h2>Order Summary</h2>
-        
-          <div class="couponcode-container">
-            <% if (coupon && coupon.code) { %>
-              <td class="couponcode-display">Coupon code: <strong style="color: red;"> <%= coupon.code %> </strong></td>
-            <% } else { %>
-              <td class="couponcode-display">N/A</td>
-            <% } %>
-          
-            <input type="text" name="couponCode" id="couponCodeInput" placeholder="Enter coupon code" class="couponcode-input">
-            <button type="button" id="applyCouponBtn" class="couponcode-apply-btn">Apply Coupon</button>
-          
-            <div id="couponDiscountDisplay" style="color: rgb(255, 0, 0); display: none;">
-              <strong>Flat: </strong><strong id="couponDiscountValue" style="color: red;">$0 off</strong>
-            </div>
-          </div>
-          
-     
-      
-        <table class="orderpage-summary-table">
-          <thead>
-            <tr>
-              <th>Product</th>
-              <th>Quantity</th>
-              <th>Product Total</th>
-              <th>Delivery Charge</th>
-              
-              
-            </tr>
-          </thead>
-          <tbody>
+      <form action="/orderPage" method="POST" onsubmit="return validateAddressSelection()">
+        <div class="orderpage-login-section">
+          <h2 style="padding: 15px;">Your Order Items</h2>
+          <% if (items.length> 0) { %>
+
+
+
             <% items.forEach(function(item) { %>
-              <tr>
-                <td ><%= item.product.name %></td>
-                <td><%= item.quantity %></td>
-               
-                <td><%= item.salePrice * item.quantity %> $</td>
-              
-              
-                <% }); %>
-                <td><%= deliveryCharges %> $</td>
-             
-              </tr>
-          </tbody>
-          <tfoot>
-           
-            <tr>
-              
-            
-              <th>Total Amount</th>
-              <th id="total" style="color: rgb(224, 1, 1);" >$<%= finalTotal %></th>
-            </tr>
-          </tfoot>
-        </table>
-    
-    
-        <input type="hidden" id="finalTotal" name="subtotal"  value="<%= finalTotal %>">
+              <div class="product-card" data-product-id="<%= item.product._id %>">
+                <a href="/productPage?id=<%= item.product._id %>">
+                  <img src="/re-image/<%= item.product.productImage[0] %>" alt="<%= item.product.name %>">
+                </a>
+                <h2 name="productName" style="color: rgb(0, 0, 0);">
+                  <%= item.product.name %>
+                </h2>
+                <p name="productPrice" class="price" style="color: red;">
+                  <strong>$<%= item.salePrice %></strong>
+                </p>
 
-        <% if(outofstock){ %>
-          <button type="submit" id="orderButton1" class="orderpage-confirm-btn" disabled style="background-color: #9e9e9e;">Confirm Order</button>
-          <h5 style="color: red;">item out of stock</h5>
+                <!-- Display the quantity of the product -->
+                <p name="productQuantity">Quantity: <%= item.quantity %>
+                </p>
 
-          <% }else{ %>
+                <!-- Calculate and display the total price for the product -->
+                <p name="totalPrice">Total Price: $<%= item.quantity * item.salePrice %>
+                </p>
 
-        <button type="submit" id="orderButton1" class="orderpage-confirm-btn">Confirm Order</button>
-        <% } %>
-    
 
-        <div class="orderpage-payment-options">
-          <label>
-            <img src="\re-image\cshondel.jpg" alt="" style="width: 162px;">
-            <input type="radio" name="paymentType" value="COD" checked> Cash on Delivery
-          </label>
+                <!-- Hidden input fields for storing values -->
+                <input type="hidden" name="productId[]" value="<%= item.product._id %>">
+                <input type="hidden" name="quantity[]" value="<%= item.quantity %>">
+                <input type="hidden" name="totalPrice[]" value="<%= item.quantity * item.salePrice %>">
+              </div>
+              <% }); %>
 
-          <label>
-            <img src="/re-image/upi.jpg" alt="" style="width: 166px;">
-            <input type="radio" name="paymentType" value="UPI" id="upiPayment"> UPI via Razorpay
-          </label>
-          <label>
-            <img src="\re-image\wallet.avif" alt="" style="width: 172px;">
-            <input type="radio" name="paymentType" value="Wallet" > Wallet
-          </label>
+
+                <% } else { %>
+                  <p>Your order list is empty.</p>
+                  <% } %>
         </div>
+
+        <h2 style="padding: 15px;">Logged Addresses</h2>
+        <% if (addresses.length> 0) { %>
+          <% addresses.forEach(function(address, index) { %>
+            <div class="address-selection">
+              <div class="address-option">
+                <input type="radio" id="address<%= index %>" name="address" value="<%= address._id %>"
+                  onclick="selectAddress('<%= address._id %>')">
+                <input type="hidden" id="userId" name="user" value="<%= user._id %>">
+                <label for="address<%= index %>">
+                  <div class="address-details">
+                    <p id="address">
+                      <%= address._id %>
+                    </p>
+                    <% if (address.adress) { %>
+                      <p>Name: <%= address.adress.name || 'N/A' %>
+                      </p>
+                      <p>State: <%= address.adress.state || 'N/A' %>
+                      </p>
+                      <p>City: <%= address.adress.city || 'N/A' %>
+                      </p>
+                      <p>Building: <%= address.adress.building || 'N/A' %>
+                      </p>
+                      <p>Area: <%= address.adress.area || 'N/A' %>
+                      </p>
+                      <p>Pin Code: <%= address.adress.pincode || 'N/A' %>
+                      </p>
+                      <p>Phone: <%= address.adress.phone || 'N/A' %>
+                      </p>
+                      <% } else { %>
+                        <p><strong>Address details are not available.</strong></p>
+                        <% } %>
+                  </div>
+                </label>
+              </div>
+            </div>
+            <% }); %>
+              <% } else { %>
+                <p>No addresses logged.</p>
+                <% } %>
+
+
+
+                  <!-- Order Summary Section -->
+                  <div class="orderpage-summary-section">
+                    <h2>Order Summary</h2>
+
+                    <div class="couponcode-container">
+                      <% if (coupon && coupon.code) { %>
+                        <td class="couponcode-display">Coupon code: <strong style="color: red;">
+                            <%= coupon.code %>
+                          </strong></td>
+                        <% } else { %>
+                          <td class="couponcode-display">N/A</td>
+                          <% } %>
+
+                            <input type="text" name="couponCode" id="couponCodeInput" placeholder="Enter coupon code"
+                              class="couponcode-input">
+                            <button type="button" id="applyCouponBtn" class="couponcode-apply-btn">Apply Coupon</button>
+
+                            <div id="couponDiscountDisplay" style="color: rgb(255, 0, 0); display: none;">
+                              <strong>Flat: </strong><strong id="couponDiscountValue" style="color: red;">$0
+                                off</strong>
+                            </div>
+                    </div>
+
+
+
+                    <table class="orderpage-summary-table">
+                      <thead>
+                        <tr>
+                          <th>Product</th>
+                          <th>Quantity</th>
+                          <th>Product Total</th>
+                          <th>Delivery Charge</th>
+
+
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <% items.forEach(function(item) { %>
+                          <tr>
+                            <td>
+                              <%= item.product.name %>
+                            </td>
+                            <td>
+                              <%= item.quantity %>
+                            </td>
+
+                            <td>
+                              <%= item.salePrice * item.quantity %> $
+                            </td>
+
+
+                            <% }); %>
+                              <td>
+                                <%= deliveryCharges %> $
+                              </td>
+
+                          </tr>
+                      </tbody>
+                      <tfoot>
+
+                        <tr>
+
+
+                          <th>Total Amount</th>
+                          <th id="total" style="color: rgb(224, 1, 1);">$<%= finalTotal %>
+                          </th>
+                        </tr>
+                      </tfoot>
+                    </table>
+
+
+                    <input type="hidden" id="finalTotal" name="subtotal" value="<%= finalTotal %>">
+
+                    <% if(outofstock){ %>
+                      <button type="submit" id="orderButton1" class="orderpage-confirm-btn" disabled
+                        style="background-color: #9e9e9e;">Confirm Order</button>
+                      <h5 style="color: red;">item out of stock</h5>
+
+                      <% }else{ %>
+
+                        <button type="submit" id="orderButton1" class="orderpage-confirm-btn">Confirm Order</button>
+                        <% } %>
+
+
+                          <div class="orderpage-payment-options">
+                            <label>
+                              <img src="\re-image\cshondel.jpg" alt="" style="width: 162px;">
+                              <input type="radio" name="paymentType" value="COD" checked> Cash on Delivery
+                            </label>
+
+                            <label>
+                              <img src="/re-image/upi.jpg" alt="" style="width: 166px;">
+                              <input type="radio" name="paymentType" value="UPI" id="upiPayment"> UPI via Razorpay
+                            </label>
+                            <label>
+                              <img src="\re-image\wallet.avif" alt="" style="width: 172px;">
+                              <input type="radio" name="paymentType" value="Wallet"> Wallet
+                            </label>
+                          </div>
+                  </div>
+      </form> <!-- Form wrapping ends here -->
+
+      <div class="orderpage-billing-section">
+        <h2>Add new Address?</h2>
+        <button class="orderpage-confirm-btn" onclick="window.location.href='/editProfile'">
+          Click here to add NEW ADDRESS
+        </button>
       </div>
-    </form> <!-- Form wrapping ends here -->
 
-    <div class="orderpage-billing-section">
-      <h2>Add new Address?</h2>
-      <button class="orderpage-confirm-btn" onclick="window.location.href='/editProfile'">
-        Click here to add NEW ADDRESS
-      </button>
-    </div>
-    
-  </section>
-  
-</main>
+    </section>
 
-<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
-<script>
+  </main>
 
-const applyCouponBtn = document.getElementById("applyCouponBtn");
-const couponCodeInput = document.getElementById("couponCodeInput");
-const finalTotals = document.getElementById("finalTotal");
-const couponDiscountDisplay = document.getElementById("couponDiscountDisplay");
-const couponDiscountValue = document.getElementById("couponDiscountValue");
+  <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+  <script>
 
-let currentTotal = parseFloat(finalTotals.value);  // Store the original final total
-let couponApplied = false;
+    const applyCouponBtn = document.getElementById("applyCouponBtn");
+    const couponCodeInput = document.getElementById("couponCodeInput");
+    const finalTotals = document.getElementById("finalTotal");
+    const couponDiscountDisplay = document.getElementById("couponDiscountDisplay");
+    const couponDiscountValue = document.getElementById("couponDiscountValue");
 
-// Apply Coupon Button Click Event
-applyCouponBtn.addEventListener("click", function () {
-  const enteredCouponCode = couponCodeInput.value.trim();
-  
-  if (!enteredCouponCode) {
-    alert("Please enter a coupon code.");
-    return;
-  }
+    let currentTotal = parseFloat(finalTotals.value);  // Store the original final total
+    let couponApplied = false;
 
-  // Fetch the coupon details from the server
-  fetch("/applyCoupon", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify({ couponCode: enteredCouponCode })
-  })
-  .then(response => response.json())
-  .then(data => {
-    if (data.success && data.discountValue) {
-      const discount = data.discountValue;
-      let newTotal = currentTotal - discount;
+    // Apply Coupon Button Click Event
+    applyCouponBtn.addEventListener("click", function () {
+      const enteredCouponCode = couponCodeInput.value.trim();
 
-      // Update the final total and display coupon discount
-      finalTotals.value = newTotal.toFixed(2);
-      couponDiscountValue.innerText = `$${discount} off`;
-      couponDiscountDisplay.style.display = "block";
+      if (!enteredCouponCode) {
+        alert("Please enter a coupon code.");
+        return;
+      }
 
-     
-      document.querySelector("th[style='color: rgb(224, 1, 1);']").innerText = `$${newTotal.toFixed(2)}`;
+      // Fetch the coupon details from the server
+      fetch("/applyCoupon", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ couponCode: enteredCouponCode })
+      })
+        .then(response => response.json())
+        .then(data => {
+          if (data.success && data.discountValue) {
+            const discount = data.discountValue;
+            let newTotal = currentTotal - discount;
 
-      couponApplied = true;
-    } else {
-      alert("Invalid coupon code or coupon expired.");
-      
-      
-      couponCodeInput.value = ""; 
-      couponDiscountValue.innerText = `$0 off`; 
-      couponDiscountDisplay.style.display = "none";
-      finalTotals.value = currentTotal.toFixed(2); 
+            // Update the final total and display coupon discount
+            finalTotals.value = newTotal.toFixed(2);
+            couponDiscountValue.innerText = `$${discount} off`;
+            couponDiscountDisplay.style.display = "block";
 
-      couponApplied = false;
-    }
-  })
-  .catch(error => {
-    console.error("Error applying coupon:", error);
-    alert("Failed to apply coupon. Please try again.");
-  });
-});
+
+            document.querySelector("th[style='color: rgb(224, 1, 1);']").innerText = `$${newTotal.toFixed(2)}`;
+
+            couponApplied = true;
+          } else {
+            alert("Invalid coupon code or coupon expired.");
+
+
+            couponCodeInput.value = "";
+            couponDiscountValue.innerText = `$0 off`;
+            couponDiscountDisplay.style.display = "none";
+            finalTotals.value = currentTotal.toFixed(2);
+
+            couponApplied = false;
+          }
+        })
+        .catch(error => {
+          console.error("Error applying coupon:", error);
+          alert("Failed to apply coupon. Please try again.");
+        });
+    });
 
 
 
 
 
- 
-
-const productCards = document.querySelectorAll('.product-card');
-
-let productsForOrder = []; 
-
-productCards.forEach(card => {
-   
-    const productId = card.getAttribute('data-product-id');
-    console.log('productId: ',productId)
-
- 
-    const qty = card.querySelector('p[name="productQuantity"]').innerText.replace('Quantity: ', '');
-    const price = card.querySelector('p.price strong').innerText.replace('$', '');
-    let totalPrice = card.querySelector('p[name="totalPrice"]').innerText.replace('Total Price: $', '');
 
 
-    productsForOrder.push({
-        product: productId,  
+    const productCards = document.querySelectorAll('.product-card');
+
+    let productsForOrder = [];
+
+    productCards.forEach(card => {
+
+      const productId = card.getAttribute('data-product-id');
+
+
+
+      const qty = card.querySelector('p[name="productQuantity"]').innerText.replace('Quantity: ', '');
+      const price = card.querySelector('p.price strong').innerText.replace('$', '');
+      let totalPrice = card.querySelector('p[name="totalPrice"]').innerText.replace('Total Price: $', '');
+
+
+      productsForOrder.push({
+        product: productId,
         quantity: qty,
         price: price,
         totalPrice: totalPrice
+      });
     });
-});
 
 
 
-let selectedAddressId = null;
-let usersId = null;
-const finalTotalElement = document.getElementById('finalTotal');
-let finalTotal = parseFloat(finalTotalElement.value);
+    let selectedAddressId = null;
+    let usersId = null;
+    const finalTotalElement = document.getElementById('finalTotal');
+    let finalTotal = parseFloat(finalTotalElement.value);
 
 
 
-usersId = document.getElementById('userId').value;
+    usersId = document.getElementById('userId').value;
 
-let coupon = "<%= coupon.code %>";
+    let coupon = "<%= coupon.code %>";
 
-function selectAddress(addressId) {
-  selectedAddressId = addressId;
-}
-
-function validateAddressSelection() {
-  if (!selectedAddressId) {
-    alert("Please select an address.");
-    return false;
-  }
-  return true;
-}
-
-console.log('selectedAddress', selectedAddressId);
-
-
-
-document.getElementById("orderButton1").addEventListener("click", function(event) {
-  
-  let paymentType = document.querySelector('input[name="paymentType"]:checked').value;
-  console.log("paymentType", paymentType);
-console.log(paymentType==="UPI")
-  if (paymentType === "UPI") {
-  
-    event.preventDefault()
-      
-    initiateRazorpayPayment();
-  } else {
-    
-    submitOrder(); 
-  }
-});
-
-function initiateRazorpayPayment() {
-
-  let enteredCoupon = document.getElementById('couponCodeInput').value;  
-  let couponDiscountValue = parseFloat("<%= coupon ? coupon.discountValue : 0 %>");  
-
-  if (enteredCoupon && couponDiscountValue > 0) {
-    finalTotal -= couponDiscountValue;  
-  }
-
-  let amount = finalTotal;  
-
-  if (isNaN(amount) || amount <= 0) {
-    alert("Invalid total amount. Please check your order total.");
-    return;
-  }
-
-  console.log('Initiating Razorpay payment with amount:', amount);
-
-  fetch('/createRazorpayOrder', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify({
-      amount: amount,
-      currency: 'INR',
-      receipt: 'receipt_order_' + new Date().getTime()
-    })
-  })
-  .then(response => {
-    if (!response.ok) {
-      throw new Error('Network response was not ok ' + response.statusText);
+    function selectAddress(addressId) {
+      selectedAddressId = addressId;
     }
-    return response.json();
-  })
-  .then(order => {
-    console.log('Razorpay order response:', order);
-    var options = {
-      key: "rzp_test_ZT3hTNhg3MXJic",
-      amount: order.amount,
-      currency: order.currency,
-      name: "Your Company Name",
-      description: "Transaction",
-      order_id: order.id,
-      handler: function (response) {
-       
-        verifyPayment(response, order);
-      },
-      prefill: {
-        name: "<%= user.name %>",
-        email: "<%= user.email %>",
-        contact: "<%= user.phoneNumber %>"
-      },
-      theme: {
-        color: "#3399cc"
+
+    function validateAddressSelection() {
+      if (!selectedAddressId) {
+        alert("Please select an address.");
+        return false;
       }
-    };
-    var rzp1 = new Razorpay(options);
-    rzp1.open();
-  })
-  .catch(error => {
-    console.error('Error creating Razorpay order:', error);
-    alert("Failed to initiate payment. Please try again.");
-  });
-
-}
-
-function verifyPayment(paymentResponse, order) {
-  fetch('/verifyRazorpayPayment', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify({
-      payment: paymentResponse,
-      order: order,
-      userId: usersId,
-      address: selectedAddressId,
-      coupon: JSON.stringify(coupon),
-      products:productsForOrder,
-    })
-  })
-  .then(response => response.json())
-  .then(data => {
-    if (data.success) {
-      console.log('Order placed successfully:', data);
-      window.location.href = "/orderConfirmation"; // Redirect after successful payment
-    } else {
-      console.error('Payment verification failed:', data.message);
-      alert("Payment verification failed. Please contact support.");
+      return true;
     }
-  })
-  .catch(error => {
-    console.error('Error verifying payment:', error);
-    alert("An error occurred. Please try again.");
-  });
-}
 
-function submitOrder() {
-  const userId = "<%= user._id %>"; 
-  const address = selectedAddressId;  
-  const paymentType = document.querySelector('input[name="paymentType"]:checked').value;  
-  const orderItems =  items.map(item => ({
-    productId: item.productId,
-    quantity: item.quantity,
-    subtotal: item.salePrice * item.quantity,
-    discount: coupon && coupon.discountValue ? coupon.discountValue : 0 
-  }));
 
-  const orderData = {
-    userId: userId,
-    address: address,
-    paymentType: paymentType,
-    items: orderItems,
-    coupon: JSON.stringify(coupon),
-    subtotal: finalTotal
-  };
 
-  fetch('/orderPage', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify(orderData)
-  })
-  .then(response => {
-    if (!response.ok) {
-      throw new Error('Network response was not ok ' + response.statusText);
+
+
+    document.getElementById("orderButton1").addEventListener("click", function (event) {
+
+      let paymentType = document.querySelector('input[name="paymentType"]:checked').value;
+
+      if (paymentType === "UPI") {
+
+        event.preventDefault()
+
+        initiateRazorpayPayment();
+      } else {
+
+        submitOrder();
+      }
+    });
+
+    function initiateRazorpayPayment() {
+
+      let enteredCoupon = document.getElementById('couponCodeInput').value;
+      let couponDiscountValue = parseFloat("<%= coupon ? coupon.discountValue : 0 %>");
+
+      if (enteredCoupon && couponDiscountValue > 0) {
+        finalTotal -= couponDiscountValue;
+      }
+
+      let amount = finalTotal;
+
+      if (isNaN(amount) || amount <= 0) {
+        alert("Invalid total amount. Please check your order total.");
+        return;
+      }
+
+
+
+      fetch('/createRazorpayOrder', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          amount: amount,
+          currency: 'INR',
+          receipt: 'receipt_order_' + new Date().getTime()
+        })
+      })
+        .then(response => {
+          if (!response.ok) {
+            throw new Error('Network response was not ok ' + response.statusText);
+          }
+          return response.json();
+        })
+        .then(order => {
+
+          var options = {
+            key: "rzp_test_ZT3hTNhg3MXJic",
+            amount: order.amount,
+            currency: order.currency,
+            name: "Your Company Name",
+            description: "Transaction",
+            order_id: order.id,
+            handler: function (response) {
+
+              verifyPayment(response, order);
+            },
+            prefill: {
+              name: "<%= user.name %>",
+              email: "<%= user.email %>",
+              contact: "<%= user.phoneNumber %>"
+            },
+            theme: {
+              color: "#3399cc"
+            }
+          };
+          var rzp1 = new Razorpay(options);
+          rzp1.open();
+        })
+        .catch(error => {
+          console.error('Error creating Razorpay order:', error);
+          alert("Failed to initiate payment. Please try again.");
+        });
+
     }
-    return response.json();
-  })
-  .then(data => {
-    console.log('Order placed successfully:', data);
-    window.location.href = "/orderConfirmation"; 
-  })
-  .catch(error => {
-    console.error('Error placing order:', error);
-    alert("Failed to place order. Please try again.");
-  });
-}
+
+    function verifyPayment(paymentResponse, order) {
+      fetch('/verifyRazorpayPayment', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          payment: paymentResponse,
+          order: order,
+          userId: usersId,
+          address: selectedAddressId,
+          coupon: JSON.stringify(coupon),
+          products: productsForOrder,
+        })
+      })
+        .then(response => response.json())
+        .then(data => {
+          if (data.success) {
+
+            window.location.href = "/orderConfirmation"; // Redirect after successful payment
+          } else {
+            console.error('Payment verification failed:', data.message);
+            alert("Payment verification failed. Please contact support.");
+          }
+        })
+        .catch(error => {
+          console.error('Error verifying payment:', error);
+          alert("An error occurred. Please try again.");
+        });
+    }
+
+    function submitOrder() {
+      const userId = "<%= user._id %>";
+      const address = selectedAddressId;
+      const paymentType = document.querySelector('input[name="paymentType"]:checked').value;
+      const orderItems = items.map(item => ({
+        productId: item.productId,
+        quantity: item.quantity,
+        subtotal: item.salePrice * item.quantity,
+        discount: coupon && coupon.discountValue ? coupon.discountValue : 0
+      }));
+
+      const orderData = {
+        userId: userId,
+        address: address,
+        paymentType: paymentType,
+        items: orderItems,
+        coupon: JSON.stringify(coupon),
+        subtotal: finalTotal
+      };
+
+      fetch('/orderPage', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(orderData)
+      })
+        .then(response => {
+          if (!response.ok) {
+            throw new Error('Network response was not ok ' + response.statusText);
+          }
+          return response.json();
+        })
+        .then(data => {
+
+          window.location.href = "/orderConfirmation";
+        })
+        .catch(error => {
+          console.error('Error placing order:', error);
+          alert("Failed to place order. Please try again.");
+        });
+    }
 
 
-</script>
-<%- include("../../Views/partials/user/footer") %>
+  </script>
+  <%- include("../../Views/partials/user/footer") %>

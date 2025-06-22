@@ -1,132 +1,122 @@
 <%- include('../partials/admin/header') %>
 
-<!-- <link rel="stylesheet" href="category.css"> -->
+  <!-- <link rel="stylesheet" href="category.css"> -->
 
-  
-<div class="container-fluid">
-  <div class="title">
-   <h1 >New Category</h1>
+
+  <div class="container-fluid">
+    <div class="title">
+      <h1>New Category</h1>
+    </div>
+    <main class="content">
+      <form class="category-form" action="/admin/addCategory" method="post" onsubmit="return handleFormSubmit(event)">
+        <div class="form-group">
+          <label for="categoryName">Category Name</label>
+          <input type="text" id="categoryName" name="name" required />
+        </div>
+
+        <div class="form-group">
+          <label for="discription">Description</label>
+          <textarea id="discription" name="discription" rows="5" required></textarea>
+        </div>
+
+        <button type="submit" class="submit-btn">Add Category</button>
+      </form>
+
+
+
+    </main>
   </div>
-  <main class="content">
-    <form
-      class="category-form"
-      action="/admin/addCategory"
-      method="post"
-      onsubmit="return handleFormSubmit(event)"
-    >
-      <div class="form-group">
-        <label for="categoryName">Category Name</label>
-        <input type="text" id="categoryName" name="name" required />
-      </div>
 
-      <div class="form-group">
-        <label for="discription">Description</label>
-        <textarea
-          id="discription"
-          name="discription"
-          rows="5"
-          required
-        ></textarea>
-      </div>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script>
 
-      <button type="submit" class="submit-btn">Add Category</button>
-    </form>
-
-   
-    
-  </main>
-</div>
-
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-<script>
-
-const handleFormSubmit = (event) => {
-  event.preventDefault();
-  if (!validation()) {
-    return;
-  }
-
-  const name = document.getElementsByName("name")[0].value;
-  const discription = document.getElementById("discription").value;
-
-  fetch("/admin/addCategory", {
-    method: "post",
-    headers: {
-      "content-type": "application/json",
-    },
-    body: JSON.stringify({ name, discription }),
-  })
-    .then((response) => {
-     console.log('ressss',response);
-     
-      if (!response.ok) {
-        return response.json().then((err) => {
-          throw new Error(err.error);
-        });
+    const handleFormSubmit = (event) => {
+      event.preventDefault();
+      if (!validation()) {
+        return;
       }
-      Swal.fire({
-        icon: "success",
-        title: "Success",
-        text: "Category added",
-      }).then(() => {
-        location.reload(); 
-      });
-      return response.json();
-    })
-    .catch((error) => {
-      console.error('Error:', error); 
-      if (error.message === "category already exists") {
-        Swal.fire({
-          icon: "error",
-          title: "Oops",
-          text: "Category already exists",
+
+      const name = document.getElementsByName("name")[0].value;
+      const discription = document.getElementById("discription").value;
+
+      fetch("/admin/addCategory", {
+        method: "post",
+        headers: {
+          "content-type": "application/json",
+        },
+        body: JSON.stringify({ name, discription }),
+      })
+        .then((response) => {
+
+
+          if (!response.ok) {
+            return response.json().then((err) => {
+              throw new Error(err.error);
+            });
+          }
+          Swal.fire({
+            icon: "success",
+            title: "Success",
+            text: "Category added",
+          }).then(() => {
+            location.reload();
+          });
+          return response.json();
+        })
+        .catch((error) => {
+          console.error('Error:', error);
+          if (error.message === "category already exists") {
+            Swal.fire({
+              icon: "error",
+              title: "Oops",
+              text: "Category already exists",
+            });
+          } else {
+            Swal.fire({
+              icon: "error",
+              title: "Oops",
+              text: "An error occurred while adding the category",
+            });
+          }
         });
-      } else {
-        Swal.fire({
-          icon: "error",
-          title: "Oops",
-          text: "An error occurred while adding the category",
-        });
+    };
+
+
+    function validation() {
+      clearErrorMessage();
+      const name = document.getElementsByName("name")[0].value.trim();
+      const discription = document.getElementById("discription").value.trim();
+      let isValid = true;
+
+      if (name === "") {
+        displayError("name-error", "Please enter a name");
+        isValid = false;
+      } else if (!/^[a-zA-Z\s]+$/.test(name)) {
+        displayError(
+          "name-error",
+          "Category name should only contain alphabetic letters"
+        );
+        isValid = false;
+      } else if (discription === "") {
+        displayError("discription-error", "Please enter a discription");
+        isValid = false;
       }
-    });
-};
 
-
-  function validation() {
-    clearErrorMessage();
-    const name = document.getElementsByName("name")[0].value.trim();
-    const discription = document.getElementById("discription").value.trim();
-    let isValid = true;
-
-    if (name === "") {
-      displayError("name-error", "Please enter a name");
-      isValid = false;
-    } else if (!/^[a-zA-Z\s]+$/.test(name)) {
-      displayError(
-        "name-error",
-        "Category name should only contain alphabetic letters"
-      );
-      isValid = false;
-    } else if (discription === "") {
-      displayError("discription-error", "Please enter a discription");
-      isValid = false;
+      return isValid;
     }
 
-    return isValid;
-  }
+    function displayError(elementId, message) {
+      const errorElement = document.getElementById(elementId);
+      errorElement.innerText = message;
+      errorElement.style.display = "block";
+    }
 
-  function displayError(elementId, message) {
-    const errorElement = document.getElementById(elementId);
-    errorElement.innerText = message;
-    errorElement.style.display = "block";
-  }
+    function clearErrorMessage() {
+      const errorElements = document.querySelectorAll(".error-message");
+      errorElements.forEach((errorElement) => {
+        errorElement.style.display = "none";
+      });
+    }
+  </script>
 
-  function clearErrorMessage() {
-    const errorElements = document.querySelectorAll(".error-message");
-    errorElements.forEach((errorElement) => {
-      errorElement.style.display = "none";
-    });
-  }
-</script>
-
-<%- include('../partials/admin/footer') %>
+  <%- include('../partials/admin/footer') %>

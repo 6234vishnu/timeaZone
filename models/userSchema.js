@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 const { Schema } = mongoose; // Use 'Schema' instead of 'schema'
-const adressSchema=require('../models/adressSchema')
+const adressSchema = require("../models/adressSchema");
 
 const userSchema = new Schema({
   name: {
@@ -17,13 +17,10 @@ const userSchema = new Schema({
     required: false, // because phone is not needed in Google login
     unique: false,
     sparse: true, // to set unique constraints
-    default:null
-    
+    default: null,
   },
   googleId: {
     type: String,
-    
-
   },
   password: {
     type: String,
@@ -39,13 +36,13 @@ const userSchema = new Schema({
   },
   cart: [
     {
-      type: Schema.Types.ObjectId, 
+      type: Schema.Types.ObjectId,
     },
   ],
   wallet: [
     {
       type: Schema.Types.ObjectId,
-      ref: "Wishlist", 
+      ref: "Wishlist",
     },
   ],
   address: [
@@ -65,7 +62,7 @@ const userSchema = new Schema({
     default: Date.now,
   },
   referenceCode: {
-    type: String, 
+    type: String,
   },
   redeemed: {
     type: Boolean,
@@ -73,7 +70,7 @@ const userSchema = new Schema({
   },
   redeemedUsers: {
     type: Schema.Types.ObjectId,
-    ref: "User", 
+    ref: "User",
     //required:true
   },
   searchHistory: [

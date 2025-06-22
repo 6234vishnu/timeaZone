@@ -9,45 +9,42 @@ const adressSchema = new Schema({
     required: true,
   },
   adress: {
-    
-      adressType: {
-        type: String,
-        required: true,
-      },
-      name: {
-        type: String,
-        required: true,
-      },
-      state:{
-        type: String, 
-        required: true,
-       
-      },
-      city: {
-        type: String,
-        required: true,
-      },
-      district: {
-        type: String,
-        required: true,
-      },
-      phone: {
-        type: Number,
-        required: true,
-      },
-      pincode: {
-        type: String,
-        required: true,
-      },
-      building: {
-        type: String,
-        required: true,
-      },
-      area: {
-        type: String,
-        required: true,
-      },
-    
+    adressType: {
+      type: String,
+      required: true,
+    },
+    name: {
+      type: String,
+      required: true,
+    },
+    state: {
+      type: String,
+      required: true,
+    },
+    city: {
+      type: String,
+      required: true,
+    },
+    district: {
+      type: String,
+      required: true,
+    },
+    phone: {
+      type: Number,
+      required: true,
+    },
+    pincode: {
+      type: String,
+      required: true,
+    },
+    building: {
+      type: String,
+      required: true,
+    },
+    area: {
+      type: String,
+      required: true,
+    },
   },
 });
 

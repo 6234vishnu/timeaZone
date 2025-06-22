@@ -1,194 +1,209 @@
-<%-include("../../Views/partials/user/header")%>
+<%-include(".. /../Views/partials/user/header")%>
 
 
-<main>
-  <!-- Your existing HTML content -->
+  <main>
+    <!-- Your existing HTML content -->
 
 
 
-  <section class="orderpage-container">
-    <% if(message){ %>
-      <h2 style="color: rgb(3, 176, 3);">Order is Successfully Done!</h2>
-      <% } %>
+    <section class="orderpage-container">
+      <% if(message){ %>
+        <h2 style="color: rgb(3, 176, 3);">Order is Successfully Done!</h2>
+        <% } %>
 
-    <!-- Login Section -->
-    <div class="orderpage-login-section">
-      <div class="product-card">
-        <!-- Product Image -->
-        <a href="/productPage?id=<%= product._id %>">
-        <img src="/re-image/<%=product.productImage[0]  %>" alt="<%= product.name %>">
-      </a>
-        
-        <h2 style="color: red;"><%= product.name %></h2>
-     
+          <!-- Login Section -->
+          <div class="orderpage-login-section">
+            <div class="product-card">
+              <!-- Product Image -->
+              <a href="/productPage?id=<%= product._id %>">
+                <img src="/re-image/<%=product.productImage[0]  %>" alt="<%= product.name %>">
+              </a>
 
-     
-        <p class="price" style="color: red;">$<%= product.salePrice%></p>
-    </div>
- 
-     
+              <h2 style="color: red;">
+                <%= product.name %>
+              </h2>
 
 
-      <h2 style="padding: 15px;">Logged addresses</h2>
-      <% if (user.address.length > 0) { %>
-        <% for (let i = 0; i < user.address.length; i++) { %>
-            <div class="address-selection">
-                <div class="address-option">
-                    <input type="radio" id="address<%= i %>" name="address" value="<%= user.address[i].adress._id %>" onclick="selectAddress('<%= user.address[i].adress._id %>')">
-                    
-                    <label for="address<%= i %>">
-                        <div class="address-details">
-                            <p id="address"><%= user.address[i].adress._id %></p>
-                            <% if (user.address[i].adress) { %>
-                                <p>Name: <%= user.address[i].adress.name || 'N/A' %></p>
-                                <p>State: <%= user.address[i].adress.state || 'N/A' %></p>
-                                <p>City: <%= user.address[i].adress.city || 'N/A' %></p>
-                                <p>Pin Code: <%= user.address[i].adress.pincode || 'N/A' %></p>
-                            <% } else { %>
-                                <p><strong>Address details are not available.</strong></p>
-                            <% } %>
-                        </div>
-                    </label>
-                </div>
+
+              <p class="price" style="color: red;">$<%= product.salePrice%>
+              </p>
             </div>
-        <% } %>
-        <% } %>
-    
-    
-
-
-    </div>
-
-
-   
-
-    <!-- Billing Details Section -->
-    <div class="orderpage-billing-section">
-      <h2>Add new Address ?</h2>
-     
-        
-      <button class="orderpage-confirm-btn" onclick="window.location.href='/editprofile';">
-        click here to add NEW ADDRESS 
-      </button>
-      
-     
-  
-      
-    </div>
-
-    <!-- Order Summary Section -->
-    <div class="orderpage-summary-section">
-      <h2>Your Order</h2>
-      <table class="orderpage-summary-table">
-        <thead>
-          <tr>
-            <th>Quantity</th>
-            <th>Total</th>
-          </tr>
-        </thead>
-        <tbody>
-         
-        
-          <tr>
-            <td id="quantity"  style="    padding-left: 100px;"><%=quantity  %></td>
-            <td  ><strong><%=product.salePrice*quantity  %>$</strong></td>
-          </tr>
-        </tbody>
-        <tfoot>
-          <tr>
-            <tr>
-              <th>Delivery charge</th>
-              <th>Free</th>
-            </tr>
-            <th>Subtotal</th>
-            <th id="subtotal" style="color: rgb(224, 1, 1);"><%=product.salePrice*quantity  %>$</th>
-          </tr>
-         
-        </tfoot>
-      </table>
-
-      <!-- Confirm Order Button -->
-      <button type="button" id="orderButton" class="orderpage-confirm-btn">Confirm Order</button>
-
-      <!-- Payment Options -->
-      <div class="orderpage-payment-options">
-        <label>
-          <img src="\re-image\cshondel.jpg" alt="" style="width: 162px;">
-          <input  type="radio" name="paymentMethod" value="COD" checked> Cash on Delivery
-        </label>
-        <label>
-          <img src="\re-image\creditimage.webp" alt="" style="width: 162px;">
-          <input type="radio" name="paymentMethod" value="CreditCard"> Credit/Debit Card
-        </label>
-        <label>
-          <img src="\re-image\upi.jpg" alt="" style="width: 166px;">
-          <input type="radio" name="paymentMethod" value="UPI"> UPI
-        </label>
-        <label>
-          <img src="\re-image\wallet.avif" alt="" style="width: 172px;">
-          <input type="radio" name="paymentMethod" value="Wallet"> Wallet
-        </label>
-      </div>
-    </div>
-  </section>
-
-</main>
 
 
 
-<script>
 
-let selectedAddressId = null;
+            <h2 style="padding: 15px;">Logged addresses</h2>
+            <% if (user.address.length> 0) { %>
+              <% for (let i=0; i < user.address.length; i++) { %>
+                <div class="address-selection">
+                  <div class="address-option">
+                    <input type="radio" id="address<%= i %>" name="address" value="<%= user.address[i].adress._id %>"
+                      onclick="selectAddress('<%= user.address[i].adress._id %>')">
+
+                    <label for="address<%= i %>">
+                      <div class="address-details">
+                        <p id="address">
+                          <%= user.address[i].adress._id %>
+                        </p>
+                        <% if (user.address[i].adress) { %>
+                          <p>Name: <%= user.address[i].adress.name || 'N/A' %>
+                          </p>
+                          <p>State: <%= user.address[i].adress.state || 'N/A' %>
+                          </p>
+                          <p>City: <%= user.address[i].adress.city || 'N/A' %>
+                          </p>
+                          <p>Pin Code: <%= user.address[i].adress.pincode || 'N/A' %>
+                          </p>
+                          <% } else { %>
+                            <p><strong>Address details are not available.</strong></p>
+                            <% } %>
+                      </div>
+                    </label>
+                  </div>
+                </div>
+                <% } %>
+                  <% } %>
 
 
-   function selectAddress(addressId) {
-   
-    selectedAddressId = addressId;
-  
-  }
 
 
-document.getElementById("orderButton").addEventListener("click", function() {
-  const productId = "<%= product._id %>"; 
-  const userId = "<%= user._id %>";        
-  const address =selectedAddressId;  
-  const paymentType = document.querySelector('input[name="paymentMethod"]:checked').value;  
-  const quantity = document.getElementById("quantity").innerText;  
-  const subtotal = document.getElementById("subtotal").innerText.replace('$', '');  
- 
+          </div>
 
-  
-  const orderData = {
-    productId: productId,
-    userId: userId,
-    address: address,
-    paymentType: paymentType,
-    quantity: quantity,
-    subtotal: subtotal
-  };
 
-  
-  fetch('/orderPage', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify(orderData)  
-  })
-  .then(response => response.json())
-  .then(data => {
-    console.log('Order placed successfully:', data);
-   
-    window.location.href = "/orderConfirmation";
-  })
-  .catch(error => {
-    console.error('Error placing order:', error);
-  });
-});
+
+
+          <!-- Billing Details Section -->
+          <div class="orderpage-billing-section">
+            <h2>Add new Address ?</h2>
+
+
+            <button class="orderpage-confirm-btn" onclick="window.location.href='/editprofile';">
+              click here to add NEW ADDRESS
+            </button>
+
+
+
+
+          </div>
+
+          <!-- Order Summary Section -->
+          <div class="orderpage-summary-section">
+            <h2>Your Order</h2>
+            <table class="orderpage-summary-table">
+              <thead>
+                <tr>
+                  <th>Quantity</th>
+                  <th>Total</th>
+                </tr>
+              </thead>
+              <tbody>
+
+
+                <tr>
+                  <td id="quantity" style="    padding-left: 100px;">
+                    <%=quantity %>
+                  </td>
+                  <td><strong>
+                      <%=product.salePrice*quantity %>$
+                    </strong></td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                <tr>
+                  <th>Delivery charge</th>
+                  <th>Free</th>
+                </tr>
+                <th>Subtotal</th>
+                <th id="subtotal" style="color: rgb(224, 1, 1);">
+                  <%=product.salePrice*quantity %>$
+                </th>
+                </tr>
+
+              </tfoot>
+            </table>
+
+            <!-- Confirm Order Button -->
+            <button type="button" id="orderButton" class="orderpage-confirm-btn">Confirm Order</button>
+
+            <!-- Payment Options -->
+            <div class="orderpage-payment-options">
+              <label>
+                <img src="\re-image\cshondel.jpg" alt="" style="width: 162px;">
+                <input type="radio" name="paymentMethod" value="COD" checked> Cash on Delivery
+              </label>
+              <label>
+                <img src="\re-image\creditimage.webp" alt="" style="width: 162px;">
+                <input type="radio" name="paymentMethod" value="CreditCard"> Credit/Debit Card
+              </label>
+              <label>
+                <img src="\re-image\upi.jpg" alt="" style="width: 166px;">
+                <input type="radio" name="paymentMethod" value="UPI"> UPI
+              </label>
+              <label>
+                <img src="\re-image\wallet.avif" alt="" style="width: 172px;">
+                <input type="radio" name="paymentMethod" value="Wallet"> Wallet
+              </label>
+            </div>
+          </div>
+    </section>
+
+  </main>
+
+
+
+  <script>
+
+    let selectedAddressId = null;
+
+
+    function selectAddress(addressId) {
+
+      selectedAddressId = addressId;
+
+    }
+
+
+    document.getElementById("orderButton").addEventListener("click", function () {
+      const productId = "<%= product._id %>";
+      const userId = "<%= user._id %>";
+      const address = selectedAddressId;
+      const paymentType = document.querySelector('input[name="paymentMethod"]:checked').value;
+      const quantity = document.getElementById("quantity").innerText;
+      const subtotal = document.getElementById("subtotal").innerText.replace('$', '');
+
+
+
+      const orderData = {
+        productId: productId,
+        userId: userId,
+        address: address,
+        paymentType: paymentType,
+        quantity: quantity,
+        subtotal: subtotal
+      };
+
+
+      fetch('/orderPage', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(orderData)
+      })
+        .then(response => response.json())
+        .then(data => {
+          console.log('Order placed successfully:', data);
+
+          window.location.href = "/orderConfirmation";
+        })
+        .catch(error => {
+          console.error('Error placing order:', error);
+        });
+    });
 
 
 
 
   </script>
- <%-include("../../Views/partials/user/footer")%>
-
+  <%-include(".. /../Views/partials/user/footer")%>
