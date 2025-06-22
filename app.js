@@ -15,7 +15,7 @@ const nocache = require("nocache");
 const MongoStore = require('connect-mongo');
 
 db();
-
+const PORT =  3000;
 app.use(session({
   secret: process.env.SECRECT_KEY,
   resave: false,
@@ -68,8 +68,8 @@ app.set("views", [
 
 app.use("/images", express.static(path.join(__dirname, "public/images")));
 
-app.listen(3000, () => {
-  console.log(`server is running on http://localhost:3000`);
+app.listen(PORT, '0.0.0.0', () => {
+  console.log(`Server is running on http://0.0.0.0:${PORT}`);
 });
 
 module.exports = app;
